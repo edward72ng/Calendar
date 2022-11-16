@@ -1,10 +1,10 @@
 import React from 'react'
 import Home from './Home';
-import Login from './Login';
+import {Login} from './Login';
 import {Route, Routes} from 'react-router-dom'
-class App extends React.Component {
 
-render(){
+
+function App () {
     return(
         <div>
             <nav>
@@ -18,7 +18,7 @@ render(){
             </Routes>
         </div>
     )
-}
+
 }
 
 export default App;

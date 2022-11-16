@@ -1,34 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import {Link} from "react-router-dom"
+import {useAuth} from "./auth"
 
-class Login extends React.Component{
+function Login (){
+const [user, setUser] = useState('')
+const [password, setPassword] = useState('')
+const auth = useAuth()
 
-    render(){
+const loginF =  (e) => {
+  e.preventDefault()
+  //console.log({user: user, password: password})
+ 
+  auth.login({user: user, password: password})
+}
+
+
         return(
             <div className="row valign-wrapper">
-            <form className="col s12">
+            <form className="col s12" onSubmit={loginF}>
               <div className="row">
                 <div className="input-field col s6 center-align">
-                  <input id="input_text" type="text" data-length="10"/>
-                  <label for="input_text">Username</label>
+                  <input id="user" type="text" 
+                      value={user}
+                      onChange= {e => setUser(e.target.value)}
+                  />
+                  <label htmlFor="user">Username</label>
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s6 center-align">
-                  <textarea id="textarea2" className="materialize-textarea" data-length="120"></textarea>
-                  <label htmlFor="textarea2">Contraseña</label>
+                  <input id="password" type="text"
+                  value={password}
+                  onChange= {e => setPassword(e.target.value)}
+                  />
+                  <label htmlFor="password">Contraseña</label>
                 </div>
               </div>
               <button className="btn waves-effect waves-light" type="submit" name="action">Iniciar Sesion
                   <i className="material-icons right">send</i>
               </button>
-              <Link to='/home'>Home</Link>
-              <a href="/home">Home a</a>
             </form>
           </div>
                 
         )
-    }
+    
 }
 
-export default Login;
+export {Login};

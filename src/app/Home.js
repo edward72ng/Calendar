@@ -1,9 +1,8 @@
 import React from 'react'
 
 
-
 class Home extends React.Component{
-
+  
     constructor(){
         super()
         this.state = {
@@ -83,6 +82,7 @@ class Home extends React.Component{
 
 
     componentDidMount() {
+
         this.fetchTasks();
         console.log('Montando componente')
       }
