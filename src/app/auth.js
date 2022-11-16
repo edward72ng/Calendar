@@ -19,6 +19,7 @@ function AuthProvider({ children }) {
         }
       }).then(res=> res.json()).then((data)=>{
         setToken(data.token)
+        console.log('token asignado')
         navigate('/home')
     })
   };

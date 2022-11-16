@@ -2,7 +2,7 @@ import React from 'react'
 import Home from './Home';
 import {Login} from './Login';
 import {Route, Routes} from 'react-router-dom'
-
+import {Homefun} from './Homefun'
 
 function App () {
     return(
@@ -14,7 +14,7 @@ function App () {
             </nav>
             <Routes>
                 <Route path='/' element={<Login/>}/>
-                <Route path='/home' element={<Home/>}/>
+                <Route path='/home' element={<Homefun/>}/>
             </Routes>
         </div>
     )
