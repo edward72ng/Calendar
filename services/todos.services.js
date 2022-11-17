@@ -1,5 +1,6 @@
 
 const boom = require('@hapi/boom')
+const { where } = require('sequelize')
 const {models} = require('./../db/connec')
 //const {Todo} = require('./../db/models/modelssequelize')
 //
@@ -107,6 +108,39 @@ class Todos {
         }
         )
         return notify
+    }
+
+    async getYourTodos(userId){
+        var yourTodos = await models.todo.findAll({
+            where: {
+                userid: userId
+            }
+        })
+        return yourTodos
+    }
+
+    async editYourTodo (idComp, objeto){
+        var yourTodos = await models.todo.update({content: objeto.content},{
+            where:{
+                id: idComp
+            }    }
+        )
+        return yourTodos
+    }
+
+    async createYourTodo (objeto, userId){
+        var semd = {
+            userid:userId,
+            ...objeto
+        }
+        var yourTodos = await models.todo.create(semd)
+    }
+
+    async deleteYourTodo (id){
+        var elementTodo = await this.obteneruno(id)
+        await elementTodo.destroy()
+   
+        return id
     }
 }
 

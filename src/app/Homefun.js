@@ -17,14 +17,15 @@ function Homefun () {
   const addTodo = (e) => {
         e.preventDefault()
         if (id){
-          fetch('/api/v1/inbox/'+id, {
+          fetch('/api/v1/inbox/your-todos/'+id, {
             method: 'PUT',
             body: JSON.stringify({
               content: contentTodo
             }),
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + auth.token,
             }
           }).then(()=> {
             fetchTasks()
@@ -33,7 +34,7 @@ function Homefun () {
             })
         }
         if (id == null){
-          fetch('/api/v1/inbox', {
+          fetch('/api/v1/inbox/your-todos', {
             method: 'POST',
             body: JSON.stringify({
               content: contentTodo
@@ -41,7 +42,8 @@ function Homefun () {
             ),
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + auth.token,
             }
           }).then(()=> {
             fetchTasks()
@@ -59,11 +61,13 @@ function Homefun () {
     }
 
     const deleteTodo= (id)=>{
-        fetch('/api/v1/inbox/'+ id, {
+        fetch('/api/v1/inbox/your-todos/'+ id, {
             method: 'DELETE',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + auth.token,
+
             }
           }).then(()=>fetchTasks())
     }
@@ -77,6 +81,7 @@ function Homefun () {
     const mount = () => {
       if(auth.token){
         console.log('hay un token :D')
+        console.log(auth.token)
         fetchTasks();
         console.log('Montando componente')
       }else{
@@ -86,10 +91,10 @@ function Homefun () {
       }
     
     const fetchTasks = () => {
-          fetch('/api/v1/inbox',{
+          fetch('/api/v1/inbox/your-todos',{
             method: 'GET',
             headers: {
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTY2ODQzNjI5NH0.XLkQS_6r1QaPSJTOTHuHkjplmv5qQqUtl3lwW2oqMkU',
+              'Authorization': 'Bearer ' + auth.token,
             },
           })
           .then(res => res.json())
@@ -155,10 +160,6 @@ function Homefun () {
 </button>
 </form>
 </div>
-
-
-
 </div>
-        )
-    }
+)}
 export {Homefun}
