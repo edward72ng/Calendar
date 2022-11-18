@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {useAuth} from './auth'
 import { useNavigate } from 'react-router-dom';
-
-
+import {OneTodo} from './OneTodo'
 function Homefun () {
   const [contentTodo,setContentTodo] = useState('')
   const [todo, setTodo] = useState([])
@@ -102,6 +101,8 @@ function Homefun () {
             setTodo(data)
             console.log('cambiando estado -> todos')
           });
+
+         
       }      
         return(
             <div>
@@ -160,6 +161,7 @@ function Homefun () {
 </button>
 </form>
 </div>
+<OneTodo></OneTodo>
 </div>
 )}
 export {Homefun}

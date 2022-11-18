@@ -16,6 +16,7 @@ function App () {
                 <Route path='/' element={<Login/>}/>
                 <Route path='/home' element={<Homefun/>}/>
             </Routes>
+            
         </div>
     )
 
