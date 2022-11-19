@@ -120,7 +120,7 @@ class Todos {
     }
 
     async editYourTodo (idComp, objeto){
-        var yourTodos = await models.todo.update({content: objeto.content},{
+        var yourTodos = await models.todo.update({content: objeto.content, deatails: objeto.deatails},{
             where:{
                 id: idComp
             }    }

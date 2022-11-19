@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 function Homefun () {
   const [contentTodo,setContentTodo] = useState('')
+  const [detailsTodo, setDetailsTodo] = useState('')
   const [todo, setTodo] = useState([])
   const [id, setId] = useState(null)
   const auth = useAuth()
@@ -19,7 +20,8 @@ function Homefun () {
           fetch('/api/v1/inbox/your-todos/'+id, {
             method: 'PUT',
             body: JSON.stringify({
-              content: contentTodo
+              content: contentTodo,
+              deatails: detailsTodo
             }),
             headers: {
               'Accept': 'application/json',
@@ -30,13 +32,15 @@ function Homefun () {
             fetchTasks()
             setId(null)
             setContentTodo('')
+            setDetailsTodo('')
             })
         }
         if (id == null){
           fetch('/api/v1/inbox/your-todos', {
             method: 'POST',
             body: JSON.stringify({
-              content: contentTodo
+              content: contentTodo,
+              deatails: detailsTodo
             }
             ),
             headers: {
@@ -48,6 +52,7 @@ function Homefun () {
             fetchTasks()
             setId(null)
             setContentTodo('')
+            setDetailsTodo('')
             })
         }
         //this.fetchTasks()
@@ -58,6 +63,11 @@ function Homefun () {
         const val = e.target.value
         setContentTodo(val)
     }
+
+    const handleChangeDetails = (e) => {
+      const val = e.target.value
+      setDetailsTodo(val)
+  }
 
     const deleteTodo= (id)=>{
         fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -71,9 +81,10 @@ function Homefun () {
           }).then(()=>fetchTasks())
     }
 
-    const editTodo= (id, cont)=>{
+    const editTodo= (id, cont, details)=>{
       setId(id)
-      setContentTodo(cont)     
+      setContentTodo(cont)
+      setDetailsTodo(details)
     }
 
 
@@ -104,55 +115,28 @@ function Homefun () {
 
          
       }      
+      const prueba = ()=>{
+        alert('funciona :O')
+      }
+
         return(
             <div>
-              
-              
-
-
-        <table>
-        <thead>
-          <tr>
-              
-              <th className='col s10'>List</th>
-              <th className='col s2'>options</th>
-              
-          </tr>
-        </thead>
-        <tbody>
-
-        
                   { todo.map(task => {
                     return (
-            <tr key={task.id}>
-            
-            <td>{task.content}</td>
-            <td>
-            <a className="waves-effect waves-light btn-small" onClick={()=> {deleteTodo(task.id)}}>
-                <i className="material-icons">delete</i>
-            </a>
-            <a className="waves-effect waves-light btn-small" onClick={()=>{editTodo(task.id,task.content)}}>
-                <i className="material-icons">edit</i>
-            </a>
-            <a className="waves-effect waves-light btn-small color-dark ">
-                <i className="material-icons">check</i>
-            </a>
-            </td>
-            
-          </tr>
+<OneTodo editFunction = {editTodo} deleteFunction = {deleteTodo} pruebaFunction = {prueba} content={task.content} details={task.deatails} id={task.id}></OneTodo>
+          
                     )})}  
-          </tbody>
-        
-
-        
-        </table>
-
+          
 <div className="row">
 <form className="col s12" >
   <div className="row">
     <div className="input-field col s12">
       <input id="input_text" type="text" data-length="10" onChange={handleChange} value = {contentTodo}/>
       <label htmlFor="input_text">Task text</label>
+    </div>
+    <div className="input-field col s12">
+      <input id="text" type="text" data-length="10" onChange={handleChangeDetails} value = {detailsTodo}/>
+      <label htmlFor="text">Details text</label>
     </div>
   </div>
   
@@ -161,7 +145,6 @@ function Homefun () {
 </button>
 </form>
 </div>
-<OneTodo></OneTodo>
 </div>
 )}
-export {Homefun}
+export {Homefun} 

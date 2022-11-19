@@ -2,33 +2,27 @@ import React from "react";
 //import './OneTodo.css';
 
 
-function OneTodo ({content, details}){
+function OneTodo (props){
 
-    const prueba = ()=>{
-        alert('funciona :O')
-      }
 
     return (
-        <>
         <div className="container">
-            <div class="section">
-                <h5>Todo</h5>
-                <p>Todo Description</p>
+        <div className="container2">
+            <div>
+                <p className="content">{props.content}</p>
+                <p className="details">{props.details}</p>
             </div>
             <div className="icons-container">
-                <a className="waves-effect waves-light btn-small" >
+                <a className="waves-effect waves-light btn-small" onClick={()=>props.deleteFunction(props.id)}>
                     <i className="material-icons">delete</i>
                 </a>
-                <a className="waves-effect waves-light btn-small" >
+                <a className="waves-effect waves-light btn-small" onClick={()=>props.editFunction(props.id,props.content,props.details)}>
                     <i className="material-icons">edit</i>
-                </a>
-                <a className="waves-effect waves-light btn-small color-dark " onClick={()=>{prueba()}}>
-                    <i className="material-icons">check</i>
                 </a>
             </div>
         </div>
         <div class="divider"></div>
-        </>
+        </div>
     )
 }
 export {OneTodo}
