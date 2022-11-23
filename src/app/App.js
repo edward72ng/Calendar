@@ -1,21 +1,22 @@
 import React from 'react'
-import Home from './Home';
 import {Login} from './Login';
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, Link} from 'react-router-dom'
 import {Homefun} from './Homefun'
+import {Notify} from './Notify'
+import { Calendar } from 'rsuite';
+import {CustomCalendar} from './CustomCalendar'
+import {Mosaics} from './Mosaics'
+//import 'rsuite/dist/rsuite.min.css';
 
 function App () {
     return(
         <div>
-            <nav class="nav-extended">
-            <div class="nav-wrapper">
-            <a href="#" class="brand-logo">TodoList</a>
-            </div>
-    <div class="nav-content">
-      <ul class="tabs tabs-transparent">
-        <li class="tab"><a href="#test1">Home</a></li>
-        <li class="tab"><a href="#test2">Calendar</a></li>
-        <li class="tab"><a href="#test4">Notify</a></li>
+            <nav className="nav-extended">
+    <div className="nav-content">
+      <ul className="tabs tabs-transparent">
+        <li className="tab"><Link to="/home">Home</Link></li>
+        <li className="tab"><Link to="/calendar" >Calendar</Link></li>
+        <li className="tab"><Link to="/notify">Notify</Link></li>
       </ul>
     </div>
   </nav>
@@ -24,6 +25,9 @@ function App () {
             <Routes>
                 <Route path='/' element={<Login/>}/>
                 <Route path='/home' element={<Homefun/>}/>
+                <Route path='/calendar' element={<CustomCalendar/>}/>
+                <Route path='/notify' element={<Notify/>}/>
+                
             </Routes>
             
         </div>

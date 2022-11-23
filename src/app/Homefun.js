@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {useAuth} from './auth'
 import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
+import{Form} from './Form'
+
 function Homefun () {
   const [contentTodo,setContentTodo] = useState('')
   const [detailsTodo, setDetailsTodo] = useState('')
@@ -120,13 +122,8 @@ function Homefun () {
       }
 
         return(
-            <div>
-                  { todo.map(task => {
-                    return (
-<OneTodo editFunction = {editTodo} deleteFunction = {deleteTodo} pruebaFunction = {prueba} content={task.content} details={task.deatails} id={task.id}></OneTodo>
-          
-                    )})}  
-          
+            <div className="home-container">
+<div className="form-container">
 <div className="row">
 <form className="col s12" >
   <div className="row">
@@ -139,12 +136,20 @@ function Homefun () {
       <label htmlFor="text">Details text</label>
     </div>
   </div>
-  
   <button className="btn waves-effect waves-light" type="submit" onClick={addTodo} name="action">Enviar
 <i className="material-icons right">send</i>
 </button>
 </form>
 </div>
+</div>
+              <div className="todos-container">
+                  { todo.map(task => {
+                    return (
+<OneTodo editFunction = {editTodo} deleteFunction = {deleteTodo} pruebaFunction = {prueba} content={task.content} details={task.deatails} id={task.id}></OneTodo>
+          
+                    )})}  
+                    </div>
+
 </div>
 )}
 export {Homefun} 

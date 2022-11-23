@@ -21,3 +21,36 @@
 .divider{
     height: 1px;
 }
+
+.home-container{
+    display: flex;
+    flex-direction: row;
+}
+.form-container{
+    width: 25%;
+    border-right: solid grey 4px;
+}
+.todos-container{
+    width: 75%;
+}
+.ol-list{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    list-style: none;
+}
+.notificate{
+    background-color: blue;
+    height: 105px;
+    border: solid gray 1px;
+}
+.notnotificate{
+    height: 105px;
+    border: solid gray 1px;
+}
+
+li:hover{
+    background-color: aqua;
+}
+.today{
+    background-color: gray;
+}

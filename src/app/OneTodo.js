@@ -21,7 +21,7 @@ function OneTodo (props){
                 </a>
             </div>
         </div>
-        <div class="divider"></div>
+        <div className="divider"></div>
         </div>
     )
 }

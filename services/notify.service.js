@@ -15,10 +15,54 @@ class Notify{
 
 
     async getWithAssociations (){
-        this.data = await models.notify.findAll({
-            include:['todonotify']
+        function isarrayVacio(arr) {
+            if (arr.length === 0){
+                return true
+            }else{
+            return false
+            }
+        }
+        const prevData = await models.todo.findAll({
+            include:['todonotify'],
+            where: {
+                userid: 1,
+            }
         })
-        return this.data
+        var data = []
+        prevData.map((arr)=>{
+            if(isarrayVacio(arr.todonotify) == false){
+                data.push(arr)
+            }
+        })
+        
+        return data
+    }
+
+    async getWithAssociationsNotify (){
+        function isarrayVacio(arr) {
+            if (arr.length === 0){
+                return true
+            }else{
+            return false
+            }
+        }
+        const prevData = await models.notify.findAll({
+            include:['todonotify'],
+            where: {
+                
+            }
+        })
+        const prevTwo =[]
+        prevData.map((arr)=>{
+            if(isarrayVacio(arr.todonotify) == false ){
+                prevTwo.push(arr)
+            }
+        })
+    
+        prevTwo.sort((a,b)=>{
+            return a.date - b.date
+        })
+        return prevTwo
     }
 }
 
