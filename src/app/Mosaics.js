@@ -1,6 +1,4 @@
-import { string } from "joi";
 import React, { useEffect, useState } from "react";
-import { set } from "rsuite/esm/utils/dateUtils";
 import {Mosaic}  from './Mosaic'
 
 function Mosaics (props){

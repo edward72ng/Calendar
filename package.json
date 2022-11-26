@@ -19,7 +19,6 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.3",
-    "rsuite": "^5.22.2",
     "sequelize": "^6.25.3",
     "webpack": "^5.75.0",
     "webpack-cli": "^4.10.0"

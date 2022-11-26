@@ -3,9 +3,7 @@ import {Login} from './Login';
 import {Route, Routes, Link} from 'react-router-dom'
 import {Homefun} from './Homefun'
 import {Notify} from './Notify'
-import { Calendar } from 'rsuite';
 import {CustomCalendar} from './CustomCalendar'
-import {Mosaics} from './Mosaics'
 //import 'rsuite/dist/rsuite.min.css';
 
 function App () {
