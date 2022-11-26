@@ -4,6 +4,7 @@ import {Route, Routes, Link} from 'react-router-dom'
 import {Homefun} from './Homefun'
 import {Notify} from './Notify'
 import {CustomCalendar} from './CustomCalendar'
+import {NotifyProvider} from './notifyContext'
 //import 'rsuite/dist/rsuite.min.css';
 
 function App () {
@@ -23,7 +24,9 @@ function App () {
             <Routes>
                 <Route path='/' element={<Login/>}/>
                 <Route path='/home' element={<Homefun/>}/>
-                <Route path='/calendar' element={<CustomCalendar/>}/>
+                <Route path='/calendar' element={<NotifyProvider>
+                  <CustomCalendar/>
+                </NotifyProvider>}/>
                 <Route path='/notify' element={<Notify/>}/>
                 
             </Routes>

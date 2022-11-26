@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {Mosaics} from './Mosaics'
-
+import {Modal} from './modal'
+import {NotifyContext} from './notifyContext'
 function CustomCalendar (){
     //const [todos,setTodos] = useState
     var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
@@ -15,7 +16,7 @@ function CustomCalendar (){
     var dayFirst = new Date(year, month, 1)
     var dayFirstday = dayFirst.getDay() 
     console.log(dayFirstday)
-    
+    const {modalView, setModalView} = useContext(NotifyContext)
     //var qMonth = String(qMonth)
     return(
         <div className="container">
@@ -40,6 +41,13 @@ function CustomCalendar (){
              </Mosaics>
             </ol>
         </div>
+
+        {!!modalView&&(
+            <Modal>
+                <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
+            </Modal>
+        )}
+        <button onClick={()=>{setModalView(!modalView)}}>colocar modal</button>
     </div>
     )
 }

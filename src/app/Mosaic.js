@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import {NotifyContext} from './notifyContext'
 
 function Mosaic ({day, first, notificate, today}){
 
@@ -28,9 +29,13 @@ function Mosaic ({day, first, notificate, today}){
         else{
             return "nottoday"
         }
-    } 
+    }
+    
+    const {modalView,
+        setModalView
+    } = useContext(NotifyContext)
     return(
-        <li key={day} onClick ={()=>click(day)}
+        <li key={day} onClick ={()=>{setModalView(!modalView)}}
         className={isNotify(notificate)+' '+istoday(day)}
         style={isFirst()} >
            {day}
