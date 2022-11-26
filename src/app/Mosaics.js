@@ -40,20 +40,21 @@ function Mosaics (props){
 
     const isEqual2 = (i, arr)=>{
         i = String(i)
-        console.log(i)
+        var arra = []
         var boo = false
         arr.map((a)=>{
             var fetchtrig = a.todonotify[0].date
-            console.log(fetchtrig)
             fetchtrig =  String(fetchtrig).replace(String(month)+ String(year),"")
-            console.log(fetchtrig + 'tring')
             if(i == fetchtrig){
                 boo = true
-                //var viewer = a.content
+                arra.push(a.id)
+                arra.push(a.content)
+                
             }
         })
-        console.log(boo)
-        return boo
+        arra.unshift(boo)
+        console.log(arra)
+        return arra  
     }
 
     return (

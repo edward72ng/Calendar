@@ -3,8 +3,6 @@ import {NotifyContext} from './notifyContext'
 
 function Mosaic ({day, first, notificate, today}){
 
-    const click = (val)=>{alert('hola elemento'+val)}
-
     const isFirst = ()=>{
         if (day == 1){
             return {gridColumnStart: first }
@@ -15,7 +13,7 @@ function Mosaic ({day, first, notificate, today}){
     }
 
     const isNotify = (val)=>{
-        if (val){
+        if (val[0]){
             return 'notificate'
         }else{
             return 'notnotificate'
@@ -32,13 +30,16 @@ function Mosaic ({day, first, notificate, today}){
     }
     
     const {modalView,
-        setModalView
+        setModalView,
+        setDayTask
     } = useContext(NotifyContext)
+    //par is content, impar is id
     return(
-        <li key={day} onClick ={()=>{setModalView(!modalView)}}
+        <li key={day} onClick ={()=>{setModalView(!modalView); setDayTask(notificate)}}
         className={isNotify(notificate)+' '+istoday(day)}
         style={isFirst()} >
            {day}
+           <p>{notificate[2]}</p>
         </li>
     )
 }

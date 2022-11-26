@@ -4,7 +4,7 @@ const NotifyContext = React.createContext()
 function NotifyProvider ({children}){
 
     const [modalView, setModalView] = useState(false)
-    const [dayTask, setDayTask] = useState([])
+    const [dayTask, setDayTask] = useState([false])
     return (
      <NotifyContext.Provider value = {{
         modalView,

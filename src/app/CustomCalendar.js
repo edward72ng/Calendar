@@ -15,8 +15,7 @@ function CustomCalendar (){
     var qMonth = dateNext.getDate()
     var dayFirst = new Date(year, month, 1)
     var dayFirstday = dayFirst.getDay() 
-    console.log(dayFirstday)
-    const {modalView, setModalView} = useContext(NotifyContext)
+    const {modalView, setModalView, dayTask} = useContext(NotifyContext)
     //var qMonth = String(qMonth)
     return(
         <div className="container">
@@ -44,10 +43,10 @@ function CustomCalendar (){
 
         {!!modalView&&(
             <Modal>
+                <div>{'value: '+dayTask[0].toString()}</div>
                 <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
             </Modal>
         )}
-        <button onClick={()=>{setModalView(!modalView)}}>colocar modal</button>
     </div>
     )
 }
