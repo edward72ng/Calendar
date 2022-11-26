@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import {Mosaics} from './Mosaics'
 import {Modal} from './modal'
 import {NotifyContext} from './notifyContext'
+import {DayView} from './DayView'
 function CustomCalendar (){
     //const [todos,setTodos] = useState
     var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
@@ -43,8 +44,15 @@ function CustomCalendar (){
 
         {!!modalView&&(
             <Modal>
-                <div>{'value: '+dayTask[0].toString()}</div>
-                <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
+                <div>
+            <ol>
+                {dayTask.map((task)=>{
+                    return(<li>{'value :  ' + task.toString()}</li>)
+                })}
+            </ol>
+            <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
+        </div>
+                             
             </Modal>
         )}
     </div>
