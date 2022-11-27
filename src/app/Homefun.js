@@ -120,7 +120,6 @@ function Homefun () {
       const prueba = ()=>{
         alert('funciona :O')
       }
-
         return(
             <div className="home-container">
 <div className="form-container">
@@ -140,12 +139,17 @@ function Homefun () {
 <i className="material-icons right">send</i>
 </button>
 </form>
+<form action='/api/v1/inbox/capture' method='POST'>
+  <input type="date" name='fecha'></input>
+  <input type="time" name='hora'></input>
+  <input type="submit"></input>
+</form>
 </div>
 </div>
               <div className="todos-container">
-                  { todo.map(task => {
+                  { todo.map((task, i) => {
                     return (
-<OneTodo editFunction = {editTodo} deleteFunction = {deleteTodo} pruebaFunction = {prueba} content={task.content} details={task.deatails} id={task.id}></OneTodo>
+<OneTodo key={i} editFunction = {editTodo} deleteFunction = {deleteTodo} pruebaFunction = {prueba} content={task.content} details={task.deatails} id={task.id}></OneTodo>
           
                     )})}  
                     </div>

@@ -4,7 +4,7 @@ const port = 3000
 const routerApi = require('./routes/index')
 const passport = require('passport')
 const path = require('path')
-
+const bodyParser = require ('body-parser')
 const midd = require('./middlewares/middleware.handler')
 const {authHeader} = require('./middlewares/auth.middleware')
 
@@ -21,6 +21,7 @@ require('./utils/auth/index')
 
 
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'src/public')));
 
 /*app.get('/',

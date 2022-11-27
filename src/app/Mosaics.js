@@ -42,9 +42,10 @@ function Mosaics (props){
         i = String(i)
         var arra = []
         var boo = false
-        arr.map((a)=>{
+        arr.map((a, ind)=>{
             var fetchtrig = a.todonotify[0].date
             fetchtrig =  String(fetchtrig).replace(String(month)+ String(year),"")
+            console.log(ind)
             if(i == fetchtrig){
                 boo = true
                 arra.push(a.id)
@@ -53,6 +54,7 @@ function Mosaics (props){
             }
         })
         arra.unshift(boo)
+        
         console.log(arra)
         return arra  
     }

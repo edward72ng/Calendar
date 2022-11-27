@@ -125,5 +125,8 @@ async (req,res,next)=>{
 }
 )
 
+router.post('/capture', (req, res)=>{
+    console.log(req.body)
+})
 
 module.exports = router
