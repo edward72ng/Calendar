@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import {DatesContext} from './datesContext'
 import {useAuth} from './auth'
 import {OneTodo} from './OneTodo'
 function Notify (){
-    const auth = useAuth()
-
-    const [items, setItems] = useState([])
+    const {dateString} = useContext(DatesContext)
+    const [tasks, setTasks] = useState([])
     useEffect(()=>{
-        fetch('/api/v1/dnotify/all-first-todo',{
+        fetchTask()
+    },[])
+
+    const fetchTask = ()=>{
+        fetch('/api/v1/dnotify/todo-date/'+ dateString, {
             method: 'GET',
             headers: {
-              'Authorization': 'Bearer ' + auth.token,
-            },
-          })
-          .then(res => res.json())
-          .then(data => {
-            setItems(data)
-            console.log('cambiando estado -> todos')
-          },[]);
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
 
-    }) 
+            }
+          }).then(res => res.json())
+          .then(data => { setTasks(data)})
+    }
 
     return(
         <div className="todos-container">
-                  { items.map(item => { 
-                    
-                    return (
-<OneTodo details={item.date}></OneTodo>
-          
-                    )})}  
-                    </div>
+          <h5>ToDay</h5>
+            <h6>Events</h6>
+            <h6>Notify</h6>
+                {
+                    tasks.map((task, i)=>{
+                        return(<p key={i} className="content">{task.content}</p>)
+                    })
+                }
+            <h6>List</h6>
+                  
+        </div>
     )
 }
 

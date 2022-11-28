@@ -19,5 +19,10 @@ router.get('/all-first-notify',async (req,res) =>{
     res.json(rsp)
 })
 
+router.get('/todo-date/:date', async (req,res)=>{
+    var rsp = await service.getTodoDate(req.params.date)
+    res.json(rsp)
+})
+
 
 module.exports = router

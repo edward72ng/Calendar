@@ -64,6 +64,31 @@ class Notify{
         })
         return prevTwo
     }
+
+    async getTodoDate(valParam){
+        function isarrayVacio(arr) {
+            if (arr.length === 0){
+                return true
+            }else{
+            return false
+            }
+        }
+        const prevData = await models.todo.findAll({
+            include:['todonotify'],
+            where: {
+                userId: 1
+            }
+        })
+        const prevTwo =[]
+        prevData.map((arr)=>{
+            if(isarrayVacio(arr.todonotify) == false ){
+                if(arr.todonotify[0].date == valParam){
+                    prevTwo.push(arr)
+                }
+            }
+        })
+        return prevTwo
+    }
 }
 
 module.exports = Notify
