@@ -2,6 +2,7 @@ const {Sequelize ,DataTypes, Model} = require('sequelize')
 
 
 const {USUARIOS_TABLE} = require('./usuariosModel')
+const {EVENTS_TABLE} = require('./events.model')
 // const user = sequelize.define('users',{
 //     uid:{
 //         type: DataTypes.UUID,
@@ -110,6 +111,16 @@ const schemaTodoSeq = {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
       },
+      eventid:{
+        type: DataTypes.INTEGER.UNSIGNED,
+
+        references: {
+            model: EVENTS_TABLE, //aunque el parametro dice model, lo que se señala es la tabla
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
+      }
  
      
   }
@@ -127,6 +138,10 @@ class Todoe extends Model{
              foreignKey: 'todoid',
              otherKey: 'notifyid',
              as: 'todonotify',})
+        this.belongsTo(models.events,{//un todo puede tener un evento
+            foreignKey: 'eventid', //aqui la fk es el eventid
+            as: 'evento'
+        })
     }
 
     static config(sequelize){

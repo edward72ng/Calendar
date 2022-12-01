@@ -2,6 +2,7 @@ const routerInbox = require('./inbox.router')
 const routerDnotify = require('./dnotify.router')
 const routerUser = require('./user.router')
 const routerAuth = require('./auth.router')
+const routerEvents = require('./events.router')
 const express = require('express')
 
 
@@ -12,6 +13,7 @@ function routerApi (app){
     routerv1.use('/dnotify',routerDnotify)
     routerv1.use('/user',routerUser)
     routerv1.use('/auth',routerAuth)
+    routerv1.use('/events',routerEvents)    
     app.use('/api/v1',routerv1)
 
 }

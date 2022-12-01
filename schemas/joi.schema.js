@@ -7,14 +7,14 @@ const notifydate = joi.string().max(50)
 const creation = joi.string().min(1).max(50)
 const user = joi.string().max(20)
 const password = joi.string().max(20)
-
+const event = joi.date
 
 const createTodo = joi.object({
     content: content.required(),
     deatails: details,
     notifydate: notifydate,
     creation: creation,
-    userid: id/*.required()*/,
+    userid: id.required(),
 })
 
 const updateTodo = joi.object({

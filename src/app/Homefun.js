@@ -9,6 +9,8 @@ function Homefun () {
   const [detailsTodo, setDetailsTodo] = useState('')
   const [todo, setTodo] = useState([])
   const [id, setId] = useState(null)
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
   useEffect(()=>{
@@ -70,6 +72,16 @@ function Homefun () {
       const val = e.target.value
       setDetailsTodo(val)
   }
+
+  const handleChangeDate = (e) => {
+    const val = e.target.value
+    setDate(val)
+}
+
+const handleChangeTime = (e) => {
+  const val = e.target.value
+  setTime(val)
+}
 
     const deleteTodo= (id)=>{
         fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -140,8 +152,8 @@ function Homefun () {
 </button>
 </form>
 <form action='/api/v1/inbox/capture' method='POST'>
-  <input type="date" name='fecha'></input>
-  <input type="time" name='hora'></input>
+  <input type="date" name='fecha' onChange={handleChangeDate}></input>
+  <input type="time" name='hora' onChange={handleChangeTime}></input>
   <input type="submit"></input>
 </form>
 </div>
