@@ -3,6 +3,7 @@ import {Mosaic}  from './Mosaic'
 
 function Meses (props){
     const [task, setTask] = useState([])
+    const [noificate, setNotificate] = useState([])
     var date = new Date()
     var dat = date.getDate()
     var month = date.getMonth()
@@ -24,6 +25,14 @@ function Meses (props){
             .then(data => {
                 setTask(data)
             });
+        fetch('http://localhost:3000/api/v1/notifications/with-notification',
+        {
+            method: 'GET',
+        }).then(res => res.json())
+            .then(data => {
+                setNotificate(data)
+            }
+        )
     }
         
 
@@ -51,7 +60,31 @@ function Meses (props){
         console.log(arra)
         return arra  
     }
-
+    const isEqual = (i, arr)=>{
+        i = String(i)
+        var arra = []
+        var boo = false
+        arr.map((a, ind)=>{
+            var fetchtrig = a.date
+            if (i < 10){
+                var d =  String(year) +'-' +String(month + 1)+'-0'+ i 
+            }else{
+                var d =  String(year) +'-' +String(month + 1)+'-'+ i 
+            }
+            console.log(d)
+            if(d == fetchtrig){
+                boo = true
+                arra.push(a.todo.id)
+                arra.push(a.todo.content)
+                
+            }
+        })
+        const l = (arra.length)/2
+        arra.unshift(l)
+        arra.unshift(boo)
+        console.log(arra)
+        return arra  
+    }
     return (
     <>
     {boxes.map((elem)=>{
@@ -60,6 +93,7 @@ function Meses (props){
                         day={elem} 
                         first={String(props.first + 1)} 
                         notificate={isEqual2(elem, task)}
+                        notification={isEqual(elem, noificate)}
                         today={dat}>
                         </Mosaic>
         )

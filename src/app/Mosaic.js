@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import {NotifyContext} from './notifyContext'
 import {EventsContext} from './eventsProvider'
-function Mosaic ({day, first, notificate, today}){
+function Mosaic ({day, first, notificate, today, notification}){
 
     const isFirst = ()=>{
         if (day == 1){
@@ -19,7 +19,13 @@ function Mosaic ({day, first, notificate, today}){
             return 'notnotificate'
         }
     }
-   
+   const isNotification = (val)=>{
+    if(val[0]){
+        return <span style={{backgroundColor: "red"}}>{val[1]}</span>
+    }else{
+        return ""
+    }
+   }
     const istoday = (d)=>{
         if(d == today){
             return "today"
@@ -39,9 +45,12 @@ function Mosaic ({day, first, notificate, today}){
         className={isNotify(notificate)+' '+istoday(day)}
         style={isFirst()} >
            {day}
+           {isNotification(notification)}
            <p>{notificate[2]}</p>
         </li>
     )
 }
 
+//<span style={{backgroundColor: "red"}}>camp</span>
+//campana notificacion
 export {Mosaic}

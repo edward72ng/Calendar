@@ -9,6 +9,7 @@ const authservice = new AuthService()
 
 const validate = require('./../middlewares/middleware.schema')
 const {createTodo , updateTodo, idTodo} = require('./../schemas/joi.schema')
+const { unauthorized } = require('@hapi/boom')
 
 router.get('/',async (req,res,next) =>{
     console.log(req.headers)
@@ -83,7 +84,9 @@ router.get('/your-todos',
             var data = await service.getYourTodos(pay.sub)
             res.json(data)
         }
-        
+        else{
+            res.send('unauthorized')
+        }
     }
 ),
 
