@@ -31,11 +31,11 @@ function Mosaic ({day, first, notificate, today}){
     
     const {modalView,
         setModalView,
-        setDayEvent
-    } = useContext(EventsContext)
+        setDayTask
+    } = useContext(NotifyContext)
     //par is content, impar is id
     return(
-        <li key={day} onClick ={()=>{setModalView(!modalView); setDayEvent(notificate)}}
+        <li key={day} onClick ={()=>{setModalView(!modalView); setDayTask(notificate)}}
         className={isNotify(notificate)+' '+istoday(day)}
         style={isFirst()} >
            {day}

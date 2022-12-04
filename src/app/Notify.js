@@ -10,7 +10,7 @@ function Notify (){
     },[])
 
     const fetchTask = ()=>{
-        fetch('/api/v1/dnotify/todo-date/'+ dateString, {
+        fetch('api/v1/events/day-events/2022-12-31ss', { /*Debemos dar el dia como url*/
             method: 'GET',
             headers: {
               'Accept': 'application/json',
@@ -18,7 +18,7 @@ function Notify (){
 
             }
           }).then(res => res.json())
-          .then(data => { setTasks(data)})
+          .then(data => { setTasks(data[0].tareas)})
     }
 
     return(

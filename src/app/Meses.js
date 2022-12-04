@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {Mosaic}  from './MosaicCopy'
+import {Mosaic}  from './Mosaic'
 
-function Mosaics (props){
+function Meses (props){
     const [task, setTask] = useState([])
     var date = new Date()
     var dat = date.getDate()
@@ -18,7 +18,7 @@ function Mosaics (props){
     },[])
 
     const fetchtak = ()=>{
-        fetch('http://localhost:3000/api/v1/dnotify/all-first-todo',{
+        fetch('http://localhost:3000/api/v1/events/with-events',{
             method: 'GET',
         }).then(res => res.json())
             .then(data => {
@@ -32,10 +32,14 @@ function Mosaics (props){
         var arra = []
         var boo = false
         arr.map((a, ind)=>{
-            var fetchtrig = a.todonotify[0].date
-            fetchtrig =  String(fetchtrig).replace(String(month)+ String(year),"")
-            console.log(ind)
-            if(i == fetchtrig){
+            var fetchtrig = a.evento.event
+            if (i < 10){
+                var d =  String(year) +'-' +String(month + 1)+'-0'+ i 
+            }else{
+                var d =  String(year) +'-' +String(month + 1)+'-'+ i 
+            }
+            console.log(d)
+            if(d == fetchtrig){
                 boo = true
                 arra.push(a.id)
                 arra.push(a.content)
@@ -63,4 +67,4 @@ function Mosaics (props){
     </>
     )
 }
-export {Mosaics}
+export {Meses}

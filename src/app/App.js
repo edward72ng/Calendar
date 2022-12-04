@@ -5,7 +5,8 @@ import {Homefun} from './Homefun'
 import {Notify} from './Notify'
 import {CustomCalendar} from './CustomCalendar'
 import {NotifyProvider} from './notifyContext'
-//import 'rsuite/dist/rsuite.min.css';
+import {Calendar} from './Calendar'
+import {EventsProvider} from './eventsProvider'
 
 function App () {
     return(
@@ -16,6 +17,7 @@ function App () {
         <li className="tab"><Link to="/home">Home</Link></li>
         <li className="tab"><Link to="/calendar" >Calendar</Link></li>
         <li className="tab"><Link to="/notify">Notify</Link></li>
+        <li className="tab"><Link to="/calendary">Calendar2</Link></li>
       </ul>
     </div>
   </nav>
@@ -28,7 +30,9 @@ function App () {
                   <CustomCalendar/>
                 </NotifyProvider>}/>
                 <Route path='/notify' element={<Notify/>}/>
-                
+                <Route path='/calendary' element={<EventsProvider>
+                  <Calendar/>
+                </EventsProvider>}/>
             </Routes>
             
         </div>
