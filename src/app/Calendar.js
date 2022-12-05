@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import {Mosaics} from './Mosaics'
 import {Modal} from './modal'
 import {EventsContext} from './eventsProvider'
 import {Meses} from './Meses'
@@ -10,7 +9,7 @@ function Calendar (){
     var year = date.getFullYear()
     var dayFirst = new Date(year, month, 1)
     var dayFirstday = dayFirst.getDay() 
-    const {modalView, setModalView,} = useContext(EventsContext)
+    const {modalView, setModalView, dayEvent} = useContext(EventsContext)
 
     return(
         <div className="container">
@@ -40,7 +39,9 @@ function Calendar (){
             <Modal>
                 <div>
             <ol>
-                <p>modal</p>
+            {dayEvent.map((task)=>{
+                    return(<li>{'value :  ' + task.toString()}</li>)
+                })}
             </ol>
             <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
         </div>

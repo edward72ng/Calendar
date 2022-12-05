@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {Mosaic}  from './Mosaic'
+import {DatesContext} from './datesContext'
 
 function Meses (props){
     const [task, setTask] = useState([])
     const [noificate, setNotificate] = useState([])
     var date = new Date()
-    var dat = date.getDate()
     var month = date.getMonth()
     var year = date.getFullYear()
     var dateNext = new Date(year, month+1, 0)
     var qMonth = dateNext.getDate()
     var boxes = []
+    const {dat} = useContext(DatesContext)
     for(var i = 1; i <= qMonth; i++){
         boxes.push(i)
     }

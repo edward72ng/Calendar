@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import {DatesContext} from './datesContext'
-import {useAuth} from './auth'
-import {OneTodo} from './OneTodo'
 function Notify (){
     const {dateString} = useContext(DatesContext)
     const [tasks, setTasks] = useState([])
@@ -11,7 +9,7 @@ function Notify (){
     },[])
 
     const fetchTask = ()=>{
-        fetch('api/v1/events/day-events/2022-12-31', { /*Debemos dar el dia como url*/
+        fetch('api/v1/events/day-events/'+dateString, { /*Debemos dar el dia como url*/
             method: 'GET',
             headers: {
               'Accept': 'application/json',
@@ -20,7 +18,7 @@ function Notify (){
             }
           }).then(res => res.json())
           .then(data => { setTasks(data[0].tareas)})
-          fetch('api/v1/notifications/notification-today/2022-12-06', { /*Debemos dar el dia como url*/
+          fetch('api/v1/notifications/notification-today/'+dateString, { /*Debemos dar el dia como url*/
             method: 'GET',
             headers: {
               'Accept': 'application/json',

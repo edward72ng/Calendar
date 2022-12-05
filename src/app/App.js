@@ -3,8 +3,6 @@ import {Login} from './Login';
 import {Route, Routes, Link} from 'react-router-dom'
 import {Homefun} from './Homefun'
 import {Notify} from './Notify'
-import {CustomCalendar} from './CustomCalendar'
-import {NotifyProvider} from './notifyContext'
 import {Calendar} from './Calendar'
 import {EventsProvider} from './eventsProvider'
 
@@ -15,7 +13,6 @@ function App () {
     <div className="nav-content">
       <ul className="tabs tabs-transparent">
         <li className="tab"><Link to="/home">Home</Link></li>
-        <li className="tab"><Link to="/calendar" >Calendar</Link></li>
         <li className="tab"><Link to="/notify">Notify</Link></li>
         <li className="tab"><Link to="/calendary">Calendar2</Link></li>
       </ul>
@@ -26,9 +23,6 @@ function App () {
             <Routes>
                 <Route path='/' element={<Login/>}/>
                 <Route path='/home' element={<Homefun/>}/>
-                <Route path='/calendar' element={<NotifyProvider>
-                  <CustomCalendar/>
-                </NotifyProvider>}/>
                 <Route path='/notify' element={<Notify/>}/>
                 <Route path='/calendary' element={<EventsProvider>
                   <Calendar/>

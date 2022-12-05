@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {useAuth} from './auth'
 import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import{Form} from './Form'
-
+import {DatesContext} from './datesContext'
 function Homefun () {
   const [contentTodo,setContentTodo] = useState('')
   const [detailsTodo, setDetailsTodo] = useState('')
@@ -13,6 +13,7 @@ function Homefun () {
   const [time, setTime] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
+  const {dateString} = useContext(DatesContext)
   useEffect(()=>{
     mount()
     //console.log('bienvenido')
@@ -135,7 +136,8 @@ const handleChangeTime = (e) => {
         return(
             <div className="home-container">
 <div className="form-container">
-<div className="row">
+<div className="row"> 
+          <div>{dateString}</div>
 <form className="col s12" >
   <div className="row">
     <div className="input-field col s12">

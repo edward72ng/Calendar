@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import {NotifyContext} from './notifyContext'
 import {EventsContext} from './eventsProvider'
 function Mosaic ({day, first, notificate, today, notification}){
 
