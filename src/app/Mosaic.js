@@ -41,11 +41,11 @@ function Mosaic ({day, first, notificate, today, notification}){
     //par is content, impar is id
     return(
         <li key={day} onClick ={()=>{setModalView(!modalView); setDayEvent(notificate)}}
-        className={isNotify(notificate)+' '+istoday(day)}
+        className={'mosaic-component'}
         style={isFirst()} >
-           {day}
+           <p className={istoday(day)}>{day}</p>
            {isNotification(notification)}
-           <p>{notificate[2]}</p>
+           <p className={isNotify(notificate)}>{notificate[2]}</p>
         </li>
     )
 }

@@ -40,13 +40,14 @@
 }
 .notificate{
     background-color: blue;
-    height: 105px;
-    border: solid gray 1px;
+   /* height: 105px;
+    border: solid gray 1px;*/
 }
-.notnotificate{
-    height: 105px;
+/*.notnotificate{
+
+    /*height: 105px;
     border: solid gray 1px;
-}
+}*/
 
 li:hover{
     background-color: aqua;
@@ -65,4 +66,9 @@ li:hover{
     justify-content: center;
     align-items: center;
     color: white;
+  }
+
+  .mosaic-component{
+    height: 105px;
+    border: solid gray 1px;
   }

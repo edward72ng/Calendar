@@ -1,7 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {Modal} from './modal'
 import {EventsContext} from './eventsProvider'
+import {useAuth} from './auth'
 import {Meses} from './Meses'
+import { useNavigate } from 'react-router-dom';
+
 function Calendar (){
     var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
     var date = new Date()
@@ -10,7 +13,19 @@ function Calendar (){
     var dayFirst = new Date(year, month, 1)
     var dayFirstday = dayFirst.getDay() 
     const {modalView, setModalView, dayEvent} = useContext(EventsContext)
-
+    const navigate = useNavigate()
+    const auth = useAuth()
+    useEffect(()=>{
+        if(auth.token){
+            console.log('hay un token :D')
+            console.log(auth.token)
+            console.log('Montando componente')
+          }else{
+            console.log('No hay token :c')
+            navigate('/')
+          }
+    },[])
+    
     return(
         <div className="container">
         <div>

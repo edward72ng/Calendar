@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import {Mosaic}  from './Mosaic'
 import {DatesContext} from './datesContext'
-
+import {useNavigate} from 'react-router-dom'
+import {useAuth} from './auth'
 function Meses (props){
     const [task, setTask] = useState([])
     const [noificate, setNotificate] = useState([])
+    const navigate = useNavigate()
+    const auth = useAuth()
     var date = new Date()
     var month = date.getMonth()
     var year = date.getFullYear()
@@ -16,12 +19,25 @@ function Meses (props){
         boxes.push(i)
     }
     useEffect(()=>{
-        fetchtak()
+        if(auth.token){
+            console.log('hay un token :D')
+            console.log(auth.token)
+            fetchtak();
+            console.log('Montando componente')
+          }else{
+            console.log('No hay token :c')
+            navigate('/')
+          }
     },[])
 
     const fetchtak = ()=>{
         fetch('http://localhost:3000/api/v1/events/with-events',{
             method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth.token,
+              }
         }).then(res => res.json())
             .then(data => {
                 setTask(data)
@@ -29,6 +45,11 @@ function Meses (props){
         fetch('http://localhost:3000/api/v1/notifications/with-notification',
         {
             method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth.token,
+              }
         }).then(res => res.json())
             .then(data => {
                 setNotificate(data)
