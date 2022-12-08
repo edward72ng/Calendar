@@ -1,6 +1,8 @@
 
 const boom = require('@hapi/boom')
+const id = require('faker/lib/locales/id_ID')
 const { where } = require('sequelize')
+const sequelize = require('./../db/connec')
 const {models} = require('./../db/connec')
 //const {Todo} = require('./../db/models/modelssequelize')
 //
@@ -129,11 +131,22 @@ class Todos {
     }
 
     async createYourTodo (objeto, userId){
+        const [evento, created] = await models.events.findOrCreate({
+            where: sequelize.where(sequelize.col('event'),objeto.event),
+            defaults: {
+                event: objeto.event
+            }
+        })
+
         var semd = {
             userid:userId,
-            ...objeto
+            content: objeto.content,
+            deatails: objeto.deatails,
+            eventid: evento.id
         }
-        var yourTodos = await models.todo.create(semd)
+        console.log(objeto)
+        console.log(evento.id)
+        await models.todo.create(semd)
     }
 
     async deleteYourTodo (id){

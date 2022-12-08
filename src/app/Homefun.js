@@ -9,7 +9,7 @@ function Homefun () {
   const [detailsTodo, setDetailsTodo] = useState('')
   const [todo, setTodo] = useState([])
   const [id, setId] = useState(null)
-  const [date, setDate] = useState('')
+  const [date, setDateEvent] = useState('')
   const [time, setTime] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
@@ -26,7 +26,8 @@ function Homefun () {
             method: 'PUT',
             body: JSON.stringify({
               content: contentTodo,
-              deatails: detailsTodo
+              deatails: detailsTodo,
+              
             }),
             headers: {
               'Accept': 'application/json',
@@ -45,7 +46,8 @@ function Homefun () {
             method: 'POST',
             body: JSON.stringify({
               content: contentTodo,
-              deatails: detailsTodo
+              deatails: detailsTodo,
+              event: date
             }
             ),
             headers: {
@@ -76,7 +78,7 @@ function Homefun () {
 
   const handleChangeDate = (e) => {
     const val = e.target.value
-    setDate(val)
+    setDateEvent(val)
 }
 
 const handleChangeTime = (e) => {
