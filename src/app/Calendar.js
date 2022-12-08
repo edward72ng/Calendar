@@ -12,7 +12,7 @@ function Calendar (){
     var year = date.getFullYear()
     var dayFirst = new Date(year, month, 1)
     var dayFirstday = dayFirst.getDay() 
-    const {modalView, setModalView, dayEvent} = useContext(EventsContext)
+    const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
     const navigate = useNavigate()
     const auth = useAuth()
     useEffect(()=>{
@@ -54,7 +54,14 @@ function Calendar (){
             <Modal>
                 <div>
             <ol>
+                Eventos
             {dayEvent.map((task)=>{
+                    return(<li>{'value :  ' + task.toString()}</li>)
+                })}
+            </ol>
+            <ol>
+                Notificaciones
+                {dayNotifications.map((task)=>{
                     return(<li>{'value :  ' + task.toString()}</li>)
                 })}
             </ol>

@@ -10,7 +10,9 @@ function Homefun () {
   const [todo, setTodo] = useState([])
   const [id, setId] = useState(null)
   const [date, setDateEvent] = useState('')
-  const [time, setTime] = useState('')
+  const [arrNotifications, setArrNotifications] = useState([])
+  const [changeTime, setChangeTime] = useState('')
+  const [changeDate, setChangeDate] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
   const {dateString} = useContext(DatesContext)
@@ -47,7 +49,8 @@ function Homefun () {
             body: JSON.stringify({
               content: contentTodo,
               deatails: detailsTodo,
-              event: date
+              event: date,
+              notifications: arrNotifications,
             }
             ),
             headers: {
@@ -81,9 +84,14 @@ function Homefun () {
     setDateEvent(val)
 }
 
+const handleChangeDateN = (e) => {
+  const val = e.target.value
+  setChangeDate(val)
+}
+
 const handleChangeTime = (e) => {
   const val = e.target.value
-  setTime(val)
+  setChangeTime(val)
 }
 
     const deleteTodo= (id)=>{
@@ -104,6 +112,14 @@ const handleChangeTime = (e) => {
       setDetailsTodo(details)
     }
 
+    
+    
+    const newNotification = (e)=> {
+      e.preventDefault()
+      setArrNotifications([...arrNotifications, {time: changeTime, date: changeDate}])
+      setChangeTime("")
+      setChangeDate("")
+    }
 
     const mount = () => {
       if(auth.token){
@@ -154,11 +170,25 @@ const handleChangeTime = (e) => {
   <button className="btn waves-effect waves-light" type="submit" onClick={addTodo} name="action">Enviar
 <i className="material-icons right">send</i>
 </button>
-</form>
-<form action='/api/v1/inbox/capture' method='POST'>
+
   <input type="date" name='fecha' onChange={handleChangeDate}></input>
-  <input type="time" name='hora' onChange={handleChangeTime}></input>
-  <input type="submit"></input>
+
+  <ul> Notificatios
+  {
+    arrNotifications.map((obj,i)=>{
+        return (<li key={i}> <input type="time" value={obj.time}></input>
+        <input type="date" value={obj.date}></input>
+        </li>)
+      })
+    }
+    <li>
+      <input type="time" name='hora' onChange={handleChangeTime} value={changeTime}></input>
+      <input type="date" name='fecha' onChange={handleChangeDateN} value={changeDate}></input>
+    </li>
+    <button onClick={newNotification}>+</button>
+  </ul>
+  
+  
 </form>
 </div>
 </div>

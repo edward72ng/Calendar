@@ -36,11 +36,16 @@ function Mosaic ({day, first, notificate, today, notification}){
     
     const {modalView,
         setModalView,
-        setDayEvent
+        setDayEvent,
+        setDayNotifications,
     } = useContext(EventsContext)
     //par is content, impar is id
     return(
-        <li key={day} onClick ={()=>{setModalView(!modalView); setDayEvent(notificate)}}
+        <li key={day} onClick ={()=>{
+            setModalView(!modalView); 
+            setDayEvent(notificate)
+            setDayNotifications(notification)
+        }}
         className={'mosaic-component'}
         style={isFirst()} >
            <p className={istoday(day)}>{day}</p>

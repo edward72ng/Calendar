@@ -131,6 +131,11 @@ class Todos {
     }
 
     async createYourTodo (objeto, userId){
+        if(objeto.event !== ""){
+
+        }
+
+
         const [evento, created] = await models.events.findOrCreate({
             where: sequelize.where(sequelize.col('event'),objeto.event),
             defaults: {
@@ -144,9 +149,18 @@ class Todos {
             deatails: objeto.deatails,
             eventid: evento.id
         }
-        console.log(objeto)
-        console.log(evento.id)
-        await models.todo.create(semd)
+        
+        const newTodo = await models.todo.create(semd)
+        console.log(newTodo.id)
+        if(objeto.notifications.length !== 0)
+        objeto.notifications.map(async (noti)=>{
+            await models.notifications.create({
+                todoid: newTodo.id,
+                date:noti.date,
+                time:noti.time,
+            })
+        })
+      
     }
 
     async deleteYourTodo (id){

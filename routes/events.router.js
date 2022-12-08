@@ -61,14 +61,18 @@ router.get('/day-events/:today',async (req, res)=>{//falta pay.sub
             include: ['tareas']//implemtar uso del token para ver el use
         })
         let rsp = []
-        data[0].tareas.map((arr)=>{
-            if (arr.userid == pay.sub){
-                rsp.push(arr)
-            }
-        })
-    
-        res.json(rsp)
-    
+        
+        if(data.length == 0){
+            res.json(rsp)
+        }else{
+            data[0].tareas.map((arr)=>{
+                if (arr.userid == pay.sub){
+                    rsp.push(arr)
+                }
+            })
+            res.json(rsp)
+        }
+            
     }
 else{
     res.send('unautoraized')
