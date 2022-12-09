@@ -29,7 +29,8 @@ function Homefun () {
             body: JSON.stringify({
               content: contentTodo,
               deatails: detailsTodo,
-              
+              event: date,
+              notifications: arrNotifications,
             }),
             headers: {
               'Accept': 'application/json',
@@ -106,10 +107,12 @@ const handleChangeTime = (e) => {
           }).then(()=>fetchTasks())
     }
 
-    const editTodo= (id, cont, details)=>{
+    const editTodo= (id, cont, details, event, notifications)=>{
       setId(id)
       setContentTodo(cont)
       setDetailsTodo(details)
+      setDateEvent(event)
+      setArrNotifications(notifications)
     }
 
     
@@ -151,6 +154,20 @@ const handleChangeTime = (e) => {
       const prueba = ()=>{
         alert('funciona :O')
       }
+      const deleteArrNotification = (indice) =>{
+        
+        let prevArr = []
+        arrNotifications.map((elem, i)=>{
+          if(i != indice){
+            prevArr.push(elem)
+          }
+        })
+     
+        setArrNotifications(
+          prevArr
+          )
+        
+      }
         return(
             <div className="home-container">
 <div className="form-container">
@@ -167,17 +184,17 @@ const handleChangeTime = (e) => {
       <label htmlFor="text">Details text</label>
     </div>
   </div>
-  <button className="btn waves-effect waves-light" type="submit" onClick={addTodo} name="action">Enviar
-<i className="material-icons right">send</i>
-</button>
+  
 
-  <input type="date" name='fecha' onChange={handleChangeDate}></input>
+  <input type="date" name='fecha' onChange={handleChangeDate} value={date}></input>
 
   <ul> Notificatios
   {
     arrNotifications.map((obj,i)=>{
-        return (<li key={i}> <input type="time" value={obj.time}></input>
-        <input type="date" value={obj.date}></input>
+        return (<li key={i}> 
+        <input type="time" value={obj.time} onChange={() => console.log('no quiero cambiar datos')}></input>
+        <input type="date" value={obj.date} onChange={() => console.log('no quiero cambiar datos')}></input>
+        <a onClick={()=>deleteArrNotification(i)}>-</a>
         </li>)
       })
     }
@@ -188,6 +205,9 @@ const handleChangeTime = (e) => {
     <button onClick={newNotification}>+</button>
   </ul>
   
+  <button className="btn waves-effect waves-light" type="submit" onClick={addTodo} name="action">Enviar
+<i className="material-icons right">send</i>
+</button>
   
 </form>
 </div>
@@ -195,7 +215,15 @@ const handleChangeTime = (e) => {
               <div className="todos-container">
                   { todo.map((task, i) => {
                     return (
-<OneTodo key={i} editFunction = {editTodo} deleteFunction = {deleteTodo} pruebaFunction = {prueba} content={task.content} details={task.deatails} id={task.id}></OneTodo>
+<OneTodo key={i} 
+editFunction = {editTodo} 
+deleteFunction = {deleteTodo} 
+pruebaFunction = {prueba} 
+content={task.content} 
+details={task.deatails} 
+id={task.id}
+evento={task.evento}
+notifications={task.notifis}></OneTodo>
           
                     )})}  
                     </div>

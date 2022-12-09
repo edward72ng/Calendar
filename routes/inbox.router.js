@@ -94,6 +94,7 @@ router.put('/your-todos/:id',
     async (req, res)=>{
         if(req.headers.authorization)
         {
+            console.log(req.body)
             var data = await service.editYourTodo(req.params.id, req.body)
             res.json(data)
         }

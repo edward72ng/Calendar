@@ -14,7 +14,7 @@ function OneTodo (props){
                 <a className="waves-effect waves-light btn-small" onClick={()=>props.deleteFunction(props.id)}>
                     <i className="material-icons">delete</i>
                 </a>
-                <a className="waves-effect waves-light btn-small" onClick={()=>props.editFunction(props.id,props.content,props.details)}>
+                <a className="waves-effect waves-light btn-small" onClick={()=>props.editFunction(props.id,props.content,props.details,props.evento.event,props.notifications)}>
                     <i className="material-icons">edit</i>
                 </a>
             </div>

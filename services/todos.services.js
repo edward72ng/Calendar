@@ -116,40 +116,68 @@ class Todos {
         var yourTodos = await models.todo.findAll({
             where: {
                 userid: userId
-            }
+            },
+            include:['notifis','evento']
         })
+        
         return yourTodos
     }
 
     async editYourTodo (idComp, objeto){
-        var yourTodos = await models.todo.update({content: objeto.content, deatails: objeto.deatails},{
+        console.log(objeto)
+        var obj = {content: objeto.content, deatails: objeto.deatails}
+        if(objeto.event !== ""){
+            const [evento, created] = await models.events.findOrCreate({
+                where: sequelize.where(sequelize.col('event'),objeto.event),
+                defaults: {
+                    event: objeto.event
+                }
+            })
+            var obj = {content: objeto.content, deatails:objeto.deatails, eventid:evento.id}
+        }
+        var yourTodos = await models.todo.update(obj,{
             where:{
                 id: idComp
             }    }
         )
+
+        if(objeto.notifications.length !== 0)
+        
+            await models.notifications.destroy({
+                where: sequelize.where(sequelize.col('todoid'),idComp)
+            })
+        objeto.notifications.map(async (noti)=>{
+            await models.notifications.create({
+                todoid: idComp,
+                date:noti.date,
+                time:noti.time,
+            })
+        })
+
         return yourTodos
     }
 
     async createYourTodo (objeto, userId){
         if(objeto.event !== ""){
-
-        }
-
-
-        const [evento, created] = await models.events.findOrCreate({
-            where: sequelize.where(sequelize.col('event'),objeto.event),
-            defaults: {
-                event: objeto.event
+            const [evento, created] = await models.events.findOrCreate({
+                where: sequelize.where(sequelize.col('event'),objeto.event),
+                defaults: {
+                    event: objeto.event
+                }
+            })
+            var semd = {
+                userid:userId,
+                content: objeto.content,
+                deatails: objeto.deatails,
+                eventid: evento.id
             }
-        })
-
-        var semd = {
-            userid:userId,
-            content: objeto.content,
-            deatails: objeto.deatails,
-            eventid: evento.id
+        }else{
+            var semd = {
+                userid:userId,
+                content: objeto.content,
+                deatails: objeto.deatails,
+            }
         }
-        
         const newTodo = await models.todo.create(semd)
         console.log(newTodo.id)
         if(objeto.notifications.length !== 0)

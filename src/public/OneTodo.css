@@ -72,3 +72,8 @@ li:hover{
     height: 105px;
     border: solid gray 1px;
   }
+
+  .divider{
+    display: flex;
+    justify-content: space-between;
+  }
