@@ -20,7 +20,12 @@ function Mosaic ({day, first, notificate, today, notification}){
     }
    const isNotification = (val)=>{
     if(val[0]){
-        return <span style={{backgroundColor: "red"}}>{val[1]}</span>
+        return <div style={
+            {
+            width: "24px",
+            height: "24px",
+            }
+        }><i class="material-icons">notifications</i></div>
     }else{
         return ""
     }
@@ -41,16 +46,26 @@ function Mosaic ({day, first, notificate, today, notification}){
     } = useContext(EventsContext)
     //par is content, impar is id
     return(
-        <li key={day} onClick ={()=>{
+        <li key={day} 
+        onClick ={()=>{
             setModalView(!modalView); 
             setDayEvent(notificate)
-            setDayNotifications(notification)
-        }}
+            setDayNotifications(notification)}}
         className={'mosaic-component'}
         style={isFirst()} >
-           <p className={istoday(day)}>{day}</p>
-           {isNotification(notification)}
-           <p className={isNotify(notificate)}>{notificate[2]}</p>
+        <div className="eje">
+            <div className={istoday(day)}>{day}</div>
+            {isNotification(notification)}
+        </div>
+           {
+             notificate.map((no, i)=>{
+                if((i!=0) && (i % 2 == 0)){
+                    return(<div className={isNotify(notificate)}>{no}</div>)
+                }
+                
+             })
+           }
+           
         </li>
     )
 }

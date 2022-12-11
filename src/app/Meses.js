@@ -4,18 +4,14 @@ import {DatesContext} from './datesContext'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from './auth'
 function Meses (props){
+    const {dat, month, year} = useContext(DatesContext)
     const [task, setTask] = useState([])
     const [noificate, setNotificate] = useState([])
     const navigate = useNavigate()
     const auth = useAuth()
-    var date = new Date()
-    var month = date.getMonth()
-    var year = date.getFullYear()
-    var dateNext = new Date(year, month+1, 0)
-    var qMonth = dateNext.getDate()
     var boxes = []
-    const {dat} = useContext(DatesContext)
-    for(var i = 1; i <= qMonth; i++){
+    
+    for(var i = 1; i <= new Date(year, parseInt(props.getElemMonth(month + props.cMonth)) + 1, 0).getDate(); i++){
         boxes.push(i)
     }
     useEffect(()=>{
@@ -65,9 +61,9 @@ function Meses (props){
         arr.map((a, ind)=>{
             var fetchtrig = a.evento.event
             if (i < 10){
-                var d =  String(year) +'-' +String(month + 1)+'-0'+ i 
+                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-0'+ i 
             }else{
-                var d =  String(year) +'-' +String(month + 1)+'-'+ i 
+                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-'+ i 
             }
             console.log(d)
             if(d == fetchtrig){
@@ -89,9 +85,9 @@ function Meses (props){
         arr.map((a, ind)=>{
             var fetchtrig = a.date
             if (i < 10){
-                var d =  String(year) +'-' +String(month + 1)+'-0'+ i 
+                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-0'+ i 
             }else{
-                var d =  String(year) +'-' +String(month + 1)+'-'+ i 
+                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-'+ i 
             }
             console.log(d)
             if(d == fetchtrig){

@@ -36,10 +36,15 @@
 .ol-list{
     display: grid;
     grid-template-columns: repeat(7,1fr);
+  
     list-style: none;
 }
+.ol-list:nth-child(2){
+    grid-template-rows: repeat(6,1fr);
+}
 .notificate{
-    background-color: blue;
+    background-color: rgb(68,188,216);
+    border-radius: 4px ;
    /* height: 105px;
     border: solid gray 1px;*/
 }
@@ -53,7 +58,10 @@ li:hover{
     background-color: aqua;
 }
 .today{
-    background-color: gray;
+    background-color: blue;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
 }
 .modal-background{
     background: rgba(32,35,41,.8);
@@ -69,11 +77,62 @@ li:hover{
   }
 
   .mosaic-component{
-    height: 105px;
-    border: solid gray 1px;
+    /*height: 105px;*/
+    border: dotted gray 1px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
   }
 
   .divider{
     display: flex;
     justify-content: space-between;
   }
+
+  .head{
+    height: 900px;
+
+    border: 5px solid red;
+
+  }
+  .logoimg{
+    object-fit: contain;
+  }
+.around{
+    display: flex;
+    justify-content: space-around;
+}
+.mosaics-container{
+    height: calc(100vh - 180px);
+}
+.eje{
+    display: flex;
+    
+    text-align: center;
+}
+ol{
+    padding-left: 0;
+    margin-top: 0;
+}
+.modal-table{
+    background-color: black;
+    border-radius: 24px;
+}
+li{
+    list-style-type: none;
+}
+.menu-enable{
+    
+    background-color: black;
+    position: fixed; 
+    z-index: 2;
+    width: 25%;
+    height: 100vh;
+    color: white;
+}
+.menu-disable{
+    display: none;
+}
+.form-container{
+    z-index: 1;
+}

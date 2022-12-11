@@ -9,17 +9,13 @@ function Notify (){
     const [notifi, setNotifi] = useState([])
     const navigate = useNavigate()
     const auth = useAuth()
+    
     useEffect(()=>{
-            if(auth.token){
-                console.log('hay un token :D')
-                console.log(auth.token)
-                fetchTask()
-                console.log('Montando componente')
-              }else{
-                console.log('No hay token :c')
+            if(auth.token == false){
                 navigate('/')
+              }else{
+                fetchTask()
               }
-              
         } ,[])
         
    
@@ -46,18 +42,27 @@ function Notify (){
     }
 
     return(
-        <div className="todos-container">
-          <h5>ToDay</h5>
-            <h6>Notify</h6>
+        <div className="container">
+          <h4>ToDay</h4>
+            <h5>Notify</h5>
             {
                 notifi.map((notifi, i)=>{
-                    return(<p key={i} className="content">{notifi.todo.content}</p>)
+                    return(<>
+                    <p key={i} className="content">{notifi.todo.content}</p>
+                    <div className="divider"></div>
+                    </>
+                    )
                 })
             }
-            <h6>Events</h6>
+            <h5>Events</h5>
                 {
                     tasks.map((task, i)=>{
-                        return(<p key={i} className="content">{task.content}</p>)
+                        return(
+                        <>
+                    <p key={i} className="content">{task.content}</p>
+                    <div className="divider"></div>
+                    </>
+                        )
                     })
                 }
             <h6>List</h6>

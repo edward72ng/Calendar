@@ -16,10 +16,11 @@ const loginF =  (e) => {
 
 
         return(
-            <div className="row valign-wrapper">
+            <div className="container valign-wrapper">
+              <div className="row valign-wrapper">
             <form className="col s12" onSubmit={loginF}>
               <div className="row">
-                <div className="input-field col s6 center-align">
+                <div className="input-field col s12 center-align">
                   <input id="user" type="text" 
                       value={user}
                       onChange= {e => setUser(e.target.value)}
@@ -28,7 +29,7 @@ const loginF =  (e) => {
                 </div>
               </div>
               <div className="row">
-                <div className="input-field col s6 center-align">
+                <div className="input-field col s12 center-align">
                   <input id="password" type="text"
                   value={password}
                   onChange= {e => setPassword(e.target.value)}
@@ -41,6 +42,7 @@ const loginF =  (e) => {
               </button>
             </form>
           </div>
+            </div>
                 
         )
     
