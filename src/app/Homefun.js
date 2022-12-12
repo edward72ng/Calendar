@@ -185,7 +185,7 @@ const handleChangeTime = (e) => {
         
       }
         return(
-            <div className="home-container">
+            <div className="home-container container">
 <div className="form-container">
 <div className="row"> 
           <div>{dateString}</div>

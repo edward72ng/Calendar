@@ -4,14 +4,14 @@ import {DatesContext} from './datesContext'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from './auth'
 function Meses (props){
-    const {dat, month, year} = useContext(DatesContext)
+    const {dat, month, year, getElemYear} = useContext(DatesContext)
     const [task, setTask] = useState([])
     const [noificate, setNotificate] = useState([])
     const navigate = useNavigate()
     const auth = useAuth()
     var boxes = []
     
-    for(var i = 1; i <= new Date(year, parseInt(props.getElemMonth(month + props.cMonth)) + 1, 0).getDate(); i++){
+    for(var i = 1; i <= new Date(getElemYear(month + props.cMonth), parseInt(props.getElemMonth(month + props.cMonth)) + 1, 0).getDate(); i++){
         boxes.push(i)
     }
     useEffect(()=>{
@@ -53,29 +53,36 @@ function Meses (props){
         )
     }
         
-
+const getParsedMonth = ()=>{
+    if((props.getElemMonth(month + props.cMonth)) + 1 < 10){
+        return ("0" + ((props.getElemMonth(month + props.cMonth)) + 1))
+    }else{
+        return (props.getElemMonth(month + props.cMonth)) + 1
+    }
+}
     const isEqual2 = (i, arr)=>{
         i = String(i)
         var arra = []
         var boo = false
+        if (i < 10){
+            var d =  String(getElemYear(month + props.cMonth)) +'-' +String(getParsedMonth())+'-0'+ i 
+        }else{
+            var d =  String(getElemYear(month + props.cMonth)) +'-' +String(getParsedMonth())+'-'+ i 
+        }
+        console.log("dia actual"+d)
         arr.map((a, ind)=>{
             var fetchtrig = a.evento.event
-            if (i < 10){
-                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-0'+ i 
-            }else{
-                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-'+ i 
-            }
-            console.log(d)
+           
+            console.log("compararndo"+fetchtrig)
             if(d == fetchtrig){
                 boo = true
                 arra.push(a.id)
                 arra.push(a.content)
+                console.log("ES IGUAL")
                 
             }
         })
         arra.unshift(boo)
-        
-        console.log(arra)
         return arra  
     }
     const isEqual = (i, arr)=>{
@@ -85,11 +92,10 @@ function Meses (props){
         arr.map((a, ind)=>{
             var fetchtrig = a.date
             if (i < 10){
-                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-0'+ i 
+                var d =  String(getElemYear(month + props.cMonth)) +'-' +String(getParsedMonth())+'-0'+ i 
             }else{
-                var d =  String(year) +'-' +String((props.getElemMonth(month + props.cMonth)) + 1)+'-'+ i 
+                var d =  String(getElemYear(month + props.cMonth)) +'-' +String(getParsedMonth())+'-'+ i 
             }
-            console.log(d)
             if(d == fetchtrig){
                 boo = true
                 arra.push(a.todo.id)
@@ -100,7 +106,6 @@ function Meses (props){
         const l = (arra.length)/2
         arra.unshift(l)
         arra.unshift(boo)
-        console.log(arra)
         return arra  
     }
     return (

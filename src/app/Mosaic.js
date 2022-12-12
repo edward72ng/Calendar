@@ -25,7 +25,7 @@ function Mosaic ({day, first, notificate, today, notification}){
             width: "24px",
             height: "24px",
             }
-        }><i class="material-icons">notifications</i></div>
+        }><i className="material-icons">notifications</i></div>
     }else{
         return ""
     }

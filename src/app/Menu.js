@@ -9,10 +9,10 @@ function Menu ({menu, setMenu}) {
                 <li onClick={()=>{setMenu(!menu)}}><i className="material-icons">menu</i></li>
                 <div className='divider'></div>
               <li><i className="material-icons">select_all</i>All</li>
-              <li><i class="material-icons">folder</i>Folder1</li>
-              <li><i class="material-icons">folder_open</i>Folder2</li>
-              <li><i class="material-icons">folder</i>Folder3</li>
-              <li><i class="material-icons">folder</i>Folder4</li>
+              <li><i className="material-icons">folder</i>Folder1</li>
+              <li><i className="material-icons">folder_open</i>Folder2</li>
+              <li><i className="material-icons">folder</i>Folder3</li>
+              <li><i className="material-icons">folder</i>Folder4</li>
             </ol>
          
     )

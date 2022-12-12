@@ -23,7 +23,7 @@ function DatesProvider({children}){
         }else if(sumMonth < 0){
             return year - 1
         }else{
-            year
+            return year
         }
     }
     let quantityDaysMonth = new Date(year, parseInt(getElemMonth(month + afterBefore)) + 1, 0).getDate()
