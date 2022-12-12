@@ -18,11 +18,17 @@ function Homefun () {
   const {dateString} = useContext(DatesContext)
   useEffect(()=>{
     mount()
-    //console.log('bienvenido')
   },[])
 
   const addTodo = (e) => {
         e.preventDefault()
+        let notificationsSend = []
+        if(changeDate != "" && changeTime != ""){
+          console.log('cambio consecutivo de estado')
+          notificationsSend = [...arrNotifications, {time: changeTime, date: changeDate}]
+        }else{
+          notificationsSend = arrNotifications
+        }
         if (id){
           fetch('/api/v1/inbox/your-todos/'+id, {
             method: 'PUT',
@@ -30,7 +36,7 @@ function Homefun () {
               content: contentTodo,
               deatails: detailsTodo,
               event: date,
-              notifications: arrNotifications,
+              notifications: notificationsSend,
             }),
             headers: {
               'Accept': 'application/json',
@@ -42,6 +48,10 @@ function Homefun () {
             setId(null)
             setContentTodo('')
             setDetailsTodo('')
+            setArrNotifications([])
+            setDateEvent('')
+            setChangeDate('')
+            setChangeTime('')
             })
         }
         if (id == null){
@@ -51,7 +61,7 @@ function Homefun () {
               content: contentTodo,
               deatails: detailsTodo,
               event: date,
-              notifications: arrNotifications,
+              notifications: notificationsSend,
             }
             ),
             headers: {
@@ -64,8 +74,12 @@ function Homefun () {
             setId(null)
             setContentTodo('')
             setDetailsTodo('')
+            setArrNotifications([])
+            setDateEvent('')
+            setChangeDate('')
+            setChangeTime('')
             })
-        }
+        }  
         //this.fetchTasks()
         
     }
@@ -119,9 +133,11 @@ const handleChangeTime = (e) => {
     
     const newNotification = (e)=> {
       e.preventDefault()
-      setArrNotifications([...arrNotifications, {time: changeTime, date: changeDate}])
-      setChangeTime("")
-      setChangeDate("")
+      if(changeDate != "" && changeTime != ""){
+        setArrNotifications([...arrNotifications, {time: changeTime, date: changeDate}])
+        setChangeTime("")
+        setChangeDate("")
+      }
     }
 
     const mount = () => {
@@ -202,7 +218,7 @@ const handleChangeTime = (e) => {
       <input type="time" name='hora' onChange={handleChangeTime} value={changeTime}></input>
       <input type="date" name='fecha' onChange={handleChangeDateN} value={changeDate}></input>
     </li>
-    <button onClick={newNotification}>+</button>
+    <a onClick={newNotification}>+</a>
   </ul>
   
   <button className="btn waves-effect waves-light" type="submit" onClick={addTodo} name="action">Enviar

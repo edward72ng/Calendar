@@ -4,25 +4,14 @@ import {EventsContext} from './eventsProvider'
 import {useAuth} from './auth'
 import {Meses} from './Meses'
 import { useNavigate } from 'react-router-dom';
+import {DatesContext} from './datesContext'
 
 function Calendar (){
-    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-    var date = new Date()
-    var month = date.getMonth()
-    var year = date.getFullYear()
-    const [countMonth, setCountMonth] = useState(0)
+    const {getElemMonth, month, year, afterBefore, setAfterBefore} = useContext(DatesContext)
     const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
     const navigate = useNavigate()
     const auth = useAuth()
-    const getElemMonth = (month)=>{
-        if(month > 11){
-            return ((month -1) % 11)
-        }else if(month < 0){
-            return month + 12
-        }else{
-            return month
-        }
-    }
+    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
     useEffect(()=>{
         if(auth.token == false){
             navigate('/')
@@ -33,9 +22,9 @@ function Calendar (){
     return(
         <div className="container">
         <div className="around">
-            <i onClick={()=>{setCountMonth(countMonth-1)}} className="waves-effect material-icons">navigate_before</i>
-            <h5 className="month" id="month">{months[getElemMonth(month + countMonth)]}</h5>
-            <i onClick={()=>{setCountMonth(countMonth+1)}} className="waves-effect material-icons">navigate_next</i>
+            <i onClick={()=>{setAfterBefore(afterBefore-1)}} className="waves-effect material-icons">navigate_before</i>
+            <h5 className="month" id="month">{months[getElemMonth(month + afterBefore)]}</h5>
+            <i onClick={()=>{setAfterBefore(afterBefore+1)}} className="waves-effect material-icons">navigate_next</i>
         </div>
 
         <div className="days">
@@ -49,7 +38,7 @@ function Calendar (){
                 <li className="mosaic">Sat</li>
             </ol>
             <ol className="ol-list mosaics-container">
-            <Meses first={new Date(year, month + countMonth, 1).getDay()} cMonth = {countMonth} getElemMonth= {getElemMonth}>
+            <Meses first={new Date(year, month + afterBefore, 1).getDay()} cMonth = {afterBefore} getElemMonth= {getElemMonth}>
             </Meses>
             </ol>
         </div>
