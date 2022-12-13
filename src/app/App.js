@@ -16,7 +16,6 @@ function App () {
                 <Route path='/calendary' element={<EventsProvider>
                   <Nav><Calendar/></Nav>
                 </EventsProvider>}/>
-                <Route path='/sidenav' element={<Menu/>}/>
             </Routes>
     )
 
