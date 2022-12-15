@@ -2,7 +2,7 @@ import React from "react";
 
 function Content({content, details}) {
     return(
-    <div className="input-field s12 ">
+    <div className="s12">
         <input type="text" 
             value={content.value}
             onChange= {content.set}

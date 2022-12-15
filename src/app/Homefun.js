@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import {useAuth} from './auth'
 import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
-import{Form} from './Form'
+import {Form} from './Form'
+import {Content} from './Content'
+import {Events} from './Events'
+import {Notifications} from './Notifications'
 import {DatesContext} from './datesContext'
 function Homefun () {
   const [contentTodo,setContentTodo] = useState('')
@@ -227,6 +230,19 @@ const handleChangeTime = (e) => {
   
 </form>
 </div>
+<Form execSubmit={addTodo}>
+  <Content 
+  content={{value: contentTodo, set: handleChange}} 
+  details={{value: detailsTodo, set: handleChangeDetails}}/>
+  <Events
+  event={{value: date, set: handleChangeDate}}/>
+  <Notifications 
+  arr={{value: arrNotifications, deleteOne: deleteArrNotification, newNotification: newNotification}}
+  time={{value: changeTime, set: handleChangeTime}}
+  date={{value: changeDate, set: handleChangeDateN}}/>
+</Form>
+
+
 </div>
               <div className="todos-container">
                   { todo.map((task, i) => {

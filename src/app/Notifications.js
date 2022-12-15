@@ -1,10 +1,10 @@
 import React from "react";
 
-function Notifications({arr, notification}) {
+function Notifications({arr, time, date}) {
     return(
         <ul> Notificaciones
     {
-    arr.map((obj,i)=>{
+    arr.value.map((obj,i)=>{
         return (
         <li key={i}> 
             <input type="time" 
@@ -15,21 +15,23 @@ function Notifications({arr, notification}) {
             value={obj.date} 
             onChange={() => console.log('no quiero cambiar datos')}>
             </input>
-            {/*<a onClick={()=>deleteArrNotification(i)}>-</a>*/}
+            <a onClick={()=>arr.deleteOne(i)}>-</a>
         </li>)
       })
     }
         <li key="finally">
-            <input type="time" name='hora' 
-            onChange={handleChangeTime} 
-            value={changeTime}></input>
-            <input type="date" name='fecha' 
-            onChange={notification.set} 
-            value={notification.value}></input>
+            <input type="time"
+            onChange={time.set} 
+            value={time.value}>
+            </input>
+            <input type="date"
+            onChange={date.set} 
+            value={date.value}>
+            </input>
         </li>
-        <a onClick={newNotification}>+</a>
+        <a onClick={arr.newNotification}>+</a>
   </ul>
     )
 }
 
-return Notifications
+export {Notifications}
