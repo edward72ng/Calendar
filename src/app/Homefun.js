@@ -44,7 +44,6 @@ function Homefun () {
               'Authorization': 'Bearer ' + auth.token,
             }
           }).then(()=> {
-            fetchTasks()
             setId(null)
             setContentTodo('')
             setDetailsTodo('')
@@ -52,6 +51,7 @@ function Homefun () {
             setDateEvent('')
             setChangeDate('')
             setChangeTime('')
+            mount()
             })
         }
         if (id == null){
@@ -70,7 +70,6 @@ function Homefun () {
               'Authorization': 'Bearer ' + auth.token,
             }
           }).then(()=> {
-            fetchTasks()
             setId(null)
             setContentTodo('')
             setDetailsTodo('')
@@ -78,6 +77,7 @@ function Homefun () {
             setDateEvent('')
             setChangeDate('')
             setChangeTime('')
+            mount()
             })
         }  
         //this.fetchTasks()

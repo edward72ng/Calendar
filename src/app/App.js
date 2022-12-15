@@ -6,7 +6,7 @@ import {Notify} from './Notify'
 import {Calendar} from './Calendar'
 import {EventsProvider} from './eventsProvider'
 import {Nav} from"./Nav"
-import {Menu} from "./Menu"
+
 function App () {
     return(
             <Routes>
