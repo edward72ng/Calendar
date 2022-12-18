@@ -3,6 +3,14 @@ import React, { useState } from "react";
 const DatesContext = React.createContext()
 function DatesProvider({children}){
     const [afterBefore, setAfterBefore] = useState(0)
+    const [inputEnabled, setInputEnabled] = useState(false)
+    const [values, setValues] = useState({
+        id: null,
+        content: '',
+        details: '',
+        event: '',
+        notifications: [],
+        })
     var date = new Date()
     var dat = date.getDate()
     var month = date.getMonth()
@@ -37,7 +45,12 @@ function DatesProvider({children}){
         getElemYear,
         quantityDaysMonth,
         afterBefore,
-        setAfterBefore}}>
+        setAfterBefore,
+        inputEnabled,
+        setInputEnabled,
+        values,
+        setValues
+        }}>
         {children}
     </DatesContext.Provider>
     )

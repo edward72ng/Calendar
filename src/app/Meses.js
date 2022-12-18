@@ -82,6 +82,8 @@ const getParsedMonth = ()=>{
                 
             }
         })
+        const l = (arra.length)/2
+        arra.unshift(l)
         arra.unshift(boo)
         return arra  
     }

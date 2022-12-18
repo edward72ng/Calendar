@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {Link} from 'react-router-dom'
+import { InputModal } from './InputModal'
 import {Menu} from './Menu'
-
+import {DatesContext} from "./datesContext"
 function Nav ({children}) {
   const [menuEnabled, setMenuEnabled] = useState(false)
-
+  const {inputEnabled, setInputEnabled} = useContext(DatesContext)
     return(
         <>
         <Menu menu={menuEnabled} setMenu={setMenuEnabled}/>
@@ -20,6 +21,7 @@ function Nav ({children}) {
             </ul>
           </nav>
           {children}
+          
         </>
     )
 }
