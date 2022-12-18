@@ -44,19 +44,28 @@ function Homefun () {
           })
     }
 
-  const editTodo= (id, cont, details, event, notifications)=>{
-      setValues(
-        {
-          id: id,
-          content: cont,
-          details: details,
-          event: event,
-          notifications: notifications,
-        }
-      )
-      setMounth(mount-1)
-      setInput(!input)
-    }
+  const editTodo= (id)=>{
+    fetch('/api/v1/inbox/your-todos/'+ id, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token,
+      }
+    }).then((res)=>res.json())
+    .then((data)=>{
+    setValues(
+      {
+        id: data.id,
+        content: data.content,
+        details: data.deatails,
+        event: data.evento? data.evento.event: '',
+        notifications: data.notifis
+      }
+    )
+    setMounth(mount-1)
+    setInput(!input)
+  })}
 
   return(<>
   <div className="todos-container container">

@@ -90,6 +90,26 @@ router.get('/your-todos',
     }
 ),
 
+router.get('/your-todos/:id',
+    async (req,res,next)=>{
+        if (req.headers.authorization){
+            console.log('hay header authorization :D')
+            console.log(req.headers.authorization)
+            var token = req.headers.authorization;
+            var newToken = token.replace("Bearer ", "");
+            console.log(newToken)
+            const pay = await authservice.getPayload(newToken)
+            console.log(pay)
+
+            var data = await service.getOne(req.params.id/*, pay.sub*/)
+            res.json(data)
+        }
+        else{
+            res.send('unauthorized')
+        }
+    }
+),
+
 router.put('/your-todos/:id',
     async (req, res)=>{
         if(req.headers.authorization)

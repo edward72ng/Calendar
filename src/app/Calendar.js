@@ -5,8 +5,11 @@ import {useAuth} from './auth'
 import {Meses} from './Meses'
 import { useNavigate } from 'react-router-dom';
 import {DatesContext} from './datesContext'
-
+import {InputModal} from './InputModal'
 function Calendar (){
+    const [input, setInput] = useState(false)
+    const [mount, setMounth] = useState(0)
+    const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
     const {getElemMonth, month, year, afterBefore, setAfterBefore} = useContext(DatesContext)
     const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
     const navigate = useNavigate()
@@ -18,7 +21,41 @@ function Calendar (){
           }
 
     },[])
-    
+    const deleteTodo= (id)=>{
+        fetch('/api/v1/inbox/your-todos/'+ id, {
+            method: 'DELETE',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + auth.token,
+            }
+          }).then(()=>{
+            setMounth(mount + 1)
+          })
+    }
+
+  const editTodo= (id)=>{
+    fetch('/api/v1/inbox/your-todos/'+ id, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token,
+      }
+    }).then((res)=>res.json())
+    .then((data)=>{
+    setValues(
+      {
+        id: data.id,
+        content: data.content,
+        details: data.deatails,
+        event: data.evento? data.evento.event: '',
+        notifications: data.notifis
+      }
+    )
+    setMounth(mount-1)
+    setInput(!input)
+  })}
     return(
         <div className="container">
         <div className="around">
@@ -48,11 +85,14 @@ function Calendar (){
                 <div className="modal-table">
             <ol>
                 <h5>Eventos</h5>
-            {dayEvent.map((task)=>{
+            {dayEvent.map((task, i)=>{
+                if(i < 1){
                     return(<>
-                    <li>{'value :  ' + task.toString()}</li>
-                    <div className="divider"></div>
-                    </>)
+                        <li>{'value :  ' + task.toString()}</li>
+                        <div className="divider"></div>
+                        </>)
+                }
+                   
                 })}
             </ol>
             <ol>
@@ -71,6 +111,14 @@ function Calendar (){
                              
             </Modal>
         )}
+         {input && <InputModal 
+                input={input} 
+                setInput={setInput} 
+                mount={mount} 
+                setMounth={setMounth}  
+                ></InputModal>}
+  <i className='material-icons adding' 
+  onClick={()=>{setInputEnabled(!inputEnabled);setInput(!input)}}>add</i>
     </div>
     )
 }

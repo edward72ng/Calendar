@@ -1,14 +1,7 @@
 import React from "react";
 
-function OneTodo ({id, content, evento, details, notifications, deleteFunction, editFunction}){
+function OneTodo ({id, content, details,deleteFunction, editFunction}){
 
-    const isValid = (val)=>{
-        if(!val){
-            return "" 
-        }else{
-            return val.event
-        }
-    }
     return (
         <div className="container">
         <div className="container2">
@@ -20,7 +13,7 @@ function OneTodo ({id, content, evento, details, notifications, deleteFunction, 
                 <a className="waves-effect waves-light btn-small" onClick={()=>deleteFunction(id)}>
                     <i className="material-icons">delete</i>
                 </a>
-                <a className="waves-effect waves-light btn-small" onClick={()=>editFunction(id,content,details,isValid(evento),notifications)}>
+                <a className="waves-effect waves-light btn-small" onClick={()=>editFunction(id)}>
                     <i className="material-icons">edit</i>
                 </a>
             </div>

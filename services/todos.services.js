@@ -197,6 +197,17 @@ class Todos {
    
         return id
     }
+
+    async getOne (id){
+        const block = await models.todo.findOne({
+            attributes: ['id', 'content', 'deatails'],
+            where: {
+                id:id
+            },
+            include: ['evento', 'notifis']
+        })
+        return (block)
+    }
 }
 
 module.exports = Todos;

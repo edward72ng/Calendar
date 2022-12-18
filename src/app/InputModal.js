@@ -96,6 +96,13 @@ function InputModal({input, setInput, mount, setMounth}) {
         
       }
     const closeModal = () =>{
+        setValues({
+          id: null,
+          content: '',
+          details: '',
+          event: '',
+          notifications: []    
+        })
         setMounth(mount + 1)
         setInput(!input)
     }
