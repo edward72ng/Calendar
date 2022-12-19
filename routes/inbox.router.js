@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const {models} = require('./../db/connec')
+
 const TodosService = require('./../services/todos.services.js')
 const service = new TodosService()
 const AuthService = require('./../services/auth.services')
@@ -9,7 +11,7 @@ const authservice = new AuthService()
 
 const validate = require('./../middlewares/middleware.schema')
 const {createTodo , updateTodo, idTodo} = require('./../schemas/joi.schema')
-const { unauthorized } = require('@hapi/boom')
+
 
 router.get('/',async (req,res,next) =>{
     console.log(req.headers)
@@ -151,6 +153,14 @@ async (req,res,next)=>{
 
 router.post('/capture', (req, res)=>{
     console.log(req.body)
+})
+
+router.get('/with-folder',async (req,res)=>{
+    const data = await models.todo.findAll({
+        include: ['folder']
+    })
+
+    res.json(data)
 })
 
 module.exports = router

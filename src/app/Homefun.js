@@ -4,30 +4,26 @@ import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import {DatesContext} from './datesContext'
 import {InputModal} from "./InputModal"
+import {useFetch} from './useFetch'
+
 function Homefun () {
-  const [todo, setTodo] = useState([])
   const [input, setInput] = useState(false)
   const [mount, setMounth] = useState(0)
-  const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
   const auth = useAuth()
+  const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
+  const [data, updateData] = useFetch('/api/v1/inbox/your-todos',{
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + auth.token,
+    }})
+  
   const navigate = useNavigate()
 
   useEffect(()=>{
     if(!auth.token){
       navigate('/')
     }else{
-      console.log('montando')
-      fetch('/api/v1/inbox/your-todos',{
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + auth.token,
-        },
-      })
-      .then(res => res.json())
-      .then(data => {
-        setTodo(data )
-        
-      });
+      updateData()
     }
   },[mount])
   
@@ -69,7 +65,7 @@ function Homefun () {
 
   return(<>
   <div className="todos-container container">
-      {todo.map((task, i) => {
+      {data.map((task, i) => {
             return(
                 <OneTodo key={i} 
                 editFunction = {editTodo} 

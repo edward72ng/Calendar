@@ -6,6 +6,7 @@ import {Meses} from './Meses'
 import { useNavigate } from 'react-router-dom';
 import {DatesContext} from './datesContext'
 import {InputModal} from './InputModal'
+import {OneTodo} from './OneTodo'
 function Calendar (){
     const [input, setInput] = useState(false)
     const [mount, setMounth] = useState(0)
@@ -86,24 +87,28 @@ function Calendar (){
             <ol>
                 <h5>Eventos</h5>
             {dayEvent.map((task, i)=>{
-                if(i < 1){
-                    return(<>
-                        <li>{'value :  ' + task.toString()}</li>
-                        <div className="divider"></div>
-                        </>)
+                if(i > 1){
+                    return(<OneTodo key={i} 
+                        editFunction = {editTodo} 
+                        deleteFunction = {deleteTodo} 
+                        content={task.content} 
+                        details={task.details} 
+                        id={task.id}></OneTodo>)
                 }
                    
                 })}
             </ol>
             <ol>
                 <h5>Notificaciones</h5>
-                {dayNotifications.map((task)=>{
-                    return(
-                    <>
-                    <li>{'value :  ' + task.toString()}</li>
-                    <div className="divider"></div>
-                    </>
-                    )
+                {dayNotifications.map((task, i)=>{
+                    if(i > 1){
+                        return(<OneTodo key={i} 
+                            editFunction = {editTodo} 
+                            deleteFunction = {deleteTodo} 
+                            content={task.content} 
+                            details={task.details} 
+                            id={task.id}></OneTodo>)
+                    }
                 })}
             </ol>
             <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>

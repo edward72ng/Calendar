@@ -59,8 +59,8 @@ function Mosaic ({day, first, notificate, today, notification}){
         </div>
            {
              notificate.map((no, i)=>{
-                if((i>1) && (i % 2 == 1)){
-                    return(<div className={isNotify(notificate)}>{no}</div>)
+                if((i>1)){
+                    return(<div className={isNotify(notificate)}>{no.content}</div>)
                 }
                 
              })

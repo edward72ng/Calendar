@@ -76,13 +76,17 @@ const getParsedMonth = ()=>{
             console.log("compararndo"+fetchtrig)
             if(d == fetchtrig){
                 boo = true
-                arra.push(a.id)
-                arra.push(a.content)
+                arra.push({
+                    id: a.id,
+                    content: a.content,
+                    details: a.deatails
+                })
+                //arra.push(a.content)
                 console.log("ES IGUAL")
                 
             }
         })
-        const l = (arra.length)/2
+        const l = (arra.length)
         arra.unshift(l)
         arra.unshift(boo)
         return arra  
@@ -100,12 +104,16 @@ const getParsedMonth = ()=>{
             }
             if(d == fetchtrig){
                 boo = true
-                arra.push(a.todo.id)
-                arra.push(a.todo.content)
+                arra.push({
+                    id: a.todo.id,
+                    content: a.todo.content,
+                    details: a.todo.deatails
+                })
+                //arra.push(a.todo.content)
                 
             }
         })
-        const l = (arra.length)/2
+        const l = (arra.length)
         arra.unshift(l)
         arra.unshift(boo)
         return arra  

@@ -69,6 +69,7 @@ function InputModal({input, setInput, mount, setMounth}) {
             setChangeTime('')
             })
         }  
+        setMounth(mount + 1)
     }
 
     const newNotification = (e)=> {

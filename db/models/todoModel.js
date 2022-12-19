@@ -120,8 +120,17 @@ const schemaTodoSeq = {
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
+      },
+      folderid:{
+        type: DataTypes.INTEGER.UNSIGNED,
+
+        /*references: {
+            model: EVENTS_TABLE,
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'*/
       }
- 
      
   }
 
@@ -147,6 +156,11 @@ class Todoe extends Model{
             as: 'notifis',
             foreignKey: 'todoid' //un todo puede tener muchas notifi
         })
+        this.belongsTo(models.folders,{//un todo puede tener un evento
+            foreignKey: 'folderid', //aqui la fk es el eventid
+            as: 'folder'
+        }
+        )
     }
 
     static config(sequelize){
