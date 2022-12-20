@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const {models} = require('./../db/connec')
-const { Op } = require("sequelize");
+
 const sequelize = require('./../db/connec');
 const Authservice = require('./../services/auth.services')
 const authservice = new Authservice
+const Eventsservice = require('./../services/events.service')
+const eventService = new Eventsservice
 router.get('/all',async (req, res)=>{
     const data = await models.events.findAll({
         
@@ -13,6 +15,7 @@ router.get('/all',async (req, res)=>{
     res.json(data)
 })
 router.get('/with-events',async (req, res)=>{
+    const {folder} = req.query;
     if (req.headers.authorization){
         console.log('hay header authorization :D')
         console.log(req.headers.authorization)
@@ -21,10 +24,9 @@ router.get('/with-events',async (req, res)=>{
         console.log(newToken)
         const pay = await authservice.getPayload(newToken)
         console.log(pay.sub)
-
-        //var data = await service.getYourTodos(pay.sub)
-        //res.json(data)
-        const data = await models.todo.findAll({
+        const dat = await eventService.getAllEvents(pay.sub, folder)
+     
+        /*const data = await models.todo.findAll({
             where: {
                 userid: pay.sub,
                 eventid: {
@@ -39,7 +41,8 @@ router.get('/with-events',async (req, res)=>{
         data.map((arr)=>{
             send.push(arr)
         })
-        res.json(send)
+        */
+        res.json(dat)
     }
     else{
         res.send('unauthorized')

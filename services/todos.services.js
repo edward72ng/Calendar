@@ -112,15 +112,29 @@ class Todos {
         return notify
     }
 
-    async getYourTodos(userId){
-        var yourTodos = await models.todo.findAll({
-            where: {
-                userid: userId
-            },
-            include:['notifis','evento']
-        })
-        
-        return yourTodos
+    async getYourTodos(userId, folder){
+        if(!folder){
+            let yourTodos = await models.todo.findAll({
+                where: {
+                    userid: userId
+                },
+                include:['notifis','evento']
+            })
+            
+            return yourTodos
+        }else if(folder){
+            let folderId = parseInt(folder)
+            let yourTodos = await models.todo.findAll({
+                where: {
+                    userid: userId,
+                    folderid: folderId
+                },
+                include:['notifis','evento']
+            })
+            
+            return yourTodos
+        }
+       
     }
 
     async editYourTodo (idComp, objeto){

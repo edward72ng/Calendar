@@ -74,16 +74,13 @@ async(req,res)=>{
 
 router.get('/your-todos',
     async (req,res,next)=>{
+        const {folder} = req.query;
         if (req.headers.authorization){
-            console.log('hay header authorization :D')
-            console.log(req.headers.authorization)
             var token = req.headers.authorization;
             var newToken = token.replace("Bearer ", "");
-            console.log(newToken)
             const pay = await authservice.getPayload(newToken)
-            console.log(pay)
-
-            var data = await service.getYourTodos(pay.sub)
+            var data = await service.getYourTodos(pay.sub, folder)
+            console.log(folder)
             res.json(data)
         }
         else{

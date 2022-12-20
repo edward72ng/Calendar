@@ -4,47 +4,28 @@ import {useAuth} from './auth'
 import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import {InputModal} from './InputModal'
+import {useFetch} from './useFetch'
 function Notify (){
-    const {dateString} = useContext(DatesContext)
-    const [input, setInput] = useState(false)
-    const [mount, setMounth] = useState(0)
-    const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
-    const [tasks, setTasks] = useState([])
-    const [notifi, setNotifi] = useState([])
-    const navigate = useNavigate()
-    const auth = useAuth()
+  const {dateString} = useContext(DatesContext)
+  const [input, setInput] = useState(false)
+  const [mount, setMounth] = useState(0)
+  const auth = useAuth()
+  const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
+  const [events, updateEvents] = useFetch('api/v1/events/day-events/'+dateString)
+  const [notifications, updateNotifications] = useFetch('api/v1/notifications/notification-today/'+dateString)
+  const navigate = useNavigate()
     
-    useEffect(()=>{
+  useEffect(()=>{
             if(auth.token == false){
                 navigate('/')
               }else{
-                fetchTask()
+                updateEvents();
+                updateNotifications();
               }
         } ,[])
         
    
-
-    const fetchTask = ()=>{
-        fetch('api/v1/events/day-events/'+dateString, { /*Debemos dar el dia como url*/
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + auth.token,
-            }
-          }).then(res => res.json())
-          .then(data => { setTasks(data/*[0].tareas*/)})
-          fetch('api/v1/notifications/notification-today/'+dateString, { /*Debemos dar el dia como url*/
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + auth.token,
-            }
-          }).then(res => res.json())
-          .then(data => { setNotifi(data)})
-    }
-    const deleteTodo= (id)=>{
+  const deleteTodo= (id)=>{
       fetch('/api/v1/inbox/your-todos/'+ id, {
           method: 'DELETE',
           headers: {
@@ -57,34 +38,34 @@ function Notify (){
         })
   }
 
-const editTodo= (id)=>{
-  fetch('/api/v1/inbox/your-todos/'+ id, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + auth.token,
-    }
-  }).then((res)=>res.json())
-  .then((data)=>{
-  setValues(
-    {
-      id: data.id,
-      content: data.content,
-      details: data.deatails,
-      event: data.evento? data.evento.event: '',
-      notifications: data.notifis
-    }
-  )
-  setMounth(mount-1)
-  setInput(!input)
-})}
+  const editTodo= (id)=>{
+    fetch('/api/v1/inbox/your-todos/'+ id, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token,
+      }
+    }).then((res)=>res.json())
+    .then((data)=>{
+    setValues(
+      {
+        id: data.id,
+        content: data.content,
+        details: data.deatails,
+        event: data.evento? data.evento.event: '',
+        notifications: data.notifis
+      }
+    )
+    setMounth(mount-1)
+    setInput(!input)
+  })}
     return(
         <div className="container">
           <h4>ToDay</h4>
             <h5>Notify</h5>
             {
-                notifi.map((notifi, i)=>{
+                notifications.map((notifi, i)=>{
                     return(
                     <OneTodo key={i} 
                       editFunction = {editTodo} 
@@ -97,7 +78,7 @@ const editTodo= (id)=>{
             }
             <h5>Events</h5>
                 {
-                    tasks.map((task, i)=>{
+                    events.map((task, i)=>{
                         return(<OneTodo key={i} 
                           editFunction = {editTodo} 
                           deleteFunction = {deleteTodo} 

@@ -1,4 +1,4 @@
-const {Sequelize ,DataTypes, Model} = require('sequelize')
+const {Sequelize ,DataTypes, Model, INTEGER} = require('sequelize')
 
 
 const FOLDERS_TABLE = 'folders'
@@ -14,6 +14,9 @@ const schemaFoldersSeq = {
         type: DataTypes.STRING,
         allowNull: false,
      },
+    userid: {
+        type: INTEGER.UNSIGNED,
+    }
   }
 
 class Folders extends Model{

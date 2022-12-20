@@ -1,57 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect} from "react";
 import {Mosaic}  from './Mosaic'
 import {DatesContext} from './datesContext'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from './auth'
+import {useFetch} from './useFetch'
 function Meses (props){
-    const {dat, month, year, getElemYear} = useContext(DatesContext)
-    const [task, setTask] = useState([])
-    const [noificate, setNotificate] = useState([])
+    const {dat, month, getElemYear, filter} = useContext(DatesContext)
     const navigate = useNavigate()
     const auth = useAuth()
-    var boxes = []
-    
-    for(var i = 1; i <= new Date(getElemYear(month + props.cMonth), parseInt(props.getElemMonth(month + props.cMonth)) + 1, 0).getDate(); i++){
+    const [events,updateEvents] = useFetch('http://localhost:3000/api/v1/events/with-events')
+    const [notifications, updateNotifications] = useFetch('http://localhost:3000/api/v1/notifications/with-notification')
+    let boxes = []
+    for(let i = 1; i <= new Date(getElemYear(month + props.cMonth), parseInt(props.getElemMonth(month + props.cMonth)) + 1, 0).getDate(); i++){
         boxes.push(i)
     }
     useEffect(()=>{
-        if(auth.token){
-            console.log('hay un token :D')
-            console.log(auth.token)
-            fetchtak();
-            console.log('Montando componente')
-          }else{
-            console.log('No hay token :c')
+        if(!auth.token){
             navigate('/')
+          }else{
+            updateEvents(filter);
+            updateNotifications(filter);  
           }
-    },[])
-
-    const fetchtak = ()=>{
-        fetch('http://localhost:3000/api/v1/events/with-events',{
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + auth.token,
-              }
-        }).then(res => res.json())
-            .then(data => {
-                setTask(data)
-            });
-        fetch('http://localhost:3000/api/v1/notifications/with-notification',
-        {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + auth.token,
-              }
-        }).then(res => res.json())
-            .then(data => {
-                setNotificate(data)
-            }
-        )
-    }
+    },[filter])
         
 const getParsedMonth = ()=>{
     if((props.getElemMonth(month + props.cMonth)) + 1 < 10){
@@ -62,8 +32,8 @@ const getParsedMonth = ()=>{
 }
     const isEqual2 = (i, arr)=>{
         i = String(i)
-        var arra = []
-        var boo = false
+        let arra = []
+        let boo = false
         if (i < 10){
             var d =  String(getElemYear(month + props.cMonth)) +'-' +String(getParsedMonth())+'-0'+ i 
         }else{
@@ -93,8 +63,8 @@ const getParsedMonth = ()=>{
     }
     const isEqual = (i, arr)=>{
         i = String(i)
-        var arra = []
-        var boo = false
+        let arra = []
+        let boo = false
         arr.map((a, ind)=>{
             var fetchtrig = a.date
             if (i < 10){
@@ -125,8 +95,8 @@ const getParsedMonth = ()=>{
             <Mosaic key={elem}
                         day={elem} 
                         first={String(props.first + 1)} 
-                        notificate={isEqual2(elem, task)}
-                        notification={isEqual(elem, noificate)}
+                        notificate={isEqual2(elem, events)}
+                        notification={isEqual(elem, notifications)}
                         today={dat}>
                         </Mosaic>
         )

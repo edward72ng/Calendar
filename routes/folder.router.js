@@ -9,8 +9,22 @@ const AuthService = require('./../services/auth.services')
 const authservice = new AuthService()
 
 router.get('/',async (req,res)=>{
-    const data = await models.folders.findAll();
-    res.json(data);
+    if (req.headers.authorization){
+        var token = req.headers.authorization;
+        var newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
+    
+        const data = await models.folders.findAll({
+            where:{
+                userid:pay.sub
+            }
+        });
+        res.json(data);
+    }
+    else{
+        res.send('unauthorized')
+    }
+    
 })
 
 module.exports =  router

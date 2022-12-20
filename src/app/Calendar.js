@@ -15,7 +15,7 @@ function Calendar (){
     const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
     const navigate = useNavigate()
     const auth = useAuth()
-    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+    let months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
     useEffect(()=>{
         if(auth.token == false){
             navigate('/')

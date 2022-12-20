@@ -5,27 +5,20 @@ import {OneTodo} from './OneTodo'
 import {DatesContext} from './datesContext'
 import {InputModal} from "./InputModal"
 import {useFetch} from './useFetch'
-
 function Homefun () {
   const [input, setInput] = useState(false)
   const [mount, setMounth] = useState(0)
   const auth = useAuth()
-  const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
-  const [data, updateData] = useFetch('/api/v1/inbox/your-todos',{
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + auth.token,
-    }})
-  
+  const {inputEnabled,setInputEnabled,setValues,filter} = useContext(DatesContext)
+  const [blocs, updateBlocs] = useFetch('/api/v1/inbox/your-todos')
   const navigate = useNavigate()
-
   useEffect(()=>{
     if(!auth.token){
       navigate('/')
     }else{
-      updateData()
+      updateBlocs(filter)
     }
-  },[mount])
+  },[mount, filter])
   
   const deleteTodo= (id)=>{
         fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -65,7 +58,7 @@ function Homefun () {
 
   return(<>
   <div className="todos-container container">
-      {data.map((task, i) => {
+      {blocs.map((task, i) => {
             return(
                 <OneTodo key={i} 
                 editFunction = {editTodo} 

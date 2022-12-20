@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const DatesContext = React.createContext()
 function DatesProvider({children}){
+    const [filter, setFilter] = useState('')
     const [afterBefore, setAfterBefore] = useState(0)
     const [inputEnabled, setInputEnabled] = useState(false)
     const [values, setValues] = useState({
@@ -49,7 +50,9 @@ function DatesProvider({children}){
         inputEnabled,
         setInputEnabled,
         values,
-        setValues
+        setValues,
+        filter,
+        setFilter
         }}>
         {children}
     </DatesContext.Provider>
