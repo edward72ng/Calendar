@@ -1,42 +1,54 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {DatesContext} from './datesContext'
+import {useFetch} from './useFetch'
+import {Form} from './Form'
 import {useAuth} from './auth'
 function Menu ({menu, setMenu}) {
-  const [folders, setFolders] = useState([])
+  const [content, setContent] = useState('')
+  const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
   const {setFilter} = useContext(DatesContext)
   const auth = useAuth()
   useEffect(()=>{
+   updateFolders()
+  },[])
+  const addFolder = (e)=>{
+    e.preventDefault()
     fetch('http://localhost:3000/api/v1/folders',
-    { 
-      method: 'GET',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        name: content
+      }
+      ),
       headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + auth.token,
       }
+    }).then(()=>{
+      updateFolders()
     })
-    .then( res => res.json())
-    .then(data =>{
-      setFolders(data)
-    })
-  },[])
+  }
     return(
-          
-            <ol className={menu?'menu-enable':'menu-disable'}>
+          <div className={menu?'menu-enable':'menu-disable'}>
+            <ol >
                 <li onClick={()=>{setMenu(!menu)}}><i className="material-icons">menu</i></li>
                 <div className='divider'></div>
               <li onClick={()=>setFilter('')}><i className="material-icons">select_all</i>All</li>
               {
-                folders.map((elem, i)=>{
+                folder.map((elem, i)=>{
                   return <li key={i} onClick={()=>setFilter('?folder=' + elem.id)}><i className="material-icons" >folder</i>{elem.name}</li>
                 })
               }
             </ol>
-         
+            <Form execSubmit={addFolder}>
+              <p>Agregar Carpeta</p>
+              <input type="text" 
+              onChange={(e)=>{setContent(e.target.value)}} 
+              value={content}></input>
+            </Form>
+          </div>
     )
 }
 
 export {Menu};
-
-/*<li onClick={()=>setFilter('?folder=2')}><i className="material-icons" >folder</i>Folder1</li>
-              <li><i className="material-icons">folder_open</i>Folder2</li>
-              <li><i className="material-icons">folder</i>Folder3</li>
-              <li><i className="material-icons">folder</i>Folder4</li> */

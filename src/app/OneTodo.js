@@ -1,6 +1,6 @@
 import React from "react";
 
-function OneTodo ({id, content, details,deleteFunction, editFunction}){
+function OneTodo ({id, content, details,deleteFunction, editFunction, moveFunction}){
 
     return (
         <div className="container">
@@ -11,10 +11,13 @@ function OneTodo ({id, content, details,deleteFunction, editFunction}){
             </div>
             <div className="icons-container">
                 <a className="waves-effect waves-light btn-small" onClick={()=>deleteFunction(id)}>
-                    <i className="material-icons">delete</i>
+                    <i className="small material-icons">delete</i>
                 </a>
                 <a className="waves-effect waves-light btn-small" onClick={()=>editFunction(id)}>
-                    <i className="material-icons">edit</i>
+                    <i className="small material-icons">edit</i>
+                </a>
+                <a className="btn-small" onClick={()=>moveFunction(id)}>
+                    <i className="tiny material-icons">more_vert</i>
                 </a>
             </div>
         </div>

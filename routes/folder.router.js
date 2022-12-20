@@ -6,6 +6,7 @@ const {models} = require('./../db/connec')
 const TodosService = require('./../services/todos.services.js')
 const service = new TodosService()
 const AuthService = require('./../services/auth.services')
+const { where } = require('sequelize')
 const authservice = new AuthService()
 
 router.get('/',async (req,res)=>{
@@ -25,6 +26,37 @@ router.get('/',async (req,res)=>{
         res.send('unauthorized')
     }
     
+})
+
+router.post('/',async (req,res)=>{
+    const {name} = req.body
+    if (req.headers.authorization){
+        var token = req.headers.authorization.replace("Bearer ", "");
+        const pay = await authservice.getPayload(token)
+        const data = await models.folders.create({
+            name: name,
+            userid: pay.sub
+        })
+        res.json(data);
+    }
+    else{
+        res.send('unauthorized')
+    }
+    
+})
+
+router.post('/:folderId',async (req,res)=>{
+    const {folderId} = req.params
+    const {todoId} = req.body
+    const data = await models.todo.update({
+        folderid: folderId
+    },
+    {
+        where:{
+            id: todoId
+        }
+    })
+    res.json(data)
 })
 
 module.exports =  router

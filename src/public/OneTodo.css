@@ -2,10 +2,16 @@
     display: flex;
     justify-content: space-between;
 }
+
+.container2:hover .icons-container{
+    opacity: 100;
+}
 .icons-container{
     display: flex;
     align-items: center;
+    opacity: 0;
 }
+
 
 .content{
     font-size: 14px;

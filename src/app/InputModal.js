@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {Form} from "./Form"
 import {useAuth} from "./auth"
 import { DatesContext } from "./datesContext";
+import { useFetch } from "./useFetch";
 function InputModal({input, setInput, mount, setMounth}) {
     const {values, setValues} = useContext(DatesContext)
     const [contentTodo,setContentTodo] = useState(values.content)
@@ -12,6 +13,10 @@ function InputModal({input, setInput, mount, setMounth}) {
     const [changeTime, setChangeTime] = useState('')
     const [changeDate, setChangeDate] = useState('')
     const auth = useAuth()
+    const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
+    useEffect(()=>{
+      updateFolders()
+    },[])
     const addTodo = (e) => {
         e.preventDefault()
         let notificationsSend = []
@@ -107,6 +112,21 @@ function InputModal({input, setInput, mount, setMounth}) {
         setMounth(mount + 1)
         setInput(!input)
     }
+    const move = (value) =>{
+      fetch('http://localhost:3000/api/v1/folders/'+value,{
+        method: 'POST',
+        body: JSON.stringify({
+          todoId: id
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + auth.token,
+        }
+      }).then(()=>{
+        closeModal()
+      })
+    }
 
     return(
     <div className="input-enabled">
@@ -139,7 +159,17 @@ function InputModal({input, setInput, mount, setMounth}) {
             onChange={(e)=>{setChangeDate(e.target.value)}}
             value={changeDate}></input>
             <i className="material-icons" onClick={newNotification}>add</i>
+
         </Form>
+        <ol>
+            {
+              folder.map((elem, i)=>{
+                return (
+                  <li key={i} onClick={()=>move(elem.id)}><i className="material-icons" >folder</i>{elem.name}</li>
+                )
+              })
+            }
+        </ol>
         <i className="material-icons" onClick={closeModal}>cancel</i>
     </div>
     )
