@@ -121,8 +121,16 @@ ol{
     margin-top: 0;
 }
 .modal-table{
+
     background-color: black;
     border-radius: 24px;
+    width: 70%;
+    max-width: 700px;
+    min-height: 80vh;
+    max-height: 80vh;
+}
+.modal-table:nth-child(1){
+    overflow: auto;
 }
 li{
     list-style-type: none;

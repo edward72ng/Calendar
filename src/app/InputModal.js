@@ -130,18 +130,23 @@ function InputModal({input, setInput, mount, setMounth}) {
 
     return(
     <div className="input-enabled">
+      <div className="modal-table">
         <Form execSubmit={addTodo}>
+          <h5>Contenido</h5>
             <input type="text" 
             onChange={(e)=>{setContentTodo(e.target.value)}} 
-            value={contentTodo}></input>
+            value={contentTodo}
+            placeholder="contenido"></input>
             <input type="text" 
             onChange={(e)=>{setDetailsTodo(e.target.value)}}
-            value={detailsTodo}></input>
+            value={detailsTodo}
+            placeholder="detalles"></input>
+            <h5>Evento</h5>
             <input type="date" 
             onChange={(e)=>{setDateEvent(e.target.value)}}
             value={date}></input>
-            <label>Notifications</label>
-            {values.notifications.map((elem, i)=>{
+            <h5>Notificaciones</h5>
+            {arrNotifications.map((elem, i)=>{
                 return (<li key={i}>
                     <input type="time" 
                     value={elem.time}
@@ -159,9 +164,7 @@ function InputModal({input, setInput, mount, setMounth}) {
             onChange={(e)=>{setChangeDate(e.target.value)}}
             value={changeDate}></input>
             <i className="material-icons" onClick={newNotification}>add</i>
-
-        </Form>
-        <ol>
+            <ol>
             {
               folder.map((elem, i)=>{
                 return (
@@ -170,7 +173,13 @@ function InputModal({input, setInput, mount, setMounth}) {
               })
             }
         </ol>
-        <i className="material-icons" onClick={closeModal}>cancel</i>
+        <button onClick={()=>{closeModal()}} className="btn waves-effect waves-light" type="button">
+      Cancelar
+      <i className="material-icons right">cancel</i>
+    </button>
+        </Form>
+        </div>
+        
     </div>
     )
 }

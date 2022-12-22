@@ -111,7 +111,7 @@ function Calendar (){
                     }
                 })}
             </ol>
-            <button onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
+            <button className="waves-effect waves-light btn" onClick={()=>{setModalView(!modalView)}}>quitar modal</button>
         </div>
                              
             </Modal>

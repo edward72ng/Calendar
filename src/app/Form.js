@@ -2,7 +2,7 @@ import React from "react"
 
 function Form ({children, execSubmit}){
   return(
-    <form onSubmit={execSubmit} className="">
+    <form onSubmit={execSubmit} className="container">
       {children}
       <button className="btn waves-effect waves-light" type="submit">
       Enviar
