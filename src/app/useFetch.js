@@ -4,9 +4,9 @@ function useFetch(url) {
   const auth = useAuth()
   const [data, setData] = useState([]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     updateData();
-  }, []);*/
+  }, [])
 
   function updateData(query) {
     if(!query){

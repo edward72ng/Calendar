@@ -9,8 +9,8 @@ function Menu ({menu, setMenu}) {
   const {setFilter} = useContext(DatesContext)
   const auth = useAuth()
   useEffect(()=>{
-   updateFolders()
-  },[])
+   
+  },[folder])
   const addFolder = (e)=>{
     e.preventDefault()
     fetch('http://localhost:3000/api/v1/folders',
@@ -29,6 +29,18 @@ function Menu ({menu, setMenu}) {
       updateFolders()
     })
   }
+  const deleteFolder = (id) =>{
+    fetch('http://localhost:3000/api/v1/folders/'+id,{
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth.token,
+    }
+  }).then(()=>{
+    updateFolders('/')
+  })
+  }
     return(
           <div className={menu?'menu-enable':'menu-disable'}>
             <ol >
@@ -37,7 +49,10 @@ function Menu ({menu, setMenu}) {
               <li onClick={()=>setFilter('')}><i className="material-icons">select_all</i>All</li>
               {
                 folder.map((elem, i)=>{
-                  return <li key={i} onClick={()=>setFilter('?folder=' + elem.id)}><i className="material-icons" >folder</i>{elem.name}</li>
+                  return <li key={i} onClick={()=>setFilter('?folder=' + elem.id)}>
+                    <i className="material-icons" >folder</i>
+                    {elem.name}
+                    <i className="material-icons" onClick={()=>{deleteFolder(elem.id)}}>delete</i></li>
                 })
               }
             </ol>

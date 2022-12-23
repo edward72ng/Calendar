@@ -59,4 +59,12 @@ router.post('/:folderId',async (req,res)=>{
     res.json(data)
 })
 
+router.delete('/:folderId',async (req,res)=>{
+    const {folderId} = req.params
+    const folder = await models.folders.findByPk(folderId)
+    const data = await folder.destroy()
+    console.log(data)
+    res.json(data)
+})
+
 module.exports =  router
