@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {Modal} from './modal'
 import {EventsContext} from './eventsProvider'
 import {useAuth} from './auth'
-import {Meses} from './Meses'
+import {MosaicsContainer} from './MosaicsContainer'
 import { useNavigate } from 'react-router-dom';
 import {DatesContext} from './datesContext'
 import {InputModal} from './InputModal'
@@ -76,8 +76,8 @@ function Calendar (){
                 <li className="mosaic">Sat</li>
             </ol>
             <ol className="ol-list mosaics-container">
-            <Meses first={new Date(year, month + afterBefore, 1).getDay()} cMonth = {afterBefore} getElemMonth= {getElemMonth}>
-            </Meses>
+            <MosaicsContainer first={new Date(year, month + afterBefore, 1).getDay()} cMonth = {afterBefore} getElemMonth= {getElemMonth}>
+            </MosaicsContainer>
             </ol>
         </div>
 

@@ -5,7 +5,7 @@ import {OneTodo} from './OneTodo'
 import {DatesContext} from './datesContext'
 import {InputModal} from "./InputModal"
 import {useFetch} from './useFetch'
-function Homefun () {
+function Home() {
   const [input, setInput] = useState(false)
   const [mount, setMounth] = useState(0)
   const auth = useAuth()
@@ -79,4 +79,4 @@ function Homefun () {
   <i className='material-icons adding' 
   onClick={()=>{setInputEnabled(!inputEnabled);setInput(!input)}}>add</i>
 </>)}
-export {Homefun} 
+export {Home} 

@@ -70,7 +70,4 @@ function Mosaic ({day, first, notificate, today, notification}){
     )
 }
 
-//<span style={{backgroundColor: "red"}}>camp</span>
-//campana notificacion
-//i>1) && (i % 2 == 1)
 export {Mosaic}
