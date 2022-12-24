@@ -18,6 +18,7 @@ function Nav ({children}) {
               <li><Link to="/home"><i className="material-icons">home</i></Link></li>
               <li><Link to="/calendary"><i className="material-icons">date_range</i></Link></li>
               <li><Link to="/notify"><i className="material-icons">view_day</i></Link></li>
+              <li><i className="material-icons">person_outline</i></li>
             </ul>
           </nav>
           {children}
