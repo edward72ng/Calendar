@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
 import {Link} from 'react-router-dom'
-import { InputModal } from './InputModal'
+import { EventsContext } from './eventsProvider'
 import {Menu} from './Menu'
-import {DatesContext} from "./datesContext"
+import { ProfileView } from './ProfileView'
+import {Modal} from './modal'
 function Nav ({children}) {
   const [menuEnabled, setMenuEnabled] = useState(false)
-  const {inputEnabled, setInputEnabled} = useContext(DatesContext)
-    return(
+  const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
+  const [profileView, setProfileView] = useState(false) 
+  return(
         <>
         <Menu menu={menuEnabled} setMenu={setMenuEnabled}/>
           <nav className="nav-extended divider">
@@ -18,11 +20,16 @@ function Nav ({children}) {
               <li><Link to="/home"><i className="material-icons">home</i></Link></li>
               <li><Link to="/calendary"><i className="material-icons">date_range</i></Link></li>
               <li><Link to="/notify"><i className="material-icons">view_day</i></Link></li>
-              <li><i className="material-icons">person_outline</i></li>
+              <li onClick={()=>{setProfileView(!profileView)}}><i className="material-icons">person_outline</i></li>
             </ul>
           </nav>
+        {
+          !! profileView && 
+          (<Modal><ProfileView 
+            profileView={profileView} 
+            setProfileView={setProfileView}/></Modal>)
+        }
           {children}
-          
         </>
     )
 }

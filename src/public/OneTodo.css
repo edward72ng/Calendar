@@ -24,8 +24,9 @@
     margin-bottom: 8px;
     margin-top: 2px;
 }
-.divider{
+.line-div{
     height: 1px;
+    background-color: gray;
 }
 
 .home-container{
@@ -169,4 +170,16 @@ li{
     position: fixed;
     right: 50px;
     bottom: 50px;
+}
+.profile-container{
+    position: fixed;
+    top: 48px;
+    right: 0px;
+    background-color: black;
+    border-radius: 8px;
+    max-width: 600px;
+    min-width: 200px;
+    height: auto;
+    padding: 12px;
+    margin: 12px;
 }

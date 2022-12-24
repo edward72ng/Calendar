@@ -21,7 +21,7 @@ function OneTodo ({id, content, details,deleteFunction, editFunction, moveFuncti
                 </a>
             </div>
         </div>
-        <div className="divider"></div>
+        <div className="line-div"></div>
         </div>
     )
 }
