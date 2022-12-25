@@ -15,12 +15,11 @@ function Calendar (){
     const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
     const navigate = useNavigate()
     const auth = useAuth()
-    let months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+    const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
     useEffect(()=>{
         if(auth.token == false){
             navigate('/')
           }
-
     },[])
     const deleteTodo= (id)=>{
         fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -34,7 +33,6 @@ function Calendar (){
             setMounth(mount + 1)
           })
     }
-
   const editTodo= (id)=>{
     fetch('/api/v1/inbox/your-todos/'+ id, {
       method: 'GET',
@@ -116,9 +114,9 @@ function Calendar (){
                              
             </Modal>
         )}
-         {input && <InputModal 
-                input={input} 
-                setInput={setInput} 
+         {inputEnabled && <InputModal 
+                input={inputEnabled} 
+                setInput={setInputEnabled} 
                 mount={mount} 
                 setMounth={setMounth}  
                 ></InputModal>}

@@ -3,8 +3,8 @@ import {Form} from "./Form"
 import {useAuth} from "./auth"
 import { DatesContext } from "./datesContext";
 import { useFetch } from "./useFetch";
-function InputModal({input, setInput, mount, setMounth}) {
-    const {values, setValues} = useContext(DatesContext)
+function InputModal() {
+    const {values, setValues, inputEnabled,setInputEnabled} = useContext(DatesContext)
     const [contentTodo,setContentTodo] = useState(values.content)
     const [detailsTodo, setDetailsTodo] = useState(values.details)
     const [id, setId] = useState(values.id)
@@ -74,7 +74,6 @@ function InputModal({input, setInput, mount, setMounth}) {
             setChangeTime('')
             })
         }  
-        setMounth(mount + 1)
     }
 
     const newNotification = (e)=> {
@@ -109,8 +108,7 @@ function InputModal({input, setInput, mount, setMounth}) {
           event: '',
           notifications: []    
         })
-        setMounth(mount + 1)
-        setInput(!input)
+        setInputEnabled(!inputEnabled)
     }
     const move = (value) =>{
       fetch('http://localhost:3000/api/v1/folders/'+value,{

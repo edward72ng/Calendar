@@ -51,9 +51,6 @@ const getParsedMonth = ()=>{
                     content: a.content,
                     details: a.deatails
                 })
-                //arra.push(a.content)
-                console.log("ES IGUAL")
-                
             }
         })
         const l = (arra.length)
@@ -79,8 +76,6 @@ const getParsedMonth = ()=>{
                     content: a.todo.content,
                     details: a.todo.deatails
                 })
-                //arra.push(a.todo.content)
-                
             }
         })
         const l = (arra.length)
