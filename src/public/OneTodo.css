@@ -183,3 +183,9 @@ li{
     padding: 12px;
     margin: 12px;
 }
+.warning{
+    color: red;
+}
+.search-container{
+    display: flex;
+}

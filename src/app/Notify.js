@@ -63,7 +63,7 @@ function Notify (){
     return(
         <div className="container">
           <h4>ToDay</h4>
-            <h5>Notify</h5>
+            {(notifications.length != 0) && <h5>Notify</h5>}
             {
                 notifications.map((notifi, i)=>{
                     return(
@@ -76,7 +76,7 @@ function Notify (){
                     )
                 })
             }
-            <h5>Events</h5>
+            {(events.length != 0) && <h5>Events</h5>}
                 {
                     events.map((task, i)=>{
                         return(<OneTodo key={i} 
@@ -87,8 +87,12 @@ function Notify (){
                           id={task.id}></OneTodo>      )
                     })
                 }
-            <h6>List</h6>
-
+            {(events.length == 0 && notifications.length == 0) &&
+              <>
+              <img src="./assets/today.png"/>
+              <h5>No tienes nada par hoy :D</h5>
+              </>
+            }
             {input && <InputModal 
                 input={input} 
                 setInput={setInput} 

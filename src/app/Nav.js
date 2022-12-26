@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { EventsContext } from './eventsProvider'
 import {Menu} from './Menu'
 import { ProfileView } from './ProfileView'
 import {Modal} from './modal'
+import { Search } from './Search'
 function Nav ({children}) {
   const [menuEnabled, setMenuEnabled] = useState(false)
-  const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
   const [profileView, setProfileView] = useState(false) 
   return(
         <>
@@ -14,7 +13,7 @@ function Nav ({children}) {
           <nav className="nav-extended divider">
             <ul>
               <li onClick={()=>{setMenuEnabled(!menuEnabled)}}><i className="material-icons">menu</i></li>
-              <li><i className="material-icons">search</i></li>
+              {/*<li><Search></Search></li>*/}
             </ul>
             <ul>
               <li><Link to="/home"><i className="material-icons">home</i></Link></li>
@@ -33,5 +32,4 @@ function Nav ({children}) {
         </>
     )
 }
-
 export {Nav};

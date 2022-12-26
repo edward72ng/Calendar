@@ -7,7 +7,7 @@ import {InputModal} from "./InputModal"
 import {useFetch} from './useFetch'
 function Home() {
   const auth = useAuth()
-  const {inputEnabled,setInputEnabled,setValues,filter} = useContext(DatesContext)
+  const {inputEnabled,setInputEnabled,filter} = useContext(DatesContext)
   const [blocs, updateBlocs] = useFetch('/api/v1/inbox/your-todos')
   const navigate = useNavigate()
 

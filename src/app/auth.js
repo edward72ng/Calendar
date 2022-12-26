@@ -25,8 +25,8 @@ function AuthProvider({ children }) {
   };
   
   const logout = () => {
-    setUser(null);
-   
+    setToken(null);
+    navigate('/')
   };
   
   const auth = { token, login, logout };

@@ -11,6 +11,12 @@ router.get('/',async (req,res) =>{
     res.json(rsp)
 })
 
+router.get('/:id',async (req,res) =>{
+    const {id} = req.params
+    var rsp = await service.getOne(id)
+    res.json(rsp)
+})
+
 router.get('/all',async (req,res) =>{
     var rsp = await service.getWithAssociations()
     res.json(rsp)

@@ -5,6 +5,7 @@ import {Form} from './Form'
 import {useAuth} from './auth'
 function Menu ({menu, setMenu}) {
   const [content, setContent] = useState('')
+  const [del, setDel] = useState(false)
   const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
   const {setFilter} = useContext(DatesContext)
   const auth = useAuth()
@@ -38,6 +39,7 @@ function Menu ({menu, setMenu}) {
       'Authorization': 'Bearer ' + auth.token,
     }
   }).then(()=>{
+    setContent('')
     updateFolders('/')
   })
   }
@@ -49,19 +51,23 @@ function Menu ({menu, setMenu}) {
               <li onClick={()=>setFilter('')}><i className="material-icons">select_all</i>All</li>
               {
                 folder.map((elem, i)=>{
-                  return <li key={i} onClick={()=>setFilter('?folder=' + elem.id)}>
-                    <i className="material-icons" >folder</i>
+                  return <li key={i}
+                  onClick={()=>setFilter('?folder=' + elem.id)}>
                     {elem.name}
-                    <i className="material-icons" onClick={()=>{deleteFolder(elem.id)}}>delete</i></li>
+                    {del && <i className="material-icons" onClick={()=>{deleteFolder(elem.id); setDel(!del)}}>delete</i>}
+                    </li>
                 })
               }
             </ol>
+            {!!del && 
             <Form execSubmit={addFolder}>
-              <p>Agregar Carpeta</p>
-              <input type="text" 
-              onChange={(e)=>{setContent(e.target.value)}} 
-              value={content}></input>
+            <p>Agregar Carpeta</p>
+            <input type="text" 
+            onChange={(e)=>{setContent(e.target.value)}} 
+            value={content}></input>
             </Form>
+            }
+            <button type='button' onClick={()=>setDel(!del)}>{!del?'habilitar edicion':'desabilitar edicion'}</button>
           </div>
     )
 }
