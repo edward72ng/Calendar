@@ -61,7 +61,7 @@ function Notify (){
     setInput(!input)
   })}
     return(
-        <div className="container">
+        <div className="calendar-container center-container">
           <h4>ToDay</h4>
             {(notifications.length != 0) && <h5>Notify</h5>}
             {
@@ -93,7 +93,7 @@ function Notify (){
               <h5>No tienes nada par hoy :D</h5>
               </>
             }
-            {input && <InputModal 
+            {inputEnabled && <InputModal 
                 input={input} 
                 setInput={setInput} 
                 mount={mount} 

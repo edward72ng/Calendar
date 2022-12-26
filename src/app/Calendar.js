@@ -56,7 +56,7 @@ function Calendar (){
     setInput(!input)
   })}
     return(
-        <div className="container">
+        <div className="calendar-container center-container">
         <div className="around">
             <i onClick={()=>{setAfterBefore(afterBefore-1)}} className="waves-effect material-icons">navigate_before</i>
             <h5 className="month" id="month">{months[getElemMonth(month + afterBefore)]}</h5>

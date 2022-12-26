@@ -44,7 +44,7 @@ function Menu ({menu, setMenu}) {
   })
   }
     return(
-          <div className={menu?'menu-enable':'menu-disable'}>
+          <div className={'menu-enable'}>
             <ol >
                 <li onClick={()=>{setMenu(!menu)}}><i className="material-icons">menu</i></li>
                 <div className='divider'></div>

@@ -20,7 +20,7 @@ function Home() {
   },[filter, inputEnabled])
   
   return(<>
-  <div className="todos-container container">
+  <div className="calendar-container center-container">
       {blocs.map((task, i) => {
             return <OneTodo key={i} 
                 content={task.content} 

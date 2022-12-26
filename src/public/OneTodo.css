@@ -1,3 +1,7 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+}
 .container2{
     display: flex;
     justify-content: space-between;
@@ -52,18 +56,8 @@
 .notificate{
     background-color: rgb(68,188,216);
     border-radius: 4px ;
-   /* height: 105px;
-    border: solid gray 1px;*/
 }
-/*.notnotificate{
 
-    /*height: 105px;
-    border: solid gray 1px;
-}*/
-
-li:hover{
-    background-color: aqua;
-}
 .today{
     background-color: blue;
     width: 24px;
@@ -91,10 +85,7 @@ li:hover{
     white-space: pre;
   }
 
-  .divider{
-    display: flex;
-    justify-content: space-between;
-  }
+
 
   .head{
     height: 900px;
@@ -117,10 +108,30 @@ li:hover{
     
     text-align: center;
 }
-ol{
-    padding-left: 0;
-    margin-top: 0;
+
+/*ETIQUETAS*/
+a{
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
 }
+ul, ol {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+li{
+    list-style-type: none;
+}
+i{
+    cursor: pointer;
+    margin: 0 10px;
+}
+i:hover{
+    background-color: lightgray;
+}
+/**/
+
 .modal-table{
 
     background-color: black;
@@ -133,20 +144,16 @@ ol{
 .modal-table:nth-child(1){
     overflow: auto;
 }
-li{
-    list-style-type: none;
-}
+
 .menu-enable{
     
     background-color: black;
-    position: fixed; 
+    position: fixed;
+    left: 0px; 
     z-index: 2;
     width: 25%;
     height: 100vh;
     color: white;
-}
-.menu-disable{
-    display: none;
 }
 .form-container{
     z-index: 1;
@@ -183,9 +190,67 @@ li{
     padding: 12px;
     margin: 12px;
 }
+
 .warning{
     color: red;
 }
 .search-container{
     display: flex;
+}
+
+
+.space-between{
+    display: flex;
+    justify-content: space-between;
+  }
+.body-container{
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+.login-container{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border-radius: 8px;
+}
+.input{
+    background-color: lightgray;
+    border: none;
+    border-radius: 8px;
+    height: 30px;
+    font-size: 12px;
+    padding: 6px;
+    margin-bottom: 12px;
+}
+.btn{
+    width: 80%;
+    background-color: #008dde;
+    border: none;
+    border-radius: 8px;
+    margin: 14px auto 30px auto;
+    height: 32px;
+    text-align: center;
+    cursor: pointer;
+}
+.bold{
+    font-weight: bold;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+}
+.navigation{
+    background-color: #f2f2f2;
+    height: 20px;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
+.center-container{
+    margin: 0 auto;
+}
+.calendar-container{
+    max-width: 928px;
 }

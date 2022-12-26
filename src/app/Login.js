@@ -14,30 +14,29 @@ const loginF =  (e) => {
 }
 
 
-    return(<>   
-        <div className="input-field s12 ">
-            <input id="user" type="text" 
+    return(
+    <div className="body-container">
+        <form className="login-container">
+        <h1>Bienvenido. Inicia Sesion</h1>
+            <label htmlFor="user" className="bold">Username</label>
+            <input id="user" type="text" className="input"
                 value={user}
-                onChange= {e => setUser(e.target.value)}/>
-            <label htmlFor="user">Username</label>
-        </div>
-              
-             
-        <div className="input-field s12 ">
-            <input id="password" type="text"
+                onChange= {e => setUser(e.target.value)}
+                placeholder="Usuario"/>
+            
+            <label htmlFor="password" className="bold">Password</label>
+            <input id="password" type="password" className="input"
                 value={password}
                 onChange= {e => setPassword(e.target.value)}
-            />
-            <label htmlFor="password">Contraseña</label>
-        </div>
-             
-        <button className="btn waves-effect waves-light" 
+                placeholder="Contraseña"/>
+            <a href="#" className="text-link">¿Olvidaste la contraseña?</a>
+        <button className="btn" 
             onClick={loginF}>
-            Iniciar Sesion
-            <i className="material-icons right">send</i>
+            <span>Iniciar Sesion</span>
         </button>
-        
-    </>
+
+        </form>
+    </div>
     )
     
 }
