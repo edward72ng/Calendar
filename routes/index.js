@@ -9,7 +9,7 @@ const express = require('express')
 
 
 function routerApi (app){
-    const routerv1 = express.Router()
+    const routerv1 = new express.Router()
     
     routerv1.use('/inbox',routerInbox)
     routerv1.use('/dnotify',routerDnotify)

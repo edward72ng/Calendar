@@ -1,7 +1,7 @@
 import React,{useContext} from "react";
 import {useAuth} from './auth'
 import {DatesContext} from './datesContext'
-function OneTodo ({id, content, details, updateBlocs}){
+function OneTodo ({id, content, details, updateBlocs, evento, children}){
     const auth = useAuth()
     const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
     const deleteTodo= (id)=>{
@@ -39,23 +39,47 @@ function OneTodo ({id, content, details, updateBlocs}){
     setInputEnabled(!inputEnabled)
   })}
     return (
-        <div className="container">
-        <div className="container2">
-            <div>
+        <div className="one-todo"
+        draggable="true"
+        onDragStart={()=>setValues(
+          {
+            id: id,
+          }
+        )}
+        onDragEnd={()=>setValues(
+          {
+            id:null,
+            content: '',
+            details: '',
+            event: '',
+            notifications: [],
+          }
+        )}>
+          <div className="space-between">
+          <div>
                 <p className="content">{content}</p>
                 <p className="details">{details}</p>
+                {evento
+                ?
+                <p className="details cont">{evento.event}
+                  <i className="material-icons  nana">today</i>
+                </p>
+                :
+                <></>
+                }
             </div>
             <div className="icons-container">
-                <a className="waves-effect waves-light btn-small" onClick={()=>deleteTodo(id)}>
-                    <i className="small material-icons">delete</i>
+                <a className="" onClick={()=>deleteTodo(id)}>
+                    <i className="material-icons">delete</i>
                 </a>
-                <a className="waves-effect waves-light btn-small" onClick={()=>editTodo(id)}>
-                    <i className="small material-icons">edit</i>
+                <a className="" onClick={()=>editTodo(id)}>
+                    <i className="material-icons">edit</i>
                 </a>
             </div>
+          </div>
+          {children}
         </div>
-        <div className="line-div"></div>
-        </div>
+        
     )
 }
 export {OneTodo}

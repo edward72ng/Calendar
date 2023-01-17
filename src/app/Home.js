@@ -18,19 +18,20 @@ function Home() {
     updateBlocs(filter)
     }
   },[filter, inputEnabled])
-  
+
   return(<>
-  <div className="calendar-container center-container">
+  <div className="container home-container">
       {blocs.map((task, i) => {
+        console.log(task.evento)
             return <OneTodo key={i} 
                 content={task.content} 
-                details={task.deatails} 
+                details={task.deatails}
+                evento={task.evento}
                 id={task.id}
-                updateBlocs={updateBlocs}></OneTodo>         
+                updateBlocs={updateBlocs}>
+                  <p>lalalalsld</p>
+                </OneTodo>         
                     })}  
   </div>
-      {inputEnabled && <InputModal/>}
-  <i className='material-icons adding' 
-  onClick={()=>{setInputEnabled(!inputEnabled)}}>add</i>
 </>)}
 export {Home} 

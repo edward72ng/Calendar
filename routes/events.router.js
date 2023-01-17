@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const router = new express.Router()
 const {models} = require('./../db/connec')
 
 const sequelize = require('./../db/connec');

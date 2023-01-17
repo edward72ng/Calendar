@@ -11,9 +11,14 @@ function ProfileView({profileView, setProfileView}){
     })
   },[])
     return <div className='profile-container'>
+      <div className='space-between'>
       <i className="material-icons">person_outline</i>
+      <i className="material-icons"
+      onClick={()=>setProfileView(false)}
+      >close</i>
+      </div>
+      
       <h6>{user}</h6>
-      <div className='line-div'></div>
       <p>Plan Free</p>
       <p className='warning' onClick={()=>{
         setProfileView(!profileView);

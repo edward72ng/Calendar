@@ -7,9 +7,9 @@ function Menu ({menu, setMenu}) {
   const [content, setContent] = useState('')
   const [del, setDel] = useState(false)
   const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
-  const {setFilter} = useContext(DatesContext)
+  const {values,setValues,setFilter} = useContext(DatesContext)
   const auth = useAuth()
-  useEffect(()=>{
+  useEffect(()=>{ 
    
   },[folder])
   const addFolder = (e)=>{
@@ -43,15 +43,42 @@ function Menu ({menu, setMenu}) {
     updateFolders('/')
   })
   }
+  const move = (value) =>{
+    fetch('http://localhost:3000/api/v1/folders/'+value,{
+      method: 'POST',
+      body: JSON.stringify({
+        todoId: values.id
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token,
+      }
+    }).then(()=>{
+      setValues(
+        {
+          id: null,
+          content: '',
+          details: '',
+          event: '',
+          notifications: [],
+        })
+        setMenu(false)
+    })
+  }
     return(
-          <div className={'menu-enable'}>
+      <>
+          <div className='menu-enable'>
             <ol >
-                <li onClick={()=>{setMenu(!menu)}}><i className="material-icons">menu</i></li>
-                <div className='divider'></div>
-              <li onClick={()=>setFilter('')}><i className="material-icons">select_all</i>All</li>
+              <li className='hover item'
+              onClick={()=>setFilter('')}>
+                <i className="material-icons">select_all</i>
+              All</li>
               {
                 folder.map((elem, i)=>{
-                  return <li key={i}
+                  return <li  key={i} className="hover item"
+                  onDragOver={(e)=>e.preventDefault()}
+                  onDrop={()=>move(elem.id)}
                   onClick={()=>setFilter('?folder=' + elem.id)}>
                     {elem.name}
                     {del && <i className="material-icons" onClick={()=>{deleteFolder(elem.id); setDel(!del)}}>delete</i>}
@@ -67,8 +94,13 @@ function Menu ({menu, setMenu}) {
             value={content}></input>
             </Form>
             }
-            <button type='button' onClick={()=>setDel(!del)}>{!del?'habilitar edicion':'desabilitar edicion'}</button>
+            <button type='button' className='btn' 
+            onClick={()=>setDel(!del)}>{!del?'habilitar edicion':'desabilitar edicion'}
+            </button>
           </div>
+          <div className='null'
+          onDragEnter={()=>setMenu(false)}></div>
+          </>
     )
 }
 

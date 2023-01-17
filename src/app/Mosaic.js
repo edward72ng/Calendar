@@ -51,7 +51,7 @@ function Mosaic ({day, first, notificate, today, notification}){
             setModalView(!modalView); 
             setDayEvent(notificate)
             setDayNotifications(notification)}}
-        className={'mosaic-component'}
+        className={'mosaic-component hover'}
         style={isFirst()} >
         <div className="eje">
             <div className={istoday(day)}>{day}</div>

@@ -3,6 +3,7 @@ import {Form} from "./Form"
 import {useAuth} from "./auth"
 import { DatesContext } from "./datesContext";
 import { useFetch } from "./useFetch";
+import {Modal} from "./modal"
 function InputModal() {
     const {values, setValues, inputEnabled,setInputEnabled} = useContext(DatesContext)
     const [contentTodo,setContentTodo] = useState(values.content)
@@ -127,7 +128,8 @@ function InputModal() {
     }
 
     return(
-    <div className="input-enabled">
+      <Modal>
+   
       <div className="modal-table">
         <Form execSubmit={addTodo}>
           <h5>Contenido</h5>
@@ -166,19 +168,19 @@ function InputModal() {
             {
               folder.map((elem, i)=>{
                 return (
-                  <li key={i} onClick={()=>move(elem.id)}><i className="material-icons" >folder</i>{elem.name}</li>
+                  <li key={i} className="hover item"
+                  onClick={()=>move(elem.id)}>
+                    <i className="material-icons" >folder</i>
+                  {elem.name}</li>
                 )
               })
             }
         </ol>
-        <button onClick={()=>{closeModal()}} className="btn waves-effect waves-light" type="button">
-      Cancelar
-      <i className="material-icons right">cancel</i>
-    </button>
         </Form>
         </div>
         
-    </div>
+    
+    </Modal>
     )
 }
 

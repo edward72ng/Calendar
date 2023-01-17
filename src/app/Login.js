@@ -15,11 +15,11 @@ const loginF =  (e) => {
 
 
     return(
-    <div className="body-container">
+    <div className="center">
         <form className="login-container">
         <h1>Bienvenido. Inicia Sesion</h1>
             <label htmlFor="user" className="bold">Username</label>
-            <input id="user" type="text" className="input"
+            <input  id="user" type="text" className="input"
                 value={user}
                 onChange= {e => setUser(e.target.value)}
                 placeholder="Usuario"/>
@@ -30,7 +30,8 @@ const loginF =  (e) => {
                 onChange= {e => setPassword(e.target.value)}
                 placeholder="Contraseña"/>
             <a href="#" className="text-link">¿Olvidaste la contraseña?</a>
-        <button className="btn" 
+
+        <button className="btn" type="submit"
             onClick={loginF}>
             <span>Iniciar Sesion</span>
         </button>

@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const router = new express.Router()
 const Service = require('./../services/user.service.js')
 const service = new Service()
 

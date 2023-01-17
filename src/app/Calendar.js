@@ -10,7 +10,7 @@ import {OneTodo} from './OneTodo'
 function Calendar (){
     const [input, setInput] = useState(false)
     const [mount, setMounth] = useState(0)
-    const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
+    const {inputEnabled ,setValues} = useContext(DatesContext)
     const {getElemMonth, month, year, afterBefore, setAfterBefore} = useContext(DatesContext)
     const {modalView, setModalView, dayEvent, dayNotifications} = useContext(EventsContext)
     const navigate = useNavigate()
@@ -56,7 +56,8 @@ function Calendar (){
     setInput(!input)
   })}
     return(
-        <div className="calendar-container center-container">
+      <div className="center">
+        <div className="calendar-container">
         <div className="around">
             <i onClick={()=>{setAfterBefore(afterBefore-1)}} className="waves-effect material-icons">navigate_before</i>
             <h5 className="month" id="month">{months[getElemMonth(month + afterBefore)]}</h5>
@@ -114,14 +115,7 @@ function Calendar (){
                              
             </Modal>
         )}
-         {inputEnabled && <InputModal 
-                input={inputEnabled} 
-                setInput={setInputEnabled} 
-                mount={mount} 
-                setMounth={setMounth}  
-                ></InputModal>}
-  <i className='material-icons adding' 
-  onClick={()=>{setInputEnabled(!inputEnabled);setInput(!input)}}>add</i>
+    </div>
     </div>
     )
 }
