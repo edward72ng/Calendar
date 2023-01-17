@@ -3,6 +3,7 @@ import {DatesContext} from './datesContext'
 import {useFetch} from './useFetch'
 import {Form} from './Form'
 import {useAuth} from './auth'
+import {SectionMenu} from './SectionMenu'
 function Menu ({menu, setMenu}) {
   const [content, setContent] = useState('')
   const [del, setDel] = useState(false)
@@ -76,13 +77,10 @@ function Menu ({menu, setMenu}) {
               All</li>
               {
                 folder.map((elem, i)=>{
-                  return <li  key={i} className="hover item"
-                  onDragOver={(e)=>e.preventDefault()}
-                  onDrop={()=>move(elem.id)}
-                  onClick={()=>setFilter('?folder=' + elem.id)}>
-                    {elem.name}
-                    {del && <i className="material-icons" onClick={()=>{deleteFolder(elem.id); setDel(!del)}}>delete</i>}
-                    </li>
+                  return <SectionMenu key={i} 
+                  dataVAlues={elem}
+                  functions={{move, setFilter, deleteFolder, del, setDel}}
+                  ></SectionMenu>
                 })
               }
             </ol>
@@ -105,3 +103,13 @@ function Menu ({menu, setMenu}) {
 }
 
 export {Menu};
+
+/*
+ return <li  key={i} className="hover item"
+                  onDragOver={(e)=>e.preventDefault()}
+                  onDrop={()=>move(elem.id)}
+                  onClick={()=>setFilter('?folder=' + elem.id)}>
+                    {elem.name}
+                    {del && <i className="material-icons" onClick={()=>{deleteFolder(elem.id); setDel(!del)}}>delete</i>}
+                    </li>
+*/

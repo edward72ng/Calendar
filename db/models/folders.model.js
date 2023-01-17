@@ -16,6 +16,10 @@ const schemaFoldersSeq = {
      },
     userid: {
         type: INTEGER.UNSIGNED,
+    },
+    collaborative:{
+        type: DataTypes.BOOLEAN,
+        default: false
     }
   }
 

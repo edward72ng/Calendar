@@ -14,18 +14,33 @@ router.get('/',async (req,res)=>{
         var token = req.headers.authorization;
         var newToken = token.replace("Bearer ", "");
         const pay = await authservice.getPayload(newToken)
-    
-        const data = await models.folders.findAll({
+        const collaborative = await models.folders.findAll({
             where:{
-                userid:pay.sub
+                userid:pay.sub,
+                collaborative: true,
             }
         });
+        const noCollaborative = await models.folders.findAll({
+            where:{
+                userid:pay.sub,
+                collaborative: false,
+            }
+        });
+        const data = [
+        {
+            tittle: "No Collaborative",
+            data: noCollaborative,
+        },
+        {
+            tittle: "Collaborative",
+            data: collaborative,
+        },
+        ]
         res.json(data);
     }
     else{
         res.send('unauthorized')
     }
-    
 })
 
 router.post('/',async (req,res)=>{

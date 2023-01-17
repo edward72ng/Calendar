@@ -1,10 +1,10 @@
 import React, { useContext, useEffect} from 'react'
 import {useAuth} from './auth'
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import {DatesContext} from './datesContext'
-import {InputModal} from "./InputModal"
 import {useFetch} from './useFetch'
+
 function Home() {
   const auth = useAuth()
   const {inputEnabled,setInputEnabled,filter} = useContext(DatesContext)
@@ -29,7 +29,7 @@ function Home() {
                 evento={task.evento}
                 id={task.id}
                 updateBlocs={updateBlocs}>
-                  <p>lalalalsld</p>
+                  
                 </OneTodo>         
                     })}  
   </div>
