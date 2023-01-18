@@ -8,7 +8,7 @@ function SectionHome({dataVAlues, functions}) {
         {
             data.map((elem, i)=>{
                 return (
-                    <OneTodo>
+                    <OneTodo id={elem.id} content={elem.content} details ={elem.deatils} evento={elem.evento}>
 
                     </OneTodo>
                 )
