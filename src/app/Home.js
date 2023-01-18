@@ -8,7 +8,7 @@ import {useFetch} from './useFetch'
 function Home() {
   const auth = useAuth()
   const {inputEnabled,setInputEnabled,filter} = useContext(DatesContext)
-  const [blocs, updateBlocs] = useFetch('/api/v1/inbox/your-todos')
+  const [blocs, updateBlocs] = useFetch('/api/v1/inbox/') //your-todos
   const navigate = useNavigate()
 
   useEffect(()=>{
@@ -22,7 +22,6 @@ function Home() {
   return(<>
   <div className="container home-container">
       {blocs.map((task, i) => {
-        console.log(task.evento)
             return <OneTodo key={i} 
                 content={task.content} 
                 details={task.deatails}

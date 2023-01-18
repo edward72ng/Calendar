@@ -13,19 +13,23 @@ const validate = require('./../middlewares/middleware.schema')
 const {createTodo , updateTodo, idTodo} = require('./../schemas/joi.schema')
 
 
-router.get('/',async (req,res,next) =>{
-    console.log(req.headers)
-    if (req.headers.authorization){
-        console.log('hay header authorization :D')
-        console.log(req.headers.authorization)
-        var token = req.headers.authorization;
-        var newToken = token.replace("Bearer ", "");
-        console.log(newToken)
-        const pay = await authservice.getPayload(newToken)
-        console.log(pay)
+router.get('/',
+    async (req,res,next)=>{
+        const {folder} = req.query;
+        if (req.headers.authorization){
+            var token = req.headers.authorization;
+            var newToken = token.replace("Bearer ", "");
+            const pay = await authservice.getPayload(newToken)
+            var data = await service.get(pay.sub, folder)
+            console.log(folder)
+            res.json(data)
+        }
+        else{
+            res.send('unauthorized')
+        }
     }
-    res.json(await service.obtener())
-})
+)
+
 
 
 router.post('/',

@@ -64,6 +64,38 @@ class Todos {
         this.data = await models.todo.findAll()//.then(res=>{console.log(res)}).catch(e=>{console.log(e)})
         return this.data
     }
+
+    async get(userId, folder) {
+        if(!folder){
+            let yourTodos = await models.todo.findAll({
+                where: {
+                    userid: userId
+                },
+                include:['notifis','evento']
+            })
+            
+            const res = [
+                {
+                tittle: "all",
+                data: yourTodos,
+                }
+            ]
+            return res
+            
+        }else if(folder){
+            let folderId = parseInt(folder)
+            let yourTodos = await models.todo.findAll({
+                where: {
+                    userid: userId,
+                    folderid: folderId
+                },
+                include:['notifis','evento']
+            })
+            
+            return yourTodos
+        }
+    }
+
     async postear(objeto) {
         var td = {
             //id: faker.datatype.uuid(),

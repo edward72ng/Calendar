@@ -30,6 +30,11 @@ class Folders extends Model{
             as: 'blocsInFolder',
             foreignKey: 'folderid' //un evento puede tener muchos todos
         })
+
+        this.hasMany(models.sections, {
+            as: 'sectionsInFolder',
+            foreignKey: 'folderid' //un evento puede tener muchos todos
+        })
     }
 
     static config(sequelize){
