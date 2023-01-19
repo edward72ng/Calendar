@@ -1,7 +1,7 @@
 
 const boom = require('@hapi/boom')
 const id = require('faker/lib/locales/id_ID')
-const { where } = require('sequelize')
+const { where, Op } = require('sequelize')
 const sequelize = require('./../db/connec')
 const {models} = require('./../db/connec')
 //const {Todo} = require('./../db/models/modelssequelize')
@@ -65,6 +65,43 @@ class Todos {
         return this.data
     }
 
+
+    async prymari(folder){
+        let obj = {
+            tittle:"No Sections",
+            data: []
+        }
+        const dat = await models.todo.findAll({
+            where: {
+                sectionid : null,
+                folderid: folder
+            }
+        })
+        obj = {
+            tittle:"No Sections",
+            data: dat
+        }
+        return obj 
+    }
+    async mutable (arr){
+        const res = []
+        let obj;
+        await Promise.all(
+            arr.map(async(elem,i)=>{
+                obj = {
+                    tittle: elem.section,
+                    data: await models.todo.findAll({
+                        where : {
+                            sectionid:elem.id, 
+                        }
+                    })
+                }
+                res.push(obj)
+            })
+        )
+        return res
+    } 
+
     async get(userId, folder) {
         if(!folder){
             let yourTodos = await models.todo.findAll({
@@ -76,23 +113,21 @@ class Todos {
             
             const res = [
                 {
-                tittle: "all",
+                tittle: "Todo",
                 data: yourTodos,
                 }
             ]
             return res
-            
+
         }else if(folder){
             let folderId = parseInt(folder)
-            let yourTodos = await models.todo.findAll({
-                where: {
-                    userid: userId,
-                    folderid: folderId
-                },
-                include:['notifis','evento']
+            let yourSections = await models.folders.findByPk(folderId,{
+                include:['sectionsInFolder']
             })
             
-            return yourTodos
+            const res = await this.mutable(yourSections.sectionsInFolder)
+            res.push(await this.prymari(folderId))
+            return res
         }
     }
 

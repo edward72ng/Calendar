@@ -1,9 +1,12 @@
-import React,{useContext} from "react";
+import React,{useContext, useState} from "react";
 import {useAuth} from './auth'
 import {DatesContext} from './datesContext'
 function OneTodo ({id, content, details, updateBlocs, evento, children}){
     const auth = useAuth()
     const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
+    const [check, setCheck] = useState(false)
+    const [expand, setExpand] = useState(false)
+
     const deleteTodo= (id)=>{
         fetch('/api/v1/inbox/your-todos/'+ id, {
             method: 'DELETE',
@@ -55,8 +58,20 @@ function OneTodo ({id, content, details, updateBlocs, evento, children}){
             notifications: [],
           }
         )}>
-          <div className="space-between">
-          <div>
+        
+          <div className="row center-item">
+            
+            {check ?
+              <i className="material-icons"
+              onClick={()=>setCheck(false)}
+              >check_box</i>
+            :
+              <i className="material-icons"
+              onClick={()=>setCheck(true)}
+              >check_box_outline_blank</i>
+            }
+                
+                <div>
                 <p className="content">{content}</p>
                 <p className="details">{details}</p>
                 {evento
@@ -67,7 +82,11 @@ function OneTodo ({id, content, details, updateBlocs, evento, children}){
                 :
                 <></>
                 }
+                </div>
+                
             </div>
+            <div className="avatar-home-container"></div>
+
             <div className="icons-container">
                 <a className="" onClick={()=>deleteTodo(id)}>
                     <i className="material-icons">delete</i>
@@ -75,9 +94,21 @@ function OneTodo ({id, content, details, updateBlocs, evento, children}){
                 <a className="" onClick={()=>editTodo(id)}>
                     <i className="material-icons">edit</i>
                 </a>
+                {
+                  expand?
+                  <a
+                  onClick={()=>setExpand(!expand)}>
+                    <i className="material-icons">expand_less</i>
+                  </a>
+                  :
+                  <a
+                  onClick={()=>setExpand(!expand)}>
+                    <i className="material-icons">expand_more</i>
+                  </a>
+                }
+                
+                
             </div>
-          </div>
-          {children}
         </div>
         
     )
