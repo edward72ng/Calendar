@@ -1,9 +1,9 @@
 /*ESTANDAR*/
 *{
     --light-back:rgba(239,238,244,255);
-    --dark-back:rgba(12,12,12,255);
+    --dark-back:rgba(37,38,40,255);
     --light-sup:rgba(255,255,255,255);
-    --dark-sup:rgba(24,24,24,255);
+    --dark-sup:rgba(30,31,33,255);
     --dark-filter:brightness(0) saturate(100%) invert(100%) sepia(59%) saturate(417%) hue-rotate(44deg) brightness(110%) contrast(105%);
     --light-filter:brightness(0) saturate(100%);
     --black: black;
@@ -13,7 +13,7 @@
     --global-back:var(--light-back);
     --global-sup:var(--light-sup);
     --global-filter:var(--light-filter);
-    --color:var(--black)
+    --color:var(--black);
 }
 body {
     font-family: 'Quicksand', sans-serif;
@@ -106,6 +106,7 @@ input{
     font-size: 14px;
     margin-top: 8px;
     margin-bottom: 2px;
+    color: var(--color);
 }
 .details{
     font-size: 12px;
@@ -172,12 +173,20 @@ input{
 }
 .menu-enable{  
     background-color: var(--global-back);
+    max-width: 364px;
+    min-width: 256px;
+    border-right: 1px solid gray;
+    display: none;
+}
+.menu-container{
+    background-color: var(--global-back);
     position: fixed;
     left: 0px; 
+    bottom: 0px;
     z-index: 1;
-    width: 25%;
-    margin-top: 40px;
-    height: calc(100vh - 40px);
+    width: 90%;
+    max-width: 396px;
+    height: calc(100vh - 60px);
 }
 .null{
     width: 75%;
@@ -235,11 +244,13 @@ input{
 }
 .navigation{
     position: fixed;
+    display: flex;
+    align-items: center;
     right: 0;
     top: 0;
     z-index: 3;
     width: 100%;
-    height: 20px;
+    height: 40px;
     padding: 10px;
     border-bottom: 1px solid lightgray;
     background-color: var(--global-sup);
@@ -247,7 +258,7 @@ input{
 }
 
 .one-todo{
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: var(--global-sup);
     padding: 4px;
     margin: 4px 0;
@@ -278,7 +289,6 @@ input{
 }
 .item{
     background-color: var(--global-sup);
-    border-radius: 8px;
     margin: 4px;
     padding: 4px;
 }
@@ -296,25 +306,25 @@ input{
     align-items: center;
 }
 .home-container{
-    margin-top: 40px;
     width: 100%;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 60px);
     display: flex;
+    /*justify-content: center;*/
     overflow-x: auto;
 }
 .home-container::-webkit-scrollbar{
     height: 8px;
 }
 .home-container::-webkit-scrollbar-thumb{
-    background-color: var(--global-sup);
+    background-color: var(--color);
     border-radius: 8px;
 }
 .home-container::-webkit-scrollbar-button{
     display: none;
 }
 .section-container{
-    min-width: 390px;
-    max-width: 390px;
+    min-width: 388px;
+    max-width: 388px;
     margin: 8px;
     padding: 4px;
     overflow-y: auto;
@@ -324,14 +334,47 @@ input{
 }
 
 .tittle{
-    color: black;
+    color: var(--color);
     font-weight: bold;
     font-size: larger;
 }
 .avatar-home-container{
     background-image: url(https://randomuser.me/api/portraits/women/63.jpg);
-    width: 50px;
-    height:50px;
+    width: 40px;
+    height:40px;
     border-radius: 50%;
     background-size: cover;
+}
+.app-container{
+    display: flex;
+    margin-top: 60px;
+}
+.edit-folder-container{
+    display: flex;
+    justify-content: center;
+}
+@media (min-width: 1000px){
+
+    .menu-enable{
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .icon-disable{
+        display: none;
+    }
+}
+@media (max-width: 400px){
+    .section-container{
+        max-width: none;
+        min-width: none;
+        padding: 2px;
+        margin: 0;
+        box-sizing: content-box;
+    }
+    .home-container{
+        display: flex;
+        justify-content: initial;
+    }
+
 }

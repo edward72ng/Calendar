@@ -1,10 +1,12 @@
 import React, { useContext, useEffect} from 'react'
 import {useAuth} from './auth'
 import {useNavigate} from 'react-router-dom';
-import {OneTodo} from './OneTodo'
 import {DatesContext} from './datesContext'
 import {useFetch} from './useFetch'
 import {SectionHome} from './SectionHome'
+import {Menu} from './Menu'
+import { AppContainer } from './AppContainer';
+
 function Home() {
   const auth = useAuth()
   const {inputEnabled,setInputEnabled,filter} = useContext(DatesContext)
@@ -16,8 +18,12 @@ function Home() {
       navigate('/')
     }else{
     updateBlocs(filter)
+    
     }
   },[filter, inputEnabled])
+  useEffect(()=>{
+
+  })
   /*useEffect(()=>{
     const scrollX = document.getElementById('scroll-x')
     scrollX.addEventListener('wheel',(e)=>{
@@ -27,8 +33,28 @@ function Home() {
     }) 
   })*/
 
-  return(<>
-  <div className="home-container" id='scroll-x'>
+  return(
+    <AppContainer>
+      <div className="home-container">
+    
+    {blocs.map((elem, i) => {
+          return <SectionHome key={i}
+          dataVAlues={elem}
+          index= {i}
+          functions={{updateBlocs}}
+          >
+          </SectionHome>
+                  })}  
+</div>
+    </AppContainer>
+  )}
+export {Home} 
+
+/**
+ * <div className='row'>
+  <Menu></Menu>
+  <div className="home-container">
+    
       {blocs.map((elem, i) => {
             return <SectionHome key={i}
             dataVAlues={elem}
@@ -38,5 +64,5 @@ function Home() {
             </SectionHome>
                     })}  
   </div>
-</>)}
-export {Home} 
+</div>
+ */

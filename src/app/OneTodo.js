@@ -85,7 +85,6 @@ function OneTodo ({id, content, details, updateBlocs, evento, children}){
                 </div>
                 
             </div>
-            <div className="avatar-home-container"></div>
 
             <div className="icons-container">
                 <a className="" onClick={()=>deleteTodo(id)}>
@@ -109,6 +108,10 @@ function OneTodo ({id, content, details, updateBlocs, evento, children}){
                 
                 
             </div>
+
+            <div className="avatar-home-container"></div>
+
+            
         </div>
         
     )

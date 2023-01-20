@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import {InputModal} from './InputModal'
 import {useFetch} from './useFetch'
+import { AppContainer } from "./AppContainer";
 function Notify (){
   const {dateString} = useContext(DatesContext)
   const [input, setInput] = useState(false)
@@ -61,7 +62,8 @@ function Notify (){
     setInput(!input)
   })}
     return(
-        <div className="home-container">
+        <AppContainer>
+          <div className="home-container">
           <h4>ToDay</h4>
             {(notifications.length != 0) && <h5>Notify</h5>}
             {
@@ -96,6 +98,7 @@ function Notify (){
   
                   
         </div>
+        </AppContainer>
     )
 }
 

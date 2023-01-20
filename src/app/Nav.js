@@ -15,25 +15,26 @@ function Nav ({children}) {
         <>
           <nav className="navigation space-between">
             <ul className='row'>
-              <li 
+              <li className='icon-disable'
               onClick={()=>{setMenuEnabled(!menuEnabled)}}
               onDragOver={()=>setMenuEnabled(true)}><i className="material-icons">menu</i></li>
               <li><Search></Search></li>
             </ul>
             <ul className='row'>
-              <ul className='row'>
+              <ul className='row center-item'>
                 <li><Link to="/home"><i className="material-icons">home</i></Link></li>
                 <li><Link to="/calendary"><i className="material-icons">date_range</i></Link></li>
                 <li><Link to="/notify"><i className="material-icons">view_day</i></Link></li>
               </ul>
-              <li onClick={()=>{setProfileView(!profileView)}}><i className="material-icons">person_outline</i></li>
+              <li onClick={()=>{setProfileView(!profileView)}}><div className="avatar-home-container"></div></li>
             </ul>
           </nav>
         {menuEnabled &&  
         <Modal>
           <Menu 
           menu={menuEnabled} 
-          setMenu={setMenuEnabled}/>
+          setMenu={setMenuEnabled}
+          className='menu-container'/>
         </Modal>}
 
         {profileView && 

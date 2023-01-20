@@ -4,7 +4,7 @@ import {useFetch} from './useFetch'
 import {Form} from './Form'
 import {useAuth} from './auth'
 import {SectionMenu} from './SectionMenu'
-function Menu ({menu, setMenu}) {
+function Menu ({menu, setMenu, className}) {
   const [content, setContent] = useState('')
   const [del, setDel] = useState(false)
   const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
@@ -69,7 +69,7 @@ function Menu ({menu, setMenu}) {
   }
     return(
       <>
-          <div className='menu-enable'>
+          <div className={className? className : 'menu-enable'}>
             <ol >
               <li className='hover item'
               onClick={()=>setFilter('')}>
@@ -84,6 +84,9 @@ function Menu ({menu, setMenu}) {
                 })
               }
             </ol>
+
+            <div className='edit-folder-container'>
+              
             {!!del && 
             <Form execSubmit={addFolder}>
             <p>Agregar Carpeta</p>
@@ -95,9 +98,12 @@ function Menu ({menu, setMenu}) {
             <button type='button' className='btn' 
             onClick={()=>setDel(!del)}>{!del?'habilitar edicion':'desabilitar edicion'}
             </button>
-          </div>
-          <div className='null'
-          onDragEnter={()=>setMenu(false)}></div>
+            </div>
+            </div>
+          
+          {className &&
+            <div className='null'
+          onDragEnter={()=>setMenu(false)}></div>}
           </>
     )
 }

@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import {OneTodo} from './OneTodo'
 function SectionHome({dataVAlues, functions, index}) {
     const {tittle, data} = dataVAlues
+    
     const {updateBlocs} = functions
     useEffect(()=>{
         const container = document.getElementById('section' + index)
-        //const container = document.getElementsByClassName('section-container')
         new Sortable(container,{
             group: 'blocs',
             animation: 150,
-            
         })
       
       })

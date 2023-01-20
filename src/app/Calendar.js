@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import {DatesContext} from './datesContext'
 import {InputModal} from './InputModal'
 import {OneTodo} from './OneTodo'
+import { AppContainer } from "./AppContainer";
 function Calendar (){
     const [input, setInput] = useState(false)
     const [mount, setMounth] = useState(0)
@@ -56,7 +57,8 @@ function Calendar (){
     setInput(!input)
   })}
     return(
-      <div className="center">
+      <AppContainer>
+        <div className="center">
         <div className="calendar-container">
         <div className="around">
             <i onClick={()=>{setAfterBefore(afterBefore-1)}} className="waves-effect material-icons">navigate_before</i>
@@ -117,6 +119,7 @@ function Calendar (){
         )}
     </div>
     </div>
+      </AppContainer>
     )
 }
 export {Calendar}

@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Login} from './Login';
 import {Route, Routes} from 'react-router-dom'
 import {Home} from './Home'
 import {Notify} from './Notify'
 import {Calendar} from './Calendar'
-import {EventsProvider} from './eventsProvider'
 import {Nav} from"./Nav"
 import {ProfileView} from './ProfileView'
 function App () {
