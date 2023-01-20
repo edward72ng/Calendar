@@ -28,5 +28,12 @@ router.get('/:id',async (req,res) =>{
     )
     res.json(rsp)
 })
+router.post('/:sectionId',async (req, res)=>{
+    const {sectionId} = req.params
+    const {todoId} = req.body
+    const todo = await models.todo.findByPk(todoId)
+    const resp = todo.update({sectionid: sectionId})
+    res.json(resp)
+})
 
 module.exports = router

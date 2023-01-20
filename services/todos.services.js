@@ -89,6 +89,7 @@ class Todos {
         await Promise.all(
             arr.map(async(elem,i)=>{
                 obj = {
+                    sectionid:elem.id,
                     tittle: elem.section,
                     data: await models.todo.findAll({
                         where : {
