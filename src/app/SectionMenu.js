@@ -1,13 +1,18 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import {SocketContext} from './socketContext'
 function SectionMenu({dataVAlues, functions}) {
     const {tittle, data} = dataVAlues
     const {move, setFilter, deleteFolder, del, setDel} = functions
+    const {setSocket} = useContext(SocketContext)
 
     const initializeCollaborative = (id, collaborative)=>{
         setFilter('?folder=' + id)
         if(collaborative){
-            io()
+            const newsocket= io()
+            
+            setSocket(newsocket)
+
+
         }
     }
 

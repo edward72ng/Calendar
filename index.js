@@ -32,4 +32,12 @@ const io = SocketIO(server)
 
 io.on('connection',(socket)=>{
   console.log("SOCKET CONECTADO¡¡¡",socket.id)
+  socket.on('moveToSection',(mesagge)=>{
+    console.log('SE A MOVIDO UN BLOQUE!!!!! a la seccion:' + mesagge.toSection)
+  })
+  socket.on('conectado',(data)=>{
+    console.log(data.message)
+    console.log('LLEGO??????')
+    io.sockets.emit('responseFromServer', data.message)
+  })
 })

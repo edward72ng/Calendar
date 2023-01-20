@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+
+import React, { useContext, useEffect } from "react";
 import {OneTodo} from './OneTodo'
+import { SocketContext } from "./socketContext";
 function SectionHome({dataVAlues, functions, index}) {
     const {tittle, data} = dataVAlues
-    
     const {updateBlocs} = functions
+    const {socket} = useContext(SocketContext)
+
     useEffect(()=>{
         const container = document.getElementById('section' + index)
         new Sortable(container,{
@@ -13,8 +16,17 @@ function SectionHome({dataVAlues, functions, index}) {
       
       })
     
-    return <div className="section-container" id={'section' + index}>
-        
+    const dropBlock = (blockId)=>{
+        console.log('se ha soltado algo')
+        socket.emit('moveToSection',{
+            toSection: tittle,
+            
+        })
+    }
+
+    return <div className="section-container" id={'section' + index}
+    onDragOver={(e)=>{e.preventDefault();console.log('arrastrando')}}
+    onDrop={()=>dropBlock()}>
         <div className="tittle" id="section">{tittle}</div>
         {
             data.map((elem, i)=>{
