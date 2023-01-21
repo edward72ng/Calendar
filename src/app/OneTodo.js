@@ -1,7 +1,7 @@
 import React,{useContext, useState} from "react";
 import {useAuth} from './auth'
 import {DatesContext} from './datesContext'
-function OneTodo ({id, content, details, updateBlocs, evento, children}){
+function OneTodo ({id, content, details, updateBlocs, evento, sectionId}){
     const auth = useAuth()
     const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
     const [check, setCheck] = useState(false)
@@ -44,11 +44,14 @@ function OneTodo ({id, content, details, updateBlocs, evento, children}){
     return (
         <div className="one-todo"
         draggable="true"
-        onDragStart={()=>setValues(
+        onDragStart={(e)=>
+          {setValues(
           {
             id: id,
-          }
-        )}
+          })
+          console.log('ORIGEN', sectionId)
+          e.dataTransfer.setData('mySectionId', sectionId)
+        }}
         onDragEnd={()=>setValues(
           {
             id:null,

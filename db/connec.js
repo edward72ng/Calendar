@@ -8,10 +8,13 @@ const setupModels = require('./models/index.js')
 const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,{
     host: config.dbHost,
     dialect: 'mysql',
+    logging: false,
     define: {
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
+        
       }
+
 });
 
 sequelize.authenticate().then(e=>{console.log('conectado con sequelize')}).catch(e=>{console.log(e)})

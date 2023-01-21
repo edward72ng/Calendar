@@ -19,13 +19,12 @@ function SectionHome({dataVAlues, functions, index}) {
       
       })
     
-    const dropBlock = (blockId)=>{
-        console.log('se ha soltado algo')
-        /*socket.emit('moveToSection',{
-            toSection: tittle,
-            
-        })*/
-        fetch('http://localhost:3000/api/v1/sections/'+sectionid,{
+    const dropBlock = (e)=>{
+      const valor = e.dataTransfer.getData('mySectionId')
+      console.log('ORIGEN',valor)
+      console.log('DESTINO', sectionid)
+
+      fetch('http://localhost:3000/api/v1/sections/'+sectionid,{
       method: 'POST',
       body: JSON.stringify({
         todoId: values.id
@@ -36,7 +35,6 @@ function SectionHome({dataVAlues, functions, index}) {
         'Authorization': 'Bearer ' + auth.token,
       }
     }).then(()=>{
-        console.log(sectionid, values.id)
       setValues(
         {
           id: null,
@@ -45,13 +43,22 @@ function SectionHome({dataVAlues, functions, index}) {
           event: '',
           notifications: [],
         })
-        updateBlocs(filter)
+        //updateBlocs(filter)
+
+        socket.emit('moveToSection',{
+            toSection: sectionid,
+            task: values.id,
+            originId: valor,
+        })
     })   
     }
 
     return <div className="section-container "   id={'section' + index}
     onDragOver={(e)=>{e.preventDefault();console.log('arrastrando')}}
-    onDrop={()=>dropBlock()}
+    onDrop={(e)=>
+      {
+      dropBlock(e)
+    }}
     style={{}}>
 
         <div className="tittle" id="section">{tittle}</div>
@@ -65,8 +72,9 @@ function SectionHome({dataVAlues, functions, index}) {
                     content={elem.content} 
                     details ={elem.deatails} 
                     evento={elem.evento} 
-                    updateBlocs={updateBlocs}>
-
+                    updateBlocs={updateBlocs}
+                    sectionId={sectionid}>
+                    
                     </OneTodo>
                 )
             })

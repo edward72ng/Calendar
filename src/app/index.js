@@ -10,6 +10,7 @@ import { SocketProvider } from './socketContext'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
+    <React.StrictMode>
     <HashRouter>
         <EventsProvider>
         <SocketProvider>
@@ -23,5 +24,6 @@ root.render(
             </SocketProvider>
             </EventsProvider>
     </HashRouter>
+    </React.StrictMode>
 )
 
