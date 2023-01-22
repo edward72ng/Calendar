@@ -3,13 +3,13 @@ import {Mosaic}  from './Mosaic'
 import {DatesContext} from './datesContext'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from './auth'
-import {useFetch} from './useFetch'
+import {UseFetch} from './useFetch'
 function MosaicsContainer (props){
     const {dat, month, getElemYear, filter} = useContext(DatesContext)
     const navigate = useNavigate()
     const auth = useAuth()
-    const [events,updateEvents] = useFetch('http://localhost:3000/api/v1/events/with-events')
-    const [notifications, updateNotifications] = useFetch('http://localhost:3000/api/v1/notifications/with-notification')
+    const [events,updateEvents] = UseFetch('http://localhost:3000/api/v1/events/with-events')
+    const [notifications, updateNotifications] = UseFetch('http://localhost:3000/api/v1/notifications/with-notification')
     let boxes = []
     for(let i = 1; i <= new Date(getElemYear(month + props.cMonth), parseInt(props.getElemMonth(month + props.cMonth)) + 1, 0).getDate(); i++){
         boxes.push(i)

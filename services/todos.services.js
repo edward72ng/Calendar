@@ -78,6 +78,7 @@ class Todos {
             }
         })
         obj = {
+            sectionid: 'nulo',
             tittle:"No Sections",
             data: dat
         }
@@ -114,6 +115,7 @@ class Todos {
             
             const res = [
                 {
+                sectionid: 'all',
                 tittle: "Todo",
                 data: yourTodos,
                 }

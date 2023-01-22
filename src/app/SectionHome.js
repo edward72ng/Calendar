@@ -1,23 +1,20 @@
 
 import React, { useContext, useEffect } from "react";
+import { useTasks } from "../custom-hooks/useTasks";
 import { useAuth } from "./auth";
 import { DatesContext } from "./datesContext";
 import {OneTodo} from './OneTodo'
 import { SocketContext } from "./socketContext";
+import { UseFetch } from "./useFetch";
 function SectionHome({dataVAlues, functions, index}) {
-    const {sectionid, tittle, data} = dataVAlues
+    const {sectionid, tittle} = dataVAlues
     const {updateBlocs} = functions
     const {socket} = useContext(SocketContext)
+    const [task, updateTask] = UseFetch('/api/v1/inbox/with-section/'+ sectionid)
+    //const {tasks} = useTasks(sectionid)
     const {values, setValues, filter} = useContext(DatesContext)
     const auth = useAuth()
-    useEffect(()=>{
-        const container = document.getElementById('section' + index)
-        new Sortable(container,{
-            group: 'blocs',
-            animation: 150,
-        })
-      
-      })
+
     
     const dropBlock = (e)=>{
       const valor = e.dataTransfer.getData('mySectionId')
@@ -35,6 +32,7 @@ function SectionHome({dataVAlues, functions, index}) {
         'Authorization': 'Bearer ' + auth.token,
       }
     }).then(()=>{
+      console.log('movicion completada')
       setValues(
         {
           id: null,
@@ -43,7 +41,7 @@ function SectionHome({dataVAlues, functions, index}) {
           event: '',
           notifications: [],
         })
-        //updateBlocs(filter)
+        updateData()
 
         socket.emit('moveToSection',{
             toSection: sectionid,
@@ -52,8 +50,8 @@ function SectionHome({dataVAlues, functions, index}) {
         })
     })   
     }
-
-    return <div className="section-container "   id={'section' + index}
+    
+      return <div className="section-container "   id={'section' + index}
     onDragOver={(e)=>{e.preventDefault();console.log('arrastrando')}}
     onDrop={(e)=>
       {
@@ -65,14 +63,15 @@ function SectionHome({dataVAlues, functions, index}) {
         
         
         {
-            data.map((elem, i)=>{
+            task.map((elem, i)=>{
                 return (
-                    <OneTodo key={i} 
+                    <OneTodo key={elem.id} 
                     id={elem.id} 
                     content={elem.content} 
                     details ={elem.deatails} 
                     evento={elem.evento} 
                     updateBlocs={updateBlocs}
+                    updateTasks= {updateTask}
                     sectionId={sectionid}>
                     
                     </OneTodo>
@@ -81,6 +80,8 @@ function SectionHome({dataVAlues, functions, index}) {
         }  
     </div>
 
+    
+    
 }
 
 export {SectionHome}

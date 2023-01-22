@@ -4,7 +4,7 @@ import {useAuth} from './auth'
 import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import {InputModal} from './InputModal'
-import {useFetch} from './useFetch'
+import {UseFetch} from './useFetch'
 import { AppContainer } from "./AppContainer";
 function Notify (){
   const {dateString} = useContext(DatesContext)
@@ -12,8 +12,8 @@ function Notify (){
   const [mount, setMounth] = useState(0)
   const auth = useAuth()
   const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
-  const [events, updateEvents] = useFetch('api/v1/events/day-events/'+dateString)
-  const [notifications, updateNotifications] = useFetch('api/v1/notifications/notification-today/'+dateString)
+  const [events, updateEvents] = UseFetch('api/v1/events/day-events/'+dateString)
+  const [notifications, updateNotifications] = UseFetch('api/v1/notifications/notification-today/'+dateString)
   const navigate = useNavigate()
     
   useEffect(()=>{

@@ -27,7 +27,7 @@ function SectionMenu({dataVAlues, functions}) {
                 onClick={()=>initializeCollaborative(elem.id, elem.collaborative)}>
                     <div>{elem.name}</div>
                 {del && 
-                <i className="material-icons" 
+                <i className="material-icons hover" 
                 onClick={()=>{deleteFolder(elem.id); setDel(!del)}}>
                 delete</i>}               
                 </li>

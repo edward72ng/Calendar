@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {DatesContext} from './datesContext'
-import {useFetch} from './useFetch'
+import {UseFetch} from './useFetch'
 import {Form} from './Form'
 import {useAuth} from './auth'
 import {SectionMenu} from './SectionMenu'
 function Menu ({menu, setMenu, className}) {
   const [content, setContent] = useState('')
   const [del, setDel] = useState(false)
-  const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
+  const [folder, updateFolders] = UseFetch('http://localhost:3000/api/v1/folders')
   const {values,setValues,setFilter} = useContext(DatesContext)
   const auth = useAuth()
   useEffect(()=>{ 

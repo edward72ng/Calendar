@@ -164,4 +164,28 @@ router.get('/with-folder',async (req,res)=>{
     res.json(data)
 })
 
+router.get('/with-section/:sectionId', async(req, res)=>{
+    const {sectionId} = req.params
+    if(sectionId == 'all'){
+        var token = req.headers.authorization;
+            var newToken = token.replace("Bearer ", "");
+            const pay = await authservice.getPayload(newToken)
+        const data = await models.todo.findAll({
+            where: {
+                userid: pay.sub,
+            },
+            include:['notifis','evento']
+        })
+        res.json(data)
+    }else{
+        const data = await models.todo.findAll({
+            where: {
+                sectionid: sectionId
+            }
+        })
+        res.json(data)
+    }
+    
+})
+
 module.exports = router

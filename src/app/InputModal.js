@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {Form} from "./Form"
 import {useAuth} from "./auth"
 import { DatesContext } from "./datesContext";
-import { useFetch } from "./useFetch";
+import { UseFetch } from "./useFetch";
 import {Modal} from "./modal"
 function InputModal() {
     const {values, setValues, inputEnabled,setInputEnabled} = useContext(DatesContext)
@@ -14,7 +14,7 @@ function InputModal() {
     const [changeTime, setChangeTime] = useState('')
     const [changeDate, setChangeDate] = useState('')
     const auth = useAuth()
-    const [folder, updateFolders] = useFetch('http://localhost:3000/api/v1/folders')
+    const [folder, updateFolders] = UseFetch('http://localhost:3000/api/v1/folders')
     useEffect(()=>{
       updateFolders()
     },[])

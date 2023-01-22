@@ -1,11 +1,15 @@
-import React,{useContext, useState} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import {useAuth} from './auth'
 import {DatesContext} from './datesContext'
-function OneTodo ({id, content, details, updateBlocs, evento, sectionId}){
+function OneTodo ({id, content, details, updateBlocs, updateTasks, evento, sectionId}){
     const auth = useAuth()
-    const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
+    const {inputEnabled,setInputEnabled,setValues, filter} = useContext(DatesContext)
     const [check, setCheck] = useState(false)
     const [expand, setExpand] = useState(false)
+    const [state, setEstate] = useState(0)
+  /*useEffect(()=>{
+    updateBlocs(filter)
+  }, [state])*/
 
     const deleteTodo= (id)=>{
         fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -16,7 +20,8 @@ function OneTodo ({id, content, details, updateBlocs, evento, sectionId}){
               'Authorization': 'Bearer ' + auth.token,
             }
           }).then(()=>{
-            updateBlocs()//los contextos se deben de enviar a un usse efect, los estados y custom hooks no
+           //updateBlocs()//los contextos se deben de enviar a un usse efect, los estados y custom hooks no
+            updateTasks()
           })
     }
 
