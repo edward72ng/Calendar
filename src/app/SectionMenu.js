@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import {SocketContext} from './socketContext'
+import {SocketContext} from '../providers/socketContext'
+import {FunctionFoldersContext} from '../providers/FuntionFolders.provider'
+
 function SectionMenu({dataVAlues, functions}) {
     const {tittle, data} = dataVAlues
-    const {move, setFilter, deleteFolder, del, setDel} = functions
+    const {setFilter, updateFolders, del, setDel} = functions
     const {setSocket} = useContext(SocketContext)
+    const {deleteFolder, moveToFolder} = useContext(FunctionFoldersContext)
 
     const initializeCollaborative = (id, collaborative)=>{
         setFilter('?folder=' + id)
@@ -23,12 +26,12 @@ function SectionMenu({dataVAlues, functions}) {
                 return (
                 <li key={i} className='hover item space-between'
                 onDragOver={(e)=>e.preventDefault()}
-                onDrop={()=>move(elem.id)}
+                onDrop={()=>moveToFolder(elem.id, updateFolders)}
                 onClick={()=>initializeCollaborative(elem.id, elem.collaborative)}>
                     <div>{elem.name}</div>
                 {del && 
                 <i className="material-icons hover" 
-                onClick={()=>{deleteFolder(elem.id); setDel(!del)}}>
+                onClick={()=>{deleteFolder(elem.id, updateFolders); /*setDel(!del)*/}}>
                 delete</i>}               
                 </li>
                 )

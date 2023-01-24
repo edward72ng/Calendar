@@ -10,14 +10,14 @@ import { AppContainer } from './AppContainer';
 function Home() {
   const auth = useAuth()
   const {inputEnabled,setInputEnabled,filter} = useContext(DatesContext)
-  const [blocs, updateBlocs] = UseFetch('/api/v1/inbox/') //your-todos
+  const [sections, refreshSections] = UseFetch('/api/v1/inbox/') //your-todos
   const navigate = useNavigate()
 
   useEffect(()=>{
     if(!auth.token){
       navigate('/')
     }else{
-    updateBlocs(filter)
+    refreshSections(filter)
     
     }
   },[filter, inputEnabled])
@@ -26,11 +26,11 @@ function Home() {
     <AppContainer>
       <div className="home-container">
     
-    {blocs.map((elem, i) => {
+    {sections.map((elem, i) => {
           return <SectionHome key={elem.sectionid}
           dataVAlues={elem}
           index= {i}
-          functions={{updateBlocs}}
+          functions={{refreshSections}}
           >
           </SectionHome>
                   })}  

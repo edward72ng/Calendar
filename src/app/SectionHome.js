@@ -1,65 +1,62 @@
 
 import React, { useContext, useEffect } from "react";
 import { useTasks } from "../custom-hooks/useTasks";
+import { FunctionSectionsContext } from "../providers/FuntionSeccions.provider";
 import { useAuth } from "./auth";
 import { DatesContext } from "./datesContext";
 import {OneTodo} from './OneTodo'
-import { SocketContext } from "./socketContext";
+import { SocketContext } from "../providers/socketContext";
 import { UseFetch } from "./useFetch";
 function SectionHome({dataVAlues, functions, index}) {
     const {sectionid, tittle} = dataVAlues
-    const {updateBlocs} = functions
+    const {refreshSections} = functions
     const {socket} = useContext(SocketContext)
-    const [task, updateTask] = UseFetch('/api/v1/inbox/with-section/'+ sectionid)
-    //const {tasks} = useTasks(sectionid)
-    const {values, setValues, filter} = useContext(DatesContext)
-    const auth = useAuth()
+    const [task, refreshTask] = UseFetch('/api/v1/inbox/with-section/'+ sectionid)
+    const {moveToSection} = useContext(FunctionSectionsContext)
+    const {filter} = useContext(DatesContext)
+    useEffect(()=>{
+        if(socket){
+            socket.on('refresh',(mesagge)=>{
+                
+                if(mesagge.origen == sectionid || mesagge.destino == sectionid){
+                    console.log('escucho un evento del server')
+                    setTimeout(()=>{
+                        refreshTask()
+                    }, 2000)
+                    
+                }
+            })
+        }
+        return ()=>{ 
+            if(socket){
+                socket.off('refresh');
+            }
+           
+        }
+    }, [])
 
-    
-    const dropBlock = (e)=>{
-      const valor = e.dataTransfer.getData('mySectionId')
-      console.log('ORIGEN',valor)
-      console.log('DESTINO', sectionid)
-
-      fetch('http://localhost:3000/api/v1/sections/'+sectionid,{
-      method: 'POST',
-      body: JSON.stringify({
-        todoId: values.id
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + auth.token,
-      }
-    }).then(()=>{
-      console.log('movicion completada')
-      setValues(
-        {
-          id: null,
-          content: '',
-          details: '',
-          event: '',
-          notifications: [],
+    /*useEffect(()=>{
+        const section = document.getElementById('section' + index)
+        const sortable = new Sortable(section,{
+            group: {
+                name: 'section-home'
+            }
         })
-        updateData()
 
-        socket.emit('moveToSection',{
-            toSection: sectionid,
-            task: values.id,
-            originId: valor,
-        })
-    })   
-    }
-    
+        return ()=>{
+            sortable.destroy()
+        }
+    }, [])*/
+
+
       return <div className="section-container "   id={'section' + index}
-    onDragOver={(e)=>{e.preventDefault();console.log('arrastrando')}}
-    onDrop={(e)=>
-      {
-      dropBlock(e)
-    }}
-    style={{}}>
+    onDragOver={(e)=>{e.preventDefault();console.log('arrastrando'); e.currentTarget.classList.add('select')}}
+    onDrop={()=>{ console.log('DESTINO:' + sectionid);  moveToSection(sectionid, refreshTask);}}>
 
-        <div className="tittle" id="section">{tittle}</div>
+        <div className="space-between" id="section">
+          <div className="tittle"> {tittle} </div>
+          <i className="material-icons">delete</i>
+        </div>
         
         
         {
@@ -70,8 +67,7 @@ function SectionHome({dataVAlues, functions, index}) {
                     content={elem.content} 
                     details ={elem.deatails} 
                     evento={elem.evento} 
-                    updateBlocs={updateBlocs}
-                    updateTasks= {updateTask}
+                    refreshTasks= {refreshTask}
                     sectionId={sectionid}>
                     
                     </OneTodo>

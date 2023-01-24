@@ -5,14 +5,13 @@ import { useAuth } from './auth'
 function UseFetch(url) {
   const auth = useAuth()
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     updateData();
   }, [])
 
   async function updateData(query) {
+    console.log('ejecutando update data')
     if(!query){
       try{
         const res = await fetch(url,
@@ -27,8 +26,6 @@ function UseFetch(url) {
       }catch(error){
         console.log(error)
       }
-      console.log('peticion completada')
-      setLoading(false)
 
     }else if(query){
       try{
@@ -43,15 +40,11 @@ function UseFetch(url) {
         setData(resp)
       }catch(error){
         console.log(error)
-        setError(true)
       }
-      console.log('peticion completada')
-      setLoading(false)
-
     }
   }
 
-  return [data, updateData, loading, error];
+  return [data, updateData];
 }
 
 export {UseFetch}

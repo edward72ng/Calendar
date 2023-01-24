@@ -6,24 +6,33 @@ import {HashRouter} from 'react-router-dom'
 import {AuthProvider} from './auth'
 import {DatesProvider} from './datesContext'
 import {EventsProvider} from './eventsProvider'
-import { SocketProvider } from './socketContext'
+import { SocketProvider } from '../providers/socketContext'
+import { FunctionFoldersProvider } from '../providers/FuntionFolders.provider'
+import { FunctionTasksProvider } from '../providers/FunctionTasks.provider'
+import { FunctionSectionsProvider } from '../providers/FuntionSeccions.provider'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-    <React.StrictMode>
+    
     <HashRouter>
+        
         <EventsProvider>
         <SocketProvider>
             <DatesProvider>
             <AuthProvider>
-                
+                <FunctionFoldersProvider>   
+                    <FunctionTasksProvider>
+                        <FunctionSectionsProvider>
                 <App/>
-                
+                </FunctionSectionsProvider>
+                </FunctionTasksProvider>
+                </FunctionFoldersProvider>
             </AuthProvider>
             </DatesProvider>
             </SocketProvider>
             </EventsProvider>
+            
     </HashRouter>
-    </React.StrictMode>
+   
 )
 

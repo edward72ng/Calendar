@@ -1,29 +1,20 @@
 import React,{useContext, useEffect, useState} from "react";
+import { FunctionTasksContext } from "../providers/FunctionTasks.provider";
 import {useAuth} from './auth'
 import {DatesContext} from './datesContext'
-function OneTodo ({id, content, details, updateBlocs, updateTasks, evento, sectionId}){
+function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
     const auth = useAuth()
-    const {inputEnabled,setInputEnabled,setValues, filter} = useContext(DatesContext)
+    
     const [check, setCheck] = useState(false)
     const [expand, setExpand] = useState(false)
-    const [state, setEstate] = useState(0)
-  /*useEffect(()=>{
-    updateBlocs(filter)
-  }, [state])*/
 
-    const deleteTodo= (id)=>{
-        fetch('/api/v1/inbox/your-todos/'+ id, {
-            method: 'DELETE',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + auth.token,
-            }
-          }).then(()=>{
-           //updateBlocs()//los contextos se deben de enviar a un usse efect, los estados y custom hooks no
-            updateTasks()
-          })
-    }
+    const {inputEnabled,setInputEnabled,setValues, filter} = useContext(DatesContext)
+    const {deleteTask} = useContext(FunctionTasksContext)
+
+    const galeryData = [
+    'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1']
 
   const editTodo= (id)=>{
     fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -47,26 +38,29 @@ function OneTodo ({id, content, details, updateBlocs, updateTasks, evento, secti
     setInputEnabled(!inputEnabled)
   })}
     return (
-        <div className="one-todo"
-        draggable="true"
-        onDragStart={(e)=>
-          {setValues(
-          {
-            id: id,
-          })
-          console.log('ORIGEN', sectionId)
-          e.dataTransfer.setData('mySectionId', sectionId)
-        }}
-        onDragEnd={()=>setValues(
-          {
-            id:null,
-            content: '',
-            details: '',
-            event: '',
-            notifications: [],
-          }
-        )}>
+      <div className="task-container"  draggable="true"
+      onDragStart={(e)=>
+        {setValues(
+        {
+          section: sectionId,
+          id: id,
+        })
+        console.log('ORIGEN', sectionId)
+      }}
+      onDragEnd={()=>{
+        setValues(
+        {
+          id:null,
+          content: '',
+          details: '',
+          event: '',
+          notifications: [],
+        })
+        setTimeout(()=>refreshTasks(), 2000)
         
+        }}>
+
+        <div className="one-todo">
           <div className="row center-item">
             
             {check ?
@@ -95,7 +89,7 @@ function OneTodo ({id, content, details, updateBlocs, updateTasks, evento, secti
             </div>
 
             <div className="icons-container">
-                <a className="" onClick={()=>deleteTodo(id)}>
+                <a className="" onClick={()=>deleteTask(id, refreshTasks)}>
                     <i className="material-icons">delete</i>
                 </a>
                 <a className="" onClick={()=>editTodo(id)}>
@@ -121,7 +115,18 @@ function OneTodo ({id, content, details, updateBlocs, updateTasks, evento, secti
 
             
         </div>
-        
+        {(expand == true) && (
+          <div className="galery-container">
+          {
+            galeryData.map((elem, i)=>{
+              return (<div key={i} className="galery-item" style={{backgroundImage: "url("+elem+")"}}></div>)
+            })
+          }
+        </div>
+        )
+          
+        }
+      </div>
     )
 }
 export {OneTodo}

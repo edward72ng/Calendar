@@ -4,69 +4,21 @@ import {UseFetch} from './useFetch'
 import {Form} from './Form'
 import {useAuth} from './auth'
 import {SectionMenu} from './SectionMenu'
+import { FunctionFoldersContext } from '../providers/FuntionFolders.provider'
 function Menu ({menu, setMenu, className}) {
   const [content, setContent] = useState('')
   const [del, setDel] = useState(false)
   const [folder, updateFolders] = UseFetch('http://localhost:3000/api/v1/folders')
   const {values,setValues,setFilter} = useContext(DatesContext)
+  const {createFolder} = useContext(FunctionFoldersContext)
   const auth = useAuth()
-  useEffect(()=>{ 
-   
-  },[folder])
+
   const addFolder = (e)=>{
     e.preventDefault()
-    fetch('http://localhost:3000/api/v1/folders',
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        name: content
-      }
-      ),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + auth.token,
-      }
-    }).then(()=>{
-      updateFolders()
-    })
-  }
-  const deleteFolder = (id) =>{
-    fetch('http://localhost:3000/api/v1/folders/'+id,{
-    method: 'DELETE',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + auth.token,
-    }
-  }).then(()=>{
+    createFolder({name: content}, updateFolders)
     setContent('')
-    updateFolders('/')
-  })
   }
-  const move = (value) =>{
-    fetch('http://localhost:3000/api/v1/folders/'+value,{
-      method: 'POST',
-      body: JSON.stringify({
-        todoId: values.id
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + auth.token,
-      }
-    }).then(()=>{
-      setValues(
-        {
-          id: null,
-          content: '',
-          details: '',
-          event: '',
-          notifications: [],
-        })
-        setMenu(false)
-    })
-  }
+
     return(
       <>
           <div className={className? className : 'menu-enable'}>
@@ -79,7 +31,7 @@ function Menu ({menu, setMenu, className}) {
                 folder.map((elem, i)=>{
                   return <SectionMenu key={i} 
                   dataVAlues={elem}
-                  functions={{move, setFilter, deleteFolder, del, setDel}}
+                  functions={{setFilter, del, setDel, updateFolders}}
                   ></SectionMenu>
                 })
               }
