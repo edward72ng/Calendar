@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SocketContext } from './socketContext';
 
 const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const {setSocket} = useContext(SocketContext)
   const [token, setToken] = React.useState(null);
 
   const login = (objeto) => {
@@ -19,7 +21,8 @@ function AuthProvider({ children }) {
         }
       }).then(res=> res.json()).then((data)=>{
         setToken(data.token)
-        console.log('token asignado')
+        const socket= io()
+        setSocket(socket)
         navigate('/home')
     })
   };

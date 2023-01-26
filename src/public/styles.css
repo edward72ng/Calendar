@@ -1,0 +1,104 @@
+*{
+    --light-back:rgba(239,238,244,255);
+    --dark-back:rgba(37,38,40,255);
+    --light-sup:rgba(255,255,255,255);
+    --dark-sup:rgba(30,31,33,255);
+    --dark-filter:brightness(0) saturate(100%) invert(100%) sepia(59%) saturate(417%) hue-rotate(44deg) brightness(110%) contrast(105%);
+    --light-filter:brightness(0) saturate(100%);
+    --black: black;
+    --white: white;
+    --gray: rgba(163,163,164,0.5);
+    --aquamarine: #07dccc;
+    --global-back:var(--dark-back);
+    --global-sup:var(--dark-sup);
+    --global-filter:var(--dark-filter);
+    --color:var(--white);
+}
+.navigation-container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--dark-sup);
+}
+.navigation-list{
+    display: flex;
+    align-items: center;
+    width: 258px !important;
+    background-color: var(--dark-sup);
+    padding: 0 0 0 28px;
+    box-sizing: border-box;
+}
+.list-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 258px;
+    height: 80%;
+}
+.header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 60px;
+    width: calc(100vw - 256px);
+    align-items: center;
+}
+.header-list{
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
+}
+.header-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(5px);
+    height: 40px;
+    width: 40px;
+}
+.viewer-container{
+    background-color: var(--dark-back);
+    border-radius: 24px 0 0 24px;
+    width: 100%;
+}
+.align-items-center{
+    display: flex;
+    align-items: center;
+}
+.padding-left{
+    padding-left: 12px;
+}
+.navigation-sub-items{
+    padding-left: 24px;
+    font-weight:lighter;
+}
+
+.dashboard-container{
+    padding: 16px;
+}
+.cards-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /*margin: 0 16px;*/
+    overflow-x: auto;
+}
+.cards-container::-webkit-scrollbar{
+    height: 8px;
+}
+.cards-container::-webkit-scrollbar-thumb{
+    background-color: var(--color);
+    border-radius: 8px;
+}
+
+.cards-item{
+    max-width: 388px;
+    min-width: 388px;
+    margin: 8px;
+    padding: 12px;
+    background-color: var(--dark-sup);
+    border-radius: 8px;
+}

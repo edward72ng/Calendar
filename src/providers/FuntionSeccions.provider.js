@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import {useAuth} from '../app/auth'
+import {useAuth} from './auth'
 import { DatesContext } from "../app/datesContext"
 import {SocketContext} from '../providers/socketContext'
 
@@ -71,13 +71,19 @@ const moveToSection = async (sectionId, callback) => {
               event: '',
               notifications: [],
             })
-        setTimeout(()=>callback(), 2000)
+        setTimeout(()=>callback(), 1000)
         
     }
 }
 
+
+const move = async(sectionId, callback)=>{
+    socket.emit('refrescar', {origen: values.section, destino: sectionId, todo: values.id, exclude: socket.id})
+    setTimeout(()=>callback(), 1000)
+}
+
 return <FunctionSectionsContext.Provider
-value={{createSection, updateSection, deleteSection, moveToSection}}>
+value={{createSection, updateSection, deleteSection, moveToSection, move}}>
 				{children}
 </FunctionSectionsContext.Provider>
 }

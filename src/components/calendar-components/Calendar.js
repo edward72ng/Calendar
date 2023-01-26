@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {Modal} from './modal'
-import {EventsContext} from './eventsProvider'
-import {useAuth} from '../providers/auth'
-import {MosaicsContainer} from './MosaicsContainer'
+import {Modal} from '../../app/modal'
+import {EventsContext} from '../../app/eventsProvider'
+import {useAuth} from '../../providers/auth'
+import {MosaicsContainer} from '../../app/MosaicsContainer'
 import { useNavigate } from 'react-router-dom';
-import {DatesContext} from './datesContext'
-import {InputModal} from './InputModal'
-import {OneTodo} from './OneTodo'
-import { AppContainer } from "./AppContainer";
-function Calendar (){
+import {DatesContext} from '../../app/datesContext'
+import {OneTodo} from '../../app/OneTodo'
+function Calendario (){
     const [input, setInput] = useState(false)
     const [mount, setMounth] = useState(0)
     const {inputEnabled ,setValues} = useContext(DatesContext)
@@ -57,7 +55,7 @@ function Calendar (){
     setInput(!input)
   })}
     return(
-      <AppContainer>
+      <>
         <div className="center">
         <div className="calendar-container">
         <div className="around">
@@ -119,7 +117,7 @@ function Calendar (){
         )}
     </div>
     </div>
-      </AppContainer>
+      </>
     )
 }
-export {Calendar}
+export {Calendario}

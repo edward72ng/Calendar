@@ -1,6 +1,6 @@
 import React,{useContext, useEffect, useState} from "react";
 import { FunctionTasksContext } from "../providers/FunctionTasks.provider";
-import {useAuth} from './auth'
+import {useAuth} from '../providers/auth'
 import {DatesContext} from './datesContext'
 function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
     const auth = useAuth()
@@ -56,7 +56,7 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
           event: '',
           notifications: [],
         })
-        setTimeout(()=>refreshTasks(), 2000)
+        setTimeout(()=>refreshTasks(), 1000)
         
         }}>
 

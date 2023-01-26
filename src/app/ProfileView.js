@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from './auth'
+import { useAuth } from '../providers/auth'
 function ProfileView({profileView, setProfileView}){
   const [user,setUser] = useState('')
   const auth = useAuth() 

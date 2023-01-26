@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import {useAuth} from '../app/auth'
+import {useAuth} from './auth'
 import { DatesContext } from "../app/datesContext"
 
 const FunctionFoldersContext = React.createContext()

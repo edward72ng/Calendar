@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import { useTasks } from "../custom-hooks/useTasks";
 import { FunctionSectionsContext } from "../providers/FuntionSeccions.provider";
-import { useAuth } from "./auth";
+import { useAuth } from "../providers/auth";
 import { DatesContext } from "./datesContext";
 import {OneTodo} from './OneTodo'
 import { SocketContext } from "../providers/socketContext";
@@ -12,11 +12,27 @@ function SectionHome({dataVAlues, functions, index}) {
     const {refreshSections} = functions
     const {socket} = useContext(SocketContext)
     const [task, refreshTask] = UseFetch('/api/v1/inbox/with-section/'+ sectionid)
-    const {moveToSection} = useContext(FunctionSectionsContext)
+    const {moveToSection, move} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DatesContext)
+
+    /*useEffect(()=>{
+        const section = document.getElementById('section' + index)
+        const sortable = new Sortable(section,{
+            group: {
+                name: 'section-home'
+            },
+
+            onEnd: ()=>{ console.log(`onEnd se ejecuto en la seccion: ${tittle}` )},
+        })
+
+        return ()=>{
+            sortable.destroy()
+        }
+    }, [])*/
+
     useEffect(()=>{
         if(socket){
-            socket.on('refresh',(mesagge)=>{
+            socket.on('refrescar',(mesagge)=>{
                 
                 if(mesagge.origen == sectionid || mesagge.destino == sectionid){
                     console.log('escucho un evento del server')
@@ -35,23 +51,15 @@ function SectionHome({dataVAlues, functions, index}) {
         }
     }, [])
 
-    /*useEffect(()=>{
-        const section = document.getElementById('section' + index)
-        const sortable = new Sortable(section,{
-            group: {
-                name: 'section-home'
-            }
-        })
-
-        return ()=>{
-            sortable.destroy()
-        }
-    }, [])*/
+    
 
 
       return <div className="section-container "   id={'section' + index}
-    onDragOver={(e)=>{e.preventDefault();console.log('arrastrando'); e.currentTarget.classList.add('select')}}
-    onDrop={()=>{ console.log('DESTINO:' + sectionid);  moveToSection(sectionid, refreshTask);}}>
+    onDragOver={(e)=>{e.preventDefault();console.log('arrastrando'); 
+    /*e.currentTarget.classList.add('select')*/}}
+    onDrop={()=>{ console.log('DESTINO:' + sectionid); 
+     //moveToSection(sectionid, refreshTask);
+     move(sectionid, refreshTask)}}>
 
         <div className="space-between" id="section">
           <div className="tittle"> {tittle} </div>

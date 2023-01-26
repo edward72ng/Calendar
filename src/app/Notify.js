@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import {DatesContext} from './datesContext'
-import {useAuth} from './auth'
+import {useAuth} from '../providers/auth'
 import { useNavigate } from 'react-router-dom';
 import {OneTodo} from './OneTodo'
 import {InputModal} from './InputModal'
@@ -91,7 +91,6 @@ function Notify (){
                 }
             {(events.length == 0 && notifications.length == 0) &&
               <>
-              <img src="./assets/today.png"/>
               <h5>No tienes nada par hoy :D</h5>
               </>
             }

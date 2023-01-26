@@ -32,7 +32,7 @@ router.post('/:sectionId',async (req, res)=>{
     const {sectionId} = req.params
     const {todoId} = req.body
     const todo = await models.todo.findByPk(todoId)
-    const resp = todo.update({sectionid: sectionId})
+    const resp = await todo.update({sectionid: sectionId})
     res.json(resp)
 })
 

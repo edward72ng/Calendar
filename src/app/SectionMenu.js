@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {SocketContext} from '../providers/socketContext'
 import {FunctionFoldersContext} from '../providers/FuntionFolders.provider'
 
@@ -8,14 +8,14 @@ function SectionMenu({dataVAlues, functions}) {
     const {setSocket} = useContext(SocketContext)
     const {deleteFolder, moveToFolder} = useContext(FunctionFoldersContext)
 
+
+
     const initializeCollaborative = (id, collaborative)=>{
         setFilter('?folder=' + id)
         if(collaborative){
             const newsocket= io()
             
             setSocket(newsocket)
-
-
         }
     }
 

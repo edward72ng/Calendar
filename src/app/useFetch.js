@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from './auth'
+import { useAuth } from '../providers/auth'
 
 
 function UseFetch(url) {
@@ -44,7 +44,7 @@ function UseFetch(url) {
     }
   }
 
-  return [data, updateData];
+  return [data, updateData, setData];
 }
 
 export {UseFetch}

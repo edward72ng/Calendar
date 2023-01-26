@@ -2,7 +2,7 @@ import React, { useContext, useEffect} from "react";
 import {Mosaic}  from './Mosaic'
 import {DatesContext} from './datesContext'
 import {useNavigate} from 'react-router-dom'
-import {useAuth} from './auth'
+import {useAuth} from '../providers/auth'
 import {UseFetch} from './useFetch'
 function MosaicsContainer (props){
     const {dat, month, getElemYear, filter} = useContext(DatesContext)

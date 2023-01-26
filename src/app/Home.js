@@ -1,5 +1,5 @@
 import React, { useContext, useEffect} from 'react'
-import {useAuth} from './auth'
+import {useAuth} from '../providers/auth'
 import {useNavigate} from 'react-router-dom';
 import {DatesContext} from './datesContext'
 import {UseFetch} from './useFetch'

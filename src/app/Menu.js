@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import {DatesContext} from './datesContext'
 import {UseFetch} from './useFetch'
 import {Form} from './Form'
-import {useAuth} from './auth'
+import {useAuth} from '../providers/auth'
 import {SectionMenu} from './SectionMenu'
 import { FunctionFoldersContext } from '../providers/FuntionFolders.provider'
 function Menu ({menu, setMenu, className}) {

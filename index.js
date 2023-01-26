@@ -9,6 +9,9 @@ const midd = require('./middlewares/middleware.handler')
 const http = require('http')
 const cors = require('cors');
 const server =  http.createServer(app)
+const {models} = require ('./db/connec')
+
+
 var corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -24,16 +27,30 @@ app.use(midd.logErrors)
 app.use(midd.boomErrorHandler)
 app.use(midd.errorHandler)
 
-server.listen(port,()=>{
-    console.log('corriendo en puerto 3000')
-})
 
 const io = SocketIO(server)
 
+
 io.on('connection',(socket)=>{
-  console.log(socket.id)
+  console.log('Conectado', socket.id)
   socket.on('moveToSection',(mesagge)=>{
     console.log('SE A MOVIDO UN BLOQUE!!!!! a la seccion:' , mesagge)
     io.emit('refresh', mesagge, { except: mesagge.user })
   })
+
+  socket.on('refrescar', async(data)=>{
+    const {origen, destino, todo, exclude} = data
+    const tod = await models.todo.findByPk(todo)
+    const resp = await tod.update({sectionid: destino})
+    console.log('refrescar')
+    console.log(exclude)
+    socket.broadcast.emit('refrescar', data)
+  })
 })
+
+server.listen(port,()=>{
+  console.log('corriendo en puerto 3000')
+})
+
+
+module.exports = {io}

@@ -82,4 +82,36 @@ router.delete('/:folderId',async (req,res)=>{
     res.json(data)
 })
 
+router.get('/me', async (req, res) => {
+    if (req.headers.authorization){
+        let token = req.headers.authorization;
+        let newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
+
+        const folders = await models.folders.findAll({
+            where: {
+                collaborative: false,
+                userid: pay.sub,
+            }
+        })
+        res.json(folders)
+    }
+})
+
+router.get('/collaborative', async (req, res) => {
+    if (req.headers.authorization){
+        let token = req.headers.authorization;
+        let newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
+
+        const folders = await models.folders.findAll({
+            where: {
+                collaborative: true,
+                userid: pay.sub,
+            }
+        })
+        res.json(folders)
+    }
+})
+
 module.exports =  router
