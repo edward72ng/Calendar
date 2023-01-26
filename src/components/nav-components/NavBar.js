@@ -4,6 +4,7 @@ import {NavProjectsGroup} from './NavProjectsGroup'
 import {NavAsignMe} from './NavAsignMe'
 import {NavCalendar} from './NavCalendar'
 import { NavDashboard } from "./NavDashboard"
+import { NavContacts } from "./NavContacts"
 
 function NavBar ({children}) {
 	const [dashboard, setDashboard] = useState(false)
@@ -39,6 +40,10 @@ function NavBar ({children}) {
 			open = {calendar}
 			setOpen= {setCalendar}
 			></NavCalendar>
+
+			<NavContacts>
+				
+			</NavContacts>
 			</ul>
 		</div>
 		{children}

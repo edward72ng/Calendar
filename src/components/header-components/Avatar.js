@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import {ProfileView} from '../../app/ProfileView'
 
 function Avatar () {
-
-    return <li className="header-item">
+    const [openProfile, setOpenProfile] = useState(false) 
+    return <li className="header-item"
+        onClick={()=>setOpenProfile(!openProfile)}>
         <div className="avatar-home-container"></div>
+        {openProfile &&
+        <ProfileView profileView={openProfile} setProfileView={setOpenProfile}/>
+        }
     </li>
 }
 

@@ -7,6 +7,9 @@ const { Events, schemaEventsSeq} = require('./events.model')
 const { Notifications, schemaNotificationsSeq} = require('./notifications.model')
 const { Folders, schemaFoldersSeq} = require('./folders.model')
 const { Sections, schemaSectionsSeq} = require('./sections.model')
+const { Assignments, schemaAssignmentsSeq} = require('./assignments.model')
+const { Contacts, schemaContactsSeq} = require('./contacts.model')
+const { Pending, schemaPendingSeq} = require('./pendingNotifications.model')
 // INICIACION DE MODELOS PARA EXPORTAR
 function setupModels(sequelize) {
     Todoe.init(schemaTodoSeq,Todoe.config(sequelize) )
@@ -17,6 +20,9 @@ function setupModels(sequelize) {
     Notifications.init(schemaNotificationsSeq, Notifications.config(sequelize))
     Folders.init(schemaFoldersSeq, Folders.config(sequelize))
     Sections.init(schemaSectionsSeq, Sections.config(sequelize))
+    Assignments.init(schemaAssignmentsSeq, Assignments.config(sequelize))
+    Contacts.init(schemaContactsSeq, Contacts.config(sequelize))
+    Pending.init(schemaPendingSeq, Pending.config(sequelize))
 
     Todoe.associate(sequelize.models)
     Notify.associate(sequelize.models)

@@ -3,7 +3,6 @@ const {Sequelize ,DataTypes, Model} = require('sequelize')
 const USUARIOS_TABLE = 'usuarios'
 
 const schemaUserSeq = {
-
     uid: {
         allowNull: false,
         autoIncrement: true,
@@ -32,6 +31,27 @@ class Usuarios extends Model{
         this.hasMany(models.todo,{
             foreignKey: 'userid',
             as: 'usertodo'
+        })
+        /*this.belongsToMany(models.todo,{
+            through: models.assignments,
+
+            foreignKey: 'uid',
+            otherKey: 'id',
+            as: 'assignmentsForMe'
+        })*/
+
+        this.belongsToMany(models.usuarios,{
+            through: models.contacts,
+
+            foreignKey: 'personid',
+            otherKey: 'contactid',
+
+            as: 'myContacts'
+        })
+
+        this.hasMany(models.pendingnotifications,{
+            foreignKey: 'userid',
+            as: 'myNotifications'
         })
 }
 

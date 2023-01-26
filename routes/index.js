@@ -6,7 +6,10 @@ const routerEvents = require('./events.router')
 const routerNotifications = require('./notifications.router')
 const routerFolders = require('./folder.router')
 const routerSections = require('./sections.router')
+const routerPending = require('./pendingnotifications.router')
+const routerContacts = require('./contacts.router')
 const express = require('express')
+const router = require('./auth.router')
 
 function routerApi (app){
     const routerv1 = new express.Router()
@@ -19,6 +22,8 @@ function routerApi (app){
     routerv1.use('/notifications',routerNotifications)    
     routerv1.use('/folders',routerFolders)
     routerv1.use('/sections', routerSections)
+    routerv1.use('/pending',routerPending)
+    routerv1.use('/contacts',routerContacts)
     app.use('/api/v1',routerv1)
 
 }

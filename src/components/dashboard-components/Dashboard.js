@@ -1,5 +1,6 @@
 import React from "react";
-
+import {EventsCard} from './EventsCard'
+import {NotificationsCard} from './NotificationsCard'
 const today = [
 {content: 'Lorem Ipsun', details: 'dolor ipsun folum', image:'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'},
 {content: 'Lorem Ipsun', details: 'dolor ipsun folum', image:'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'},
@@ -12,36 +13,12 @@ function Dashboard () {
 
         <span>Eventos del Dia</span>
         <div className="cards-container">
-            {
-                today.map((elem, i)=>{
-                    return <div key={i} className="cards-item">
-                        <p className="content">{elem.content}</p>
-                        <p className="details">{elem.details}</p>
-                        <div className="galery-container">
-                            <div  className="galery-item" style={{backgroundImage: "url("+ elem.image +")"}}></div>
-                            <div  className="galery-item" style={{backgroundImage: "url("+elem.image+")"}}></div>
-                            <div  className="galery-item" style={{backgroundImage: "url("+elem.image+")"}}></div>
-                        </div>
-                    </div>
-                })
-            }
+            <EventsCard></EventsCard>
         </div>
 
         <span>Eventos Asignados</span>
         <div className="cards-container">
-            {
-                today.map((elem, i)=>{
-                    return <div key={i} className="cards-item">
-                        <p className="content">{elem.content}</p>
-                        <p className="details">{elem.details}</p>
-                        <div className="galery-container">
-                            <div  className="galery-item" style={{backgroundImage: "url("+elem.image+")"}}></div>
-                            <div  className="galery-item" style={{backgroundImage: "url("+elem.image+")"}}></div>
-                            <div  className="galery-item" style={{backgroundImage: "url("+elem.image+")"}}></div>
-                        </div>
-                    </div>
-                })
-            }
+           <NotificationsCard></NotificationsCard>
         </div>
 
     </div>

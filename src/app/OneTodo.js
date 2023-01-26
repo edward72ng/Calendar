@@ -2,11 +2,13 @@ import React,{useContext, useEffect, useState} from "react";
 import { FunctionTasksContext } from "../providers/FunctionTasks.provider";
 import {useAuth} from '../providers/auth'
 import {DatesContext} from './datesContext'
+import { Options } from "../components/my-projects-components/Options";
 function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
     const auth = useAuth()
     
     const [check, setCheck] = useState(false)
     const [expand, setExpand] = useState(false)
+    const [option,setOption] = useState(false)
 
     const {inputEnabled,setInputEnabled,setValues, filter} = useContext(DatesContext)
     const {deleteTask} = useContext(FunctionTasksContext)
@@ -95,6 +97,8 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
                 <a className="" onClick={()=>editTodo(id)}>
                     <i className="material-icons">edit</i>
                 </a>
+                <span className="material-symbols-outlined"
+                onClick={()=>{setOption(!option)}}>more_vert</span>
                 {
                   expand?
                   <a
@@ -126,6 +130,11 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
         )
           
         }
+
+        {option &&
+        <Options open={option} setOpen={setOption}></Options>
+        }
+
       </div>
     )
 }

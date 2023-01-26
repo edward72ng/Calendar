@@ -61,6 +61,28 @@ class UsuariosService{
         return rta
     }
 
+    async searchContacts (value) {
+        const val = value.toLowerCase()
+        const users = await models.usuarios.findAll({
+            attributes: ['user', 'uid']
+        })
+        const data = users.filter((elem)=>{
+            const name = elem.user.toLowerCase()
+            return name.includes(val)
+        })
+        return data
+    }
+
+    async getMyNotifications (userId) {
+        const data = await models.usuarios.findAll({
+            where: {
+                uid : userId
+            },
+            include: ['myNotifications']
+        })
+        return data[0].myNotifications
+    }
+
 }
 
 module.exports = UsuariosService

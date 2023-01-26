@@ -93,12 +93,30 @@
     background-color: var(--color);
     border-radius: 8px;
 }
-
 .cards-item{
     max-width: 388px;
     min-width: 388px;
     margin: 8px;
     padding: 12px;
-    background-color: var(--dark-sup);
+    background-color: var(--global-sup);
     border-radius: 8px;
+}
+.options-container{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--global-sup);
+    border-radius: 4px;
+    width: 140px;
+    padding: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1px solid lightgray;
+}
+.option-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+    border-bottom: 1px solid lightgray;
 }
