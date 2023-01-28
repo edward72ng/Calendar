@@ -10,6 +10,7 @@ import { SocketProvider } from '../providers/socketContext'
 import { FunctionFoldersProvider } from '../providers/FuntionFolders.provider'
 import { FunctionTasksProvider } from '../providers/FunctionTasks.provider'
 import { FunctionSectionsProvider } from '../providers/FuntionSeccions.provider'
+import { DataProvider } from '../providers/DataContext'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
@@ -20,13 +21,15 @@ root.render(
         <SocketProvider>
             <DatesProvider>
             <AuthProvider>
+                <DataProvider>
                 <FunctionFoldersProvider>   
-                    <FunctionTasksProvider>
-                        <FunctionSectionsProvider>
-                <App/>
+                <FunctionTasksProvider>
+                <FunctionSectionsProvider>
+                    <App/>
                 </FunctionSectionsProvider>
                 </FunctionTasksProvider>
                 </FunctionFoldersProvider>
+                </DataProvider>
             </AuthProvider>
             </DatesProvider>
             </SocketProvider>

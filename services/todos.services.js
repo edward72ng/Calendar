@@ -78,7 +78,7 @@ class Todos {
             }
         })
         obj = {
-            sectionid: 'nulo',
+            sectionid: `folder-${folder}`,
             tittle:"No Sections",
             data: dat
         }
@@ -209,7 +209,7 @@ class Todos {
 
     async editYourTodo (idComp, objeto){
         console.log(objeto)
-        var obj = {content: objeto.content, deatails: objeto.deatails}
+        var obj = {content: objeto.content, details: objeto.details, folderid: objeto.folderid,  assignedto: objeto.assignedto}
         if(objeto.event !== ""){
             const [evento, created] = await models.events.findOrCreate({
                 where: sequelize.where(sequelize.col('event'),objeto.event),
@@ -242,37 +242,13 @@ class Todos {
     }
 
     async createYourTodo (objeto, userId){
-        if(objeto.event !== ""){
-            const [evento, created] = await models.events.findOrCreate({
-                where: sequelize.where(sequelize.col('event'),objeto.event),
-                defaults: {
-                    event: objeto.event
-                }
-            })
-            var semd = {
-                userid:userId,
-                content: objeto.content,
-                deatails: objeto.deatails,
-                eventid: evento.id
-            }
-        }else{
-            var semd = {
-                userid:userId,
-                content: objeto.content,
-                deatails: objeto.deatails,
-            }
-        }
-        const newTodo = await models.todo.create(semd)
-        console.log(newTodo.id)
-        if(objeto.notifications.length !== 0)
-        objeto.notifications.map(async (noti)=>{
-            await models.notifications.create({
-                todoid: newTodo.id,
-                date:noti.date,
-                time:noti.time,
-            })
-        })
-      
+        console.log('servicio create todo')
+        console.log({...objeto, userid: userId})
+        const newTodo = await models.todo.create({
+            ...objeto,
+            userid: userId})
+        
+        return newTodo
     }
 
     async deleteYourTodo (id){
@@ -284,7 +260,7 @@ class Todos {
 
     async getOne (id){
         const block = await models.todo.findOne({
-            attributes: ['id', 'content', 'deatails'],
+            attributes: ['id', 'content', 'details'],
             where: {
                 id:id
             },

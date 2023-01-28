@@ -1,4 +1,5 @@
 import React from "react";
+import { Add } from "../auxiliar-components/Add";
 import { Avatar } from "./Avatar";
 import { Notifications } from "./Notifications";
 import { Search } from "./Search";
@@ -19,6 +20,7 @@ function Header ({children}) {
         </ul>
     </header>
     {children}
+    <Add></Add>
     </div>
 }
 

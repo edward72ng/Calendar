@@ -132,7 +132,7 @@ async (req,res,next)=>{
         var token = req.headers.authorization;
         var newToken = token.replace("Bearer ", "");
         const pay = await authservice.getPayload(newToken)
-        console.log(pay)
+        console.log(req.body)
 
         var data = await service.createYourTodo(req.body,pay.sub)
         res.json(data)
@@ -166,13 +166,14 @@ router.get('/with-folder',async (req,res)=>{
 
 router.get('/with-section/:sectionId', async(req, res)=>{
     const {sectionId} = req.params
-    if(sectionId == 'all'){
-        var token = req.headers.authorization;
-            var newToken = token.replace("Bearer ", "");
-            const pay = await authservice.getPayload(newToken)
-        const data = await models.todo.findAll({
+    //typeof(sectionId) == 'string'
+    if(sectionId.length > 2){
+            const folder = sectionId.replace("folder-","")
+
+            const data = await models.todo.findAll({
             where: {
-                userid: pay.sub,
+                folderid: folder,
+                sectionid: null
             },
             include:['notifis','evento']
         })

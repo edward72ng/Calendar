@@ -1,8 +1,8 @@
-import React,{useContext, useEffect, useState} from "react";
-import { FunctionTasksContext } from "../providers/FunctionTasks.provider";
+import React,{useContext, useState} from "react";
 import {useAuth} from '../providers/auth'
 import {DatesContext} from './datesContext'
 import { Options } from "../components/my-projects-components/Options";
+import { DataContext } from "../providers/DataContext";
 function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
     const auth = useAuth()
     
@@ -10,8 +10,9 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
     const [expand, setExpand] = useState(false)
     const [option,setOption] = useState(false)
 
-    const {inputEnabled,setInputEnabled,setValues, filter} = useContext(DatesContext)
-    const {deleteTask} = useContext(FunctionTasksContext)
+    //const {inputEnabled,setInputEnabled,setValues} = useContext(DatesContext)
+    
+    const {setTaskValue, setForm} = useContext(DataContext)
 
     const galeryData = [
     'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1',
@@ -28,21 +29,23 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
       }
     }).then((res)=>res.json())
     .then((data)=>{
-    setValues(
+    setTaskValue(
       {
         id: data.id,
         content: data.content,
-        details: data.deatails,
+        details: data.details,
         event: data.evento? data.evento.event: '',
-        notifications: data.notifis
+        notifications: data.notifis,
+        folderid: null,
+        assignedto: null
       }
     )
-    setInputEnabled(!inputEnabled)
+    setForm(true)
   })}
     return (
       <div className="task-container"  draggable="true"
       onDragStart={(e)=>
-        {setValues(
+        {setTaskValue(
         {
           section: sectionId,
           id: id,
@@ -50,7 +53,7 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
         console.log('ORIGEN', sectionId)
       }}
       onDragEnd={()=>{
-        setValues(
+        setTaskValue(
         {
           id:null,
           content: '',
@@ -91,9 +94,7 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
             </div>
 
             <div className="icons-container">
-                <a className="" onClick={()=>deleteTask(id, refreshTasks)}>
-                    <i className="material-icons">delete</i>
-                </a>
+         
                 <a className="" onClick={()=>editTodo(id)}>
                     <i className="material-icons">edit</i>
                 </a>
@@ -132,7 +133,9 @@ function OneTodo ({id, content, details, refreshTasks, evento, sectionId}){
         }
 
         {option &&
-        <Options open={option} setOpen={setOption}></Options>
+        <Options 
+        open={option} setOpen={setOption} 
+        functions={{refreshTasks, id}}></Options>
         }
 
       </div>

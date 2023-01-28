@@ -1,17 +1,21 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import {useAuth} from './auth'
-import { DatesContext } from "../app/datesContext"
+import { DataContext } from "./DataContext"
 
 const FunctionTasksContext = React.createContext()
 
 function FunctionTasksProvider({children}){
     const auth = useAuth()
-    const {values, setValues} = useContext(DatesContext)
+    const { taskValue, setDefault } = useContext(DataContext)
     const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + auth.token,
     }
+
+useEffect(()=>{
+    
+}, [taskValue])
 
 const deleteTask = async (id, callback) => {
 				const res = await fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -37,16 +41,21 @@ const updateTask = async (folderId, body, callback) => {
                 }
 }
 
-const createTask = async (body, callback) => {
-				const res = await fetch('http://localhost:3000/api/v1/folders',{
+const createTask = async (body) => {
+                if(taskValue.id){
+                    fetch('/api/v1/inbox/your-todos/'+taskValue.id, {
+                        method: 'PUT',
+                        body: JSON.stringify(Object.assign(taskValue, body)),
+                        headers: headers
+                      })
+                }else{
+				await fetch('/api/v1/inbox/your-todos/',{
 								method: 'POST',
 								headers: headers,
-								body:  JSON.stringify(body),
+								body:  JSON.stringify(Object.assign(taskValue, body)),
 				})
-				if(res){
-                    console.log(res)
-                    callback()
-                }
+            }
+				setDefault()
 }
 
 return <FunctionTasksContext.Provider

@@ -73,7 +73,7 @@ function SectionHome({dataVAlues, functions, index}) {
                     <OneTodo key={elem.id} 
                     id={elem.id} 
                     content={elem.content} 
-                    details ={elem.deatails} 
+                    details ={elem.details} 
                     evento={elem.evento} 
                     refreshTasks= {refreshTask}
                     sectionId={sectionid}>

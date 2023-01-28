@@ -6,6 +6,7 @@ import {NavCalendar} from './NavCalendar'
 import { NavDashboard } from "./NavDashboard"
 import { NavContacts } from "./NavContacts"
 
+
 function NavBar ({children}) {
 	const [dashboard, setDashboard] = useState(false)
 	const [myProjects, setMyProjects] = useState(false)
@@ -47,6 +48,7 @@ function NavBar ({children}) {
 			</ul>
 		</div>
 		{children}
+		
 	</nav>
 }
 

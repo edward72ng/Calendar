@@ -2,18 +2,44 @@ import React, { useContext } from "react"
 import {useAuth} from './auth'
 import { DatesContext } from "../app/datesContext"
 import {SocketContext} from '../providers/socketContext'
+import { DataContext } from "./DataContext"
 
 const FunctionSectionsContext = React.createContext()
 
 function FunctionSectionsProvider({children}){
     const {socket} = useContext(SocketContext)
     const auth = useAuth()
-    const {values, setValues} = useContext(DatesContext)
+    const {taskValue, setTaskValue, setDefault} = useContext(DataContext)
     const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + auth.token,
     }
+
+const moveToSection = async (sectionId, callback) => {
+    const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
+                    method: 'POST',
+                    headers: headers,
+                    body:JSON.stringify({
+                        todoId: taskValue.id
+                      }),
+    })
+    if(res){
+        socket.emit('moveToSection',{origen: taskValue.section, destino: sectionId, user: socket.id,})
+        console.log(`se movio ${taskValue.id} a ${sectionId}`,res)
+        console.log(`origen: ${taskValue.section} destino:  ${sectionId}`,res)
+        setTaskValue(
+            {
+              id: null,
+              content: '',
+              details: '',
+              event: '',
+              notifications: [],
+            })
+        setTimeout(()=>callback(), 1000)
+        
+    }
+}
 
 const deleteSection = async (id, callback) => {
 				const res = await fetch('/api/v1/inbox/your-todos/'+ id, {
@@ -51,35 +77,13 @@ const createSection = async (body, callback) => {
                 }
 }
 
-const moveToSection = async (sectionId, callback) => {
-    const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
-                    method: 'POST',
-                    headers: headers,
-                    body:JSON.stringify({
-                        todoId: values.id
-                      }),
-    })
-    if(res){
-        socket.emit('moveToSection',{origen: values.section, destino: sectionId, user: socket.id,})
-        console.log(`se movio ${values.id} a ${sectionId}`,res)
-        console.log(`origen: ${values.section} destino:  ${sectionId}`,res)
-        setValues(
-            {
-              id: null,
-              content: '',
-              details: '',
-              event: '',
-              notifications: [],
-            })
-        setTimeout(()=>callback(), 1000)
-        
-    }
-}
+
 
 
 const move = async(sectionId, callback)=>{
-    socket.emit('refrescar', {origen: values.section, destino: sectionId, todo: values.id, exclude: socket.id})
+    socket.emit('refrescar', {origen: taskValue.section, destino: sectionId, todo: taskValue.id, exclude: socket.id})
     setTimeout(()=>callback(), 1000)
+    setDefault()
 }
 
 return <FunctionSectionsContext.Provider

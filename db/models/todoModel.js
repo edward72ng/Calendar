@@ -93,7 +93,7 @@ const schemaTodoSeq = {
         type: DataTypes.STRING,
          allowNull: false
      },
-     deatails: {
+     details: {
          type: DataTypes.STRING
       },
      creation:{
@@ -130,8 +130,10 @@ const schemaTodoSeq = {
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'*/
-      }
-     
+      },
+     assignedto: {
+        type: DataTypes.INTEGER,
+     }
   }
 
 class Todoe extends Model{
