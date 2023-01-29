@@ -17,8 +17,8 @@ function NotificationsCard () {
     return <ul>
         {notification.map((elem)=>{
             return <div key={elem.id} className='cards-item'>
-                <p className="content">{elem.content}</p>
-                <p className="details">{elem.deatails}</p>
+                <p className="content">{elem.todo.content}</p>
+                <p className="details">{elem.todo.details}</p>
                 <span>{elem.folderid}</span>
                     <div className="galery-container">
                         <div  className="galery-item" style={{backgroundImage: "url("+image+")"}}></div>

@@ -10,7 +10,7 @@ const http = require('http')
 const cors = require('cors');
 const server =  http.createServer(app)
 const {models} = require ('./db/connec')
-
+const IP = '192.168.0.104'
 
 var corsOptions = {
   origin: 'http://localhost:3000',
@@ -49,7 +49,7 @@ io.on('connection',(socket)=>{
 })
 
 server.listen(port,()=>{
-  console.log('corriendo en puerto 3000')
+  console.log("http://"+ IP +":" + port + "/");
 })
 
 

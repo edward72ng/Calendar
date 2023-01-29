@@ -8,25 +8,26 @@ function NavMyProjects ({open, setOpen}) {
 	const {setFilter} = useContext(DatesContext)
 
 	return<>
-		<li className='hover'
+		<li className='navigation-item'
 		onClick = {() => setOpen(!open)}>
 			<div className='align-items-center'>
-			<span className="material-symbols-outlined">folder</span>
+			<span className="material-symbols-outlined">folder_copy</span>
 			<span className='padding-left'>Mis Proyectos</span>
 			</div>
+		</li>
 		{open && 
 			<ul>
 			{myProjects.map((elem) => {
-			return  <li key={elem.id} className='navigation-sub-items'
+			return <div key={elem.id}><Link  to='/my-projects'> 
+			<li className='navigation-sub-items'
 					onClick={()=>setFilter('?folder=' + elem.id)}>
-						<Link to='/my-projects'>
-						{elem.name}</Link>
-					</li>
+						<span className="material-symbols-outlined">folder_open</span>
+						
+						{elem.name}
+					</li></Link></div>
 			})}
 				</ul>
 		}
-		</li>
-		
 	</>
 }
 

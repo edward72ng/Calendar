@@ -29,23 +29,14 @@ const deleteTask = async (id, callback) => {
                 
 }
 
-const updateTask = async (folderId, body, callback) => {
-				const res = await fetch('#' + folderId,{
-								method: 'PUT',
-								headers: headers,
-								body: body,
-				})
-				if(res){
-                    console.log(res)
-                    callback()
-                }
-}
-
 const createTask = async (body) => {
                 if(taskValue.id){
-                    fetch('/api/v1/inbox/your-todos/'+taskValue.id, {
+                    const {id, ...send} = taskValue
+                    //console.log(send)
+                    console.log({...send, ...body})
+                    fetch('/api/v1/inbox/your-todos/'+id, {
                         method: 'PUT',
-                        body: JSON.stringify(Object.assign(taskValue, body)),
+                        body: JSON.stringify({...send, ...body}),
                         headers: headers
                       })
                 }else{
@@ -59,9 +50,11 @@ const createTask = async (body) => {
 }
 
 return <FunctionTasksContext.Provider
-value={{createTask, updateTask, deleteTask}}>
+value={{createTask, deleteTask}}>
 				{children}
 </FunctionTasksContext.Provider>
 }
 				
 export {FunctionTasksContext, FunctionTasksProvider}
+
+//Object.assign(send, body)

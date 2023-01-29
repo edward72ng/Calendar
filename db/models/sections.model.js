@@ -15,7 +15,7 @@ const schemaSectionsSeq = {
         allowNull: false,
      },
     folderid: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull:false,
         references: {
             model: FOLDERS_TABLE, 

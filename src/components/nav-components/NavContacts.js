@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom'
 
 function NavContacts ({open, setOpen}) {
 				
-	return <>
-		<li className='hover'>
-		<Link to='/contacts'>
+	return <><Link to='/contacts'>
+		<li className='navigation-item'>
 			<div className='align-items-center'>
 			<span className="material-symbols-outlined">groups</span>
 			<span className='padding-left'>Contactos</span>
 			</div>
-		</Link>
 		</li>
+		</Link>
 	</>
 }
 

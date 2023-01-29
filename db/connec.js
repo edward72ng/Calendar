@@ -4,11 +4,11 @@ const {Sequelize} = require ('sequelize');
 
 //const setupModles= require('./models/index')
 const setupModels = require('./models/index.js')
-
-const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,{
-    host: config.dbHost,
+console.log(config.uriLink)
+const sequelize = new Sequelize(config.uriLink,{
+    //host: config.dbHost,
     dialect: 'mysql',
-    logging: false,
+    logging: true,
     define: {
         freezeTableName: true,
         timestamps: false,
@@ -20,7 +20,7 @@ const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,
 sequelize.authenticate().then(e=>{console.log('conectado con sequelize')}).catch(e=>{console.log(e)})
 
 setupModels(sequelize);
-//sequelize.sync()
+sequelize.sync()
 
 
 

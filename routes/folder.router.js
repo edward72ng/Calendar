@@ -17,25 +17,7 @@ router.get('/',async (req,res)=>{
         const collaborative = await models.folders.findAll({
             where:{
                 userid:pay.sub,
-                collaborative: true,
-            }
-        });
-        const noCollaborative = await models.folders.findAll({
-            where:{
-                userid:pay.sub,
-                collaborative: false,
-            }
-        });
-        const data = [
-        {
-            tittle: "No Collaborative",
-            data: noCollaborative,
-        },
-        {
-            tittle: "Collaborative",
-            data: collaborative,
-        },
-        ]
+            }})
         res.json(data);
     }
     else{

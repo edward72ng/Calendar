@@ -13,9 +13,8 @@ const schemaAssignmentsSeq = {
         
       },
     userid: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        type: DataTypes.INTEGER,
         references: {
             model: USUARIOS_TABLE,
             key: 'uid'
@@ -24,7 +23,7 @@ const schemaAssignmentsSeq = {
         onDelete: 'CASCADE',
      },
      todoid: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         references: {
             model: TODO_TABLE,
             key: 'id'

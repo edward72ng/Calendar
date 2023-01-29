@@ -209,15 +209,17 @@ class Todos {
 
     async editYourTodo (idComp, objeto){
         console.log(objeto)
-        var obj = {content: objeto.content, details: objeto.details, folderid: objeto.folderid,  assignedto: objeto.assignedto}
-        if(objeto.event !== ""){
+        let obj = objeto
+        console.log(obj)
+        //var obj = {content: objeto.content, details: objeto.details, folderid: objeto.folderid,  assignedto: objeto.assignedto}
+        if(objeto.event){
             const [evento, created] = await models.events.findOrCreate({
                 where: sequelize.where(sequelize.col('event'),objeto.event),
                 defaults: {
                     event: objeto.event
                 }
             })
-            var obj = {content: objeto.content, deatails:objeto.deatails, eventid:evento.id}
+            obj = {content: objeto.content, deatails:objeto.deatails, eventid:evento.id}
         }
         var yourTodos = await models.todo.update(obj,{
             where:{
@@ -225,7 +227,7 @@ class Todos {
             }    }
         )
 
-        if(objeto.notifications.length !== 0)
+        if(objeto.notifications)
         
             await models.notifications.destroy({
                 where: sequelize.where(sequelize.col('todoid'),idComp)

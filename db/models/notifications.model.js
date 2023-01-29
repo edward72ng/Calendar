@@ -18,7 +18,7 @@ const schemaNotificationsSeq = {
         type: DataTypes.TIME
       },
      todoid: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         references: {
             model: TODO_TABLE, //aunque el parametro dice model, lo que se señala es la tabla
             key: 'id'

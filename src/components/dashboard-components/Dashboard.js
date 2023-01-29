@@ -16,7 +16,7 @@ function Dashboard ({children}) {
             <EventsCard></EventsCard>
         </div>
 
-        <span>Eventos Asignados</span>
+        <span>Notificaciones del Dia</span>
         <div className="cards-container">
            <NotificationsCard></NotificationsCard>
         </div>

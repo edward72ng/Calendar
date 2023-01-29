@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function NavDashboard ({open, setOpen}) {
 				
-	return<li className="row hover"
+	return<li className="navigation-item"
 		onClick = {() => setOpen(!open)}>
 			<Link to='/home'>
 			<div className='align-items-center'>

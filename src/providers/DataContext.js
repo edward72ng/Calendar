@@ -16,6 +16,7 @@ function DataProvider ({children}) {
     const [form, setForm] = useState(false)
 	const [filter, setFilter] = useState('')
 	const [taskValue, setTaskValue] = useState(defaultValue)
+    const [activeMenu, setActiveMenu] = useState(false)
 	
     const setDefault = () => {
         setTaskValue(defaultValue)
@@ -29,7 +30,9 @@ function DataProvider ({children}) {
             form,
             setForm,
             filter,
-            setFilter}}>
+            setFilter,
+            activeMenu,
+            setActiveMenu}}>
 		{children}
 	</DataContext.Provider>
 }

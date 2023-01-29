@@ -1,10 +1,11 @@
-import React, {useState} from "react"
+import React, {useContext, useState} from "react"
 import {NavMyProjects} from './NavMyProjects'
 import {NavProjectsGroup} from './NavProjectsGroup'
 import {NavAsignMe} from './NavAsignMe'
 import {NavCalendar} from './NavCalendar'
 import { NavDashboard } from "./NavDashboard"
 import { NavContacts } from "./NavContacts"
+import { DataContext } from "../../providers/DataContext"
 
 
 function NavBar ({children}) {
@@ -13,9 +14,10 @@ function NavBar ({children}) {
 	const [projectsGroup, setProjectsGroup] = useState(false)
 	const [assignedToMe, setAssignedToMe] = useState(false)
 	const [calendar, setCalendar] = useState(false)
-				
-	return<nav className="navigation-container">
-		<div className="navigation-list">
+	const {activeMenu} = useContext(DataContext)
+
+	return<nav className="navigation-container" >
+		<div className={activeMenu ? "active-menu" : "navigation-list"}>
 			<ul className="list-container">
 			<NavDashboard
 			open = {dashboard}

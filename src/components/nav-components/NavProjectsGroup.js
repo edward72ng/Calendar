@@ -8,24 +8,24 @@ function NavProjectsGroup ({open, setOpen}) {
 	const {setFilter} = useContext(DatesContext)
 
 	return<>
-		<li className='hover'
+		<li className='navigation-item'
 		onClick = {() => setOpen(!open)}>
 			<div className='align-items-center'>
 			<span className="material-symbols-outlined">folder_shared</span>
 			<span className='padding-left'>Proyectos Grupales</span>
 			</div>
+		</li>
 		{open && 
 			<ul>
 			{projectsGroup.map((elem) => {
-				return (<li key={elem.id} className='navigation-sub-items'
+				return (<div key={elem.id}><Link to='/collaborative'><li  className='navigation-sub-items'
 					onClick={()=>setFilter('?folder=' + elem.id)}>
-					<Link to='/collaborative'>{elem.name}</Link>
-					</li>)
+					<span className="material-symbols-outlined">folder_open</span>
+					{elem.name}
+					</li></Link></div>)
 			})}
 			</ul>
 		}
-		</li>
-		
 	</>
 }
 
