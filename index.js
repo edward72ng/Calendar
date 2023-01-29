@@ -1,6 +1,7 @@
+const config = require('./configuration/config')
 const express = require('express')
 const app = express()
-const port = 3000
+const port = config.port
 const routerApi = require('./routes/index')
 const path = require('path')
 const bodyParser = require ('body-parser')
@@ -10,7 +11,6 @@ const http = require('http')
 const cors = require('cors');
 const server =  http.createServer(app)
 const {models} = require ('./db/connec')
-const IP = '192.168.0.104'
 
 var corsOptions = {
   origin: 'http://localhost:3000',
@@ -49,7 +49,7 @@ io.on('connection',(socket)=>{
 })
 
 server.listen(port,()=>{
-  console.log("http://"+ IP +":" + port + "/");
+  console.log("host:" + port + "/");
 })
 
 
