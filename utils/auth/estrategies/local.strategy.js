@@ -14,11 +14,13 @@ const localEstrategy = new Strategy(options ,async (email, password, done)=>{
     try{
         const user = await service.getByUser(email)
         if (!user){
-            done(boom.unauthorized('user not found'),false)
+            done(boom.unauthorized('User not found'),false)
+            return;
         }
         const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch){
-            done(boom.unauthorized('contraseña incorrecta'),false)
+            done(boom.unauthorized('Incorrect password'),false)
+            return;
         }
         done(null, user)
     }

@@ -26,10 +26,10 @@ async (req,res, next) =>{
       token
    })
    //res.redirect('/home')
+
    //la estrategia jwt aun no esta implementada
    }catch(error){
     next(error)
-
    }
 })
 

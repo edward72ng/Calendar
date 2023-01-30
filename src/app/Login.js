@@ -29,8 +29,10 @@ const loginF =  (e) => {
                 value={password}
                 onChange= {e => setPassword(e.target.value)}
                 placeholder="Contraseña"/>
+            {auth.error &&
+                <div className="warning">{auth.error}</div>
+            }
             <a href="#" className="text-link">¿Olvidaste la contraseña?</a>
-
         <button className="btn" type="submit"
             onClick={loginF}>
             <span>Iniciar Sesion</span>

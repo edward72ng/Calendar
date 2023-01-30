@@ -17,19 +17,22 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
+//middleaware not errors
 app.use(cors(corsOptions ));
 require('./utils/auth/index')
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'src/public')));
+
+//middleware routes
 routerApi(app)
+
+//middleware errors
 app.use(midd.logErrors)
 app.use(midd.boomErrorHandler)
 app.use(midd.errorHandler)
 
-
 const io = SocketIO(server)
-
 
 io.on('connection',(socket)=>{
   console.log('Conectado', socket.id)
