@@ -10,8 +10,17 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null)
 
+  const checkLocal = () => {
+    const localToken = localStorage.getItem('MANAGER_TOKEN')
+    console.log('REVISANDO LOCALSTORAGE')
+    if (localToken){
+      setToken(localToken)
+      console.log('TOKEN DETECTADO, REDIRIGIENDO')
+      return true
+    }
+  }
+
   const login = (objeto) => {
-    console.log('Iniciando solicitud de inicio de sesión...');
     fetch('/api/v1/auth/login', {
       method: 'POST',
       body: JSON.stringify(objeto),
@@ -32,6 +41,8 @@ function AuthProvider({ children }) {
       const socket = io();
       setSocket(socket);
       navigate('/home');
+      console.log('GUARDA TOKEN EN LOCALSTORAGE')
+      localStorage.setItem('MANAGER_TOKEN',data.token)
     })
       .catch(err => {
       setError(err.message);
@@ -40,12 +51,13 @@ function AuthProvider({ children }) {
   
   
   const logout = () => {
+    localStorage.clear('MANAGER_TOKEN')
     setToken(null);
     setError(null)
     navigate('/')
   };
   
-  const auth = { token, login, logout, error };
+  const auth = { token, login, logout, error, checkLocal};
 
   return (
     <AuthContext.Provider value={auth}>

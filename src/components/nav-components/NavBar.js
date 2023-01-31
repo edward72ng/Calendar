@@ -8,6 +8,7 @@ import { NavContacts } from "./NavContacts"
 import { DataContext } from "../../providers/DataContext"
 import { useAuth } from "../../providers/auth"
 import {useNavigate} from 'react-router-dom';
+import { NavInbox } from "./NavInbox"
 
 function NavBar ({children}) {
 	const [dashboard, setDashboard] = useState(false)
@@ -16,7 +17,8 @@ function NavBar ({children}) {
 	const [assignedToMe, setAssignedToMe] = useState(false)
 	const [calendar, setCalendar] = useState(false)
 	const {activeMenu} = useContext(DataContext)
-	
+	const [inbox, setInbox] = useState(false)
+
 	const auth = useAuth()
 	const [render, setRender] = useState(false)
 	const navigate = useNavigate()
@@ -35,6 +37,11 @@ function NavBar ({children}) {
 	return<nav className="navigation-container" >
 		<div className={activeMenu ? "active-menu" : "navigation-list"}>
 			<ul className="list-container">
+			<NavInbox
+			open = {inbox}
+			setOpen = {setInbox}
+			></NavInbox>
+
 			<NavDashboard
 			open = {dashboard}
 			setOpen = {setDashboard}

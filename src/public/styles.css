@@ -595,7 +595,7 @@ input{
         display: none;
     }
 }
-@media (max-width: 400px){
+@media (max-width: 450px){
     .navigation-list{
         display: none;
     }

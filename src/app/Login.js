@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useAuth} from "../providers/auth"
+import { useNavigate } from 'react-router-dom';
+
+
 
 function Login (){
+const navigate = useNavigate();
 const [user, setUser] = useState('')
 const [password, setPassword] = useState('')
 const auth = useAuth()
 
 const loginF =  (e) => {
     e.preventDefault()
-    //console.log({user: user, password: password})
- 
     auth.login({user: user, password: password})
 }
 
+useEffect(()=>{
+    if (auth.checkLocal()){
+        navigate('home')
+    }
+},[])
 
     return(
     <div className="center">
