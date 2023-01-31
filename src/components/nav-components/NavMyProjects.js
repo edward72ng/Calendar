@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { DatesContext } from '../../app/datesContext'
 import {UseFetch} from '../../app/useFetch'
@@ -6,6 +6,10 @@ import {UseFetch} from '../../app/useFetch'
 function NavMyProjects ({open, setOpen}) {
 	const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')
 	const {setFilter} = useContext(DatesContext)
+
+	useEffect(()=>{
+		updateMyProjects()
+	},[open])
 
 	return<>
 		<li className='navigation-item'

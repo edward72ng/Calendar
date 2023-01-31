@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { UseFetch } from "../../app/useFetch";
+import { InputFolders } from "./InputFolder";
 
-function FoldersReact () {
+function FoldersCard () {
+    const [open, setOpen] = useState(false)
     const [folders, updateFolders] = UseFetch('/api/v1/folders/')
 
     return <div className="folder-card-container">
@@ -10,16 +13,25 @@ function FoldersReact () {
                     <div>{elem.name}</div>
                     <div>
                         {elem.collaborative ?
-                        <span class="material-symbols-outlined">groups</span>
+                        <span className="material-symbols-outlined">groups</span>
                         :
-                        <span class="material-symbols-outlined">person_filled</span>
+                        <span className="material-symbols-outlined">person_filled</span>
                         }
                     </div>
 
                 </div>
             })
         }
+        <div className="folder-card-item" 
+        onClick={()=>setOpen(!open)}>
+            <div>Add</div>
+            <span className="material-symbols-outlined">add</span>
+            {
+                <InputFolders
+                functions={{updateFolders}}></InputFolders>
+            }
+        </div>
     </div>
 }
 
-export {FoldersReact}
+export {FoldersCard}
