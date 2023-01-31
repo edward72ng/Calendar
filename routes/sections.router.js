@@ -28,12 +28,27 @@ router.get('/:id',async (req,res) =>{
     )
     res.json(rsp)
 })
-router.post('/:sectionId',async (req, res)=>{
+router.put('/:sectionId',async (req, res)=>{
     const {sectionId} = req.params
     const {todoId} = req.body
     const todo = await models.todo.findByPk(todoId)
     const resp = await todo.update({sectionid: sectionId})
     res.json(resp)
+})
+router.post('/',async (req, res)=>{
+    if (req.headers.authorization){
+        console.log('hay header authorization :D')
+        console.log(req.headers.authorization)
+        var token = req.headers.authorization;
+        var newToken = token.replace("Bearer ", "");
+        console.log(newToken)
+        const pay = await authservice.getPayload(newToken)
+
+        const body = req.body
+        const resp = await models.sections.create({...body,userid: pay.sub})
+        res.json(resp)
+    }
+    
 })
 
 module.exports = router

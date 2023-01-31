@@ -1,14 +1,18 @@
-import React, { useContext, useEffect} from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../../providers/auth';
 import { UseFetch } from '../../app/useFetch';
 import { SectionHome } from '../../app/SectionHome';
 import { AppContainer } from '../../app/AppContainer';
 import { DatesContext } from '../../app/datesContext';
+import { DataContext } from '../../providers/DataContext';
+import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provider';
 
 function MyProjects() {
   const {filter} = useContext(DatesContext)
+  const {createSection} = useContext(FunctionSectionsContext)
   const [sections, refreshSections] = UseFetch(`/api/v1/inbox/${filter}`) 
+  const [input, setInput] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
 
@@ -28,6 +32,15 @@ return<div className="home-container">
         functions={{refreshSections}}>
         </SectionHome>})
     }  
+    <div className='section-container'>
+    <div className="space-between" id="section">
+          <input className='tittle' placeholder='Añadir Secccion'
+          value={input}
+          onChange={(e)=>setInput(e.target.value)}></input>
+          <span class="material-symbols-outlined"
+          onClick={()=>createSection({section:input, folderid:filter.replace("?folder=","")},refreshSections)}>add</span>
+        </div>
+    </div>
 </div>
 }
 export {MyProjects} 

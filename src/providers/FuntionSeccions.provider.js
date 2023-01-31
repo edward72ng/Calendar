@@ -66,7 +66,7 @@ const updateSection = async (folderId, body, callback) => {
 }
 
 const createSection = async (body, callback) => {
-				const res = await fetch('http://localhost:3000/api/v1/folders',{
+				const res = await fetch('http://localhost:3000/api/v1/sections',{
 								method: 'POST',
 								headers: headers,
 								body:  JSON.stringify(body),
