@@ -3,9 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../../providers/auth';
 import { UseFetch } from '../../app/useFetch';
 import { SectionHome } from '../../app/SectionHome';
-import { AppContainer } from '../../app/AppContainer';
 import { DatesContext } from '../../app/datesContext';
-import { DataContext } from '../../providers/DataContext';
 import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provider';
 
 function MyProjects() {
