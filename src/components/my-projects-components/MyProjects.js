@@ -38,7 +38,10 @@ return<div className="home-container">
           value={input}
           onChange={(e)=>setInput(e.target.value)}></input>
           <span class="material-symbols-outlined"
-          onClick={()=>createSection({section:input, folderid:filter.replace("?folder=","")},refreshSections)}>add</span>
+          onClick={()=>{
+            createSection({section:input, folderid:filter.replace("?folder=","")},refreshSections);
+            setInput('')
+          }}>add</span>
         </div>
     </div>
 </div>
