@@ -7,11 +7,13 @@ import { DatesContext } from "./datesContext";
 import {OneTodo} from '../components/inbox-components/OneTodo'
 import { SocketContext } from "../providers/socketContext";
 import { UseFetch } from "./useFetch";
+import { useFetchItems } from "../custom-hooks/useFetchItems";
 function SectionHome({dataVAlues, functions, index}) {
     const {sectionid, tittle} = dataVAlues
     const {refreshSections} = functions
     const {socket} = useContext(SocketContext)
-    const [task, refreshTask] = UseFetch('/api/v1/inbox/with-section/'+ sectionid)
+    
+    const [task, dispatchTasks ,refreshTasks] =useFetchItems('/api/v1/inbox/with-section/'+ sectionid)
     const {moveToSection, move} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DatesContext)
 
@@ -37,7 +39,7 @@ function SectionHome({dataVAlues, functions, index}) {
                 if(mesagge.origen == sectionid || mesagge.destino == sectionid){
                     console.log('escucho un evento del server')
                     setTimeout(()=>{
-                        refreshTask()
+                        refreshTasks()
                     }, 2000)
                     
                 }
@@ -59,7 +61,7 @@ function SectionHome({dataVAlues, functions, index}) {
     /*e.currentTarget.classList.add('select')*/}}
     onDrop={()=>{ console.log('DESTINO:' + sectionid); 
      //moveToSection(sectionid, refreshTask);
-     move(sectionid, refreshTask)}}>
+     move(sectionid, refreshTasks)}}>
 
         <div className="space-between" id="section">
           <div className="tittle"> {tittle} </div>
@@ -69,14 +71,11 @@ function SectionHome({dataVAlues, functions, index}) {
         
         {
             task.map((elem, i)=>{
+                const {id, content, details, evento, sectionid} = elem
                 return (
-                    <OneTodo key={elem.id} 
-                    id={elem.id} 
-                    content={elem.content} 
-                    details ={elem.details} 
-                    evento={elem.evento} 
-                    refreshTasks= {refreshTask}
-                    sectionId={sectionid}>
+                    <OneTodo key={id} 
+                    values={{id, content, details, evento, sectionid}}
+                functions = {{refreshTasks, dispatchTasks}}>
                     
                     </OneTodo>
                 )

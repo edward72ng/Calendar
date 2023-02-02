@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { SubOptions } from "../my-projects-components/SubOptions";
 
 function EditTask ({values, functions}) {
-    const {contentVal = content,
-        detailsVal = details} = values;
+    const {id, content: contentVal,
+        details: detailsVal} = values;
+    const {refreshTasks, setEdit, dispatchTasks} = functions
 
     const {editTask} = useContext(FunctionTasksContext)
 
@@ -12,11 +13,13 @@ function EditTask ({values, functions}) {
     const [details, setDetails] = useState(detailsVal);
 
     const sendTask = () => {
-        editTask({content, details})
+        dispatchTasks({type:'UPDATE', payload: {id: id, body: {content, details}}})
+        setEdit(false)
+        editTask({id, content, details}, refreshTasks)
     } 
 
     return <div>
-        <div>
+        <div className="form-task-container">
         <input className="input-task" placeholder="contenido"
             value={content}
             onChange = { (e) => setContent(e.target.value)}></input>

@@ -27,7 +27,7 @@ function FormTask () {
         <div className="options-container-horizontal">
             <SubOptions>
             <li 
-            onClick={()=>setTask('')}
+            onClick={()=>setTask()}
             className="option-item">
             <span className="material-symbols-outlined">send</span>
             <span>Enviar</span>

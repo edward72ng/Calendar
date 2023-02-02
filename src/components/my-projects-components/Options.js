@@ -3,8 +3,13 @@ import {FunctionTasksContext} from '../../providers/FunctionTasks.provider'
 import { SubOptions } from "./SubOptions";
 
 function Options ({open, setOpen, functions}) {
-    const {refreshTasks, id} = functions
-    const {deleteTask} = useContext(FunctionTasksContext)
+    const {refreshTasks, id, dispatchTasks} = functions
+    const {deleteTask, } = useContext(FunctionTasksContext)
+
+    const sendTask = () => {
+        dispatchTasks({type: 'DELETE', payload: {id: id}})
+        deleteTask(id, refreshTasks)
+    }
 
     return <div className="options-container">
         <ul>
@@ -20,7 +25,7 @@ function Options ({open, setOpen, functions}) {
             <span>Cerrar</span>
             </li>
             <li className="option-item"
-            onClick={()=>deleteTask(id, refreshTasks)}>
+            onClick={sendTask}>
             <span className="material-symbols-outlined">delete</span>
             <span>Borrar</span>
             </li>

@@ -18,18 +18,20 @@ useEffect(()=>{
 }, [taskValue])
 
 const deleteTask = async (id, callback) => {
-				const res = await fetch('/api/v1/inbox/your-todos/'+ id, {
-                    method: 'DELETE',
-                    headers: headers,})
-                if(res){
-                    console.log(res)
-                    callback()
-                }
-				
-                
+    try {
+        const res = await fetch('/api/v1/inbox/your-todos/'+ id, {
+            method: 'DELETE',
+            headers: headers,})
+        if(res.status > 299){
+            throw new Error('Ha ocurrido un error inesperado')
+        }
+    } catch (error) {
+        alert('error al borrar')
+        callback()
+    }      
 }
 
-const editTask = async (body) => {
+const editTask = async (body,callback) => {
     const {id, ...send} = body
     
     try{
@@ -41,7 +43,8 @@ const editTask = async (body) => {
             throw new Error('Ha ocurrido un error inesperado')
         }
     }catch(err){
-
+        alert('error al editar')
+        callback()
     }
     
 }

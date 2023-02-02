@@ -227,8 +227,7 @@ class Todos {
             }    }
         )
 
-        if(objeto.notifications)
-        
+        if(objeto.notifications){
             await models.notifications.destroy({
                 where: sequelize.where(sequelize.col('todoid'),idComp)
             })
@@ -239,6 +238,9 @@ class Todos {
                 time:noti.time,
             })
         })
+        }
+        
+        
 
         return yourTodos
     }

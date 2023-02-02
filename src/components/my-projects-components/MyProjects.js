@@ -35,7 +35,7 @@ return<div className="home-container">
           <input className='tittle' placeholder='Añadir Secccion'
           value={input}
           onChange={(e)=>setInput(e.target.value)}></input>
-          <span class="material-symbols-outlined"
+          <span className="material-symbols-outlined"
           onClick={()=>{
             createSection({section:input, folderid:filter.replace("?folder=","")},refreshSections);
             setInput('')

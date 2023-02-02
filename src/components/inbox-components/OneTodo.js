@@ -3,11 +3,12 @@ import {useAuth} from '../../providers/auth'
 import { Options } from "../my-projects-components/Options";
 import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
+import { EditTask } from "./EditTask";
 
 function OneTodo ({values, functions}){
     const {id, content, details, evento, sectionid} = values
     const sectionId = sectionid
-    const refreshTasks = functions
+    const {refreshTasks, dispatchTasks} = functions
 
     const auth = useAuth()
     
@@ -41,6 +42,12 @@ function OneTodo ({values, functions}){
       )
       setForm(true)
     })}
+
+    if(edit){
+      return <EditTask
+      values={{id, content, details}}
+      functions={{refreshTasks, setEdit, dispatchTasks}}></EditTask>
+    }
 
     return (
       <div className="task-container"  draggable="true"
@@ -93,7 +100,7 @@ function OneTodo ({values, functions}){
             </div>
 
             <div className="icons-container">
-                <a className="" onClick={()=>editTodo(id)}>
+                <a className="" onClick={()=>/*editTodo(id)*/setEdit(!edit)}>
                     <i className="material-icons">edit</i>
                 </a>
                 <span className="material-symbols-outlined"
@@ -119,7 +126,7 @@ function OneTodo ({values, functions}){
         {option &&
         <Options 
         open={option} setOpen={setOption} 
-        functions={{refreshTasks, id}}></Options>
+        functions={{refreshTasks, id, dispatchTasks}}></Options>
         }
 
       </div>
