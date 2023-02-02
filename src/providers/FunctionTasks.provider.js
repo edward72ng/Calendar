@@ -29,6 +29,23 @@ const deleteTask = async (id, callback) => {
                 
 }
 
+const editTask = async (body) => {
+    const {id, ...send} = body
+    
+    try{
+        const res = await fetch('/api/v1/inbox/your-todos/'+id, {
+            method: 'PUT',
+            body: JSON.stringify(send),
+            headers: headers})
+        if(res.status > 299){
+            throw new Error('Ha ocurrido un error inesperado')
+        }
+    }catch(err){
+
+    }
+    
+}
+
 const createTask = async (body) => {
                 if(taskValue.id){
                     const {id, ...send} = taskValue
@@ -50,7 +67,7 @@ const createTask = async (body) => {
 }
 
 return <FunctionTasksContext.Provider
-value={{createTask, deleteTask}}>
+value={{createTask, deleteTask, editTask}}>
 				{children}
 </FunctionTasksContext.Provider>
 }

@@ -5,7 +5,7 @@ import {useAuth} from '../../providers/auth'
 import {MosaicsContainer} from '../../app/MosaicsContainer'
 import { useNavigate } from 'react-router-dom';
 import {DatesContext} from '../../app/datesContext'
-import {OneTodo} from '../../app/OneTodo'
+import {OneTodo} from '../inbox-components/OneTodo'
 function Calendario (){
     const [input, setInput] = useState(false)
     const [mount, setMounth] = useState(0)

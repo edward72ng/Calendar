@@ -1,5 +1,5 @@
 import React from "react";
-import { OneTodo } from "../../app/OneTodo";
+import { OneTodo } from "./OneTodo";
 import { UseFetch } from "../../app/useFetch";
 
 
@@ -9,13 +9,10 @@ function Inbox () {
     return <div><ul>
         {
             inboxTasks.map((elem)=>{
-                return <OneTodo key={elem.id} 
-                id={elem.id} 
-                content={elem.content} 
-                details ={elem.details} 
-                evento={elem.evento} 
-                refreshTasks= {updateInboxTasks}
-                sectionId={elem.sectionid}>
+                const {id, content, details, evento, sectionid} = elem
+                return <OneTodo key={id} 
+                values={{id, content, details, evento, sectionid}}
+                functions = {updateInboxTasks}>
                 
                 </OneTodo>
             })

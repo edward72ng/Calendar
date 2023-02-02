@@ -4,7 +4,7 @@ import { useTasks } from "../custom-hooks/useTasks";
 import { FunctionSectionsContext } from "../providers/FuntionSeccions.provider";
 import { useAuth } from "../providers/auth";
 import { DatesContext } from "./datesContext";
-import {OneTodo} from './OneTodo'
+import {OneTodo} from '../components/inbox-components/OneTodo'
 import { SocketContext } from "../providers/socketContext";
 import { UseFetch } from "./useFetch";
 function SectionHome({dataVAlues, functions, index}) {
