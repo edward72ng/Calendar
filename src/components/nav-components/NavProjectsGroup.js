@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { DatesContext } from '../../app/datesContext'
-import {UseFetch} from '../../app/useFetch'
+import { UseFetch } from '../../custom-hooks/useFetch'
 
 function NavProjectsGroup ({open, setOpen}) {
 	const [projectsGroup, updateProjectsGroup] = UseFetch('/api/v1/folders/collaborative')

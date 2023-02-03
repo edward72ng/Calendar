@@ -244,15 +244,39 @@ class Todos {
 
         return yourTodos
     }
-
+//sequelize.where(sequelize.col('event'),objeto.event)
     async createYourTodo (objeto, userId){
-        console.log('servicio create todo')
-        console.log({...objeto, userid: userId})
-        const newTodo = await models.todo.create({
-            ...objeto,
-            userid: userId})
+        const {event, notifications} = objeto
+        sequelize.transaction( async (transaction) => {
+            if (event){
+                const [eventObtained, created] = await models.events.findOrCreate({
+                    where:{event : event},
+                defaults: {
+                    event: event,
+                },
+            transaction}
+                );
+                objeto = {...objeto, eventid : eventObtained.id}
+            };
+
+
+            const newTodo = await models.todo.create({
+                ...objeto,
+                userid: userId},{transaction});
+
+            if(notifications){
+                notifications.map( async(elem)=>{
+                    await models.notifications.create(
+                        {
+                            ...elem,
+                            todoid: newTodo.id,
+                        }
+                    ,{transaction});
+                })
+            };
+        });
         
-        return newTodo
+        
     }
 
     async deleteYourTodo (id){

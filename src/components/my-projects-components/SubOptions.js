@@ -33,8 +33,8 @@ function SubOptions ({children}) {
         </li>
         {children}
         {folders &&
-                <FoldersList></FoldersList>
-            }
+            <FoldersList></FoldersList>
+        }
         {contacts &&
             <Contactlist></Contactlist>
         }

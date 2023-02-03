@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UseFetch } from "../../app/useFetch";
+import { UseFetch } from "../../custom-hooks/useFetch";
 import {useAuth} from '../../providers/auth'
 
 function Contacts () {

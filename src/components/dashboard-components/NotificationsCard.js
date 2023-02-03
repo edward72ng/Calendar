@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { DatesContext } from "../../app/datesContext";
-import {UseFetch} from '../../app/useFetch'
+import { UseFetch } from "../../custom-hooks/useFetch";
 
 const image = 'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'
 

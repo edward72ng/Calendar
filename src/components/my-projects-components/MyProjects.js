@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../../providers/auth';
-import { UseFetch } from '../../app/useFetch';
-import { SectionHome } from '../../app/SectionHome';
+import { UseFetch } from '../../custom-hooks/useFetch';
+import { SectionHome } from './SectionHome';
 import { DatesContext } from '../../app/datesContext';
 import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provider';
 

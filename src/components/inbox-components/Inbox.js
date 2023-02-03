@@ -1,6 +1,6 @@
 import React from "react";
 import { OneTodo } from "./OneTodo";
-import { UseFetch } from "../../app/useFetch";
+import { UseFetch } from "../../custom-hooks/useFetch";
 import { useFetchItems } from "../../custom-hooks/useFetchItems";
 
 

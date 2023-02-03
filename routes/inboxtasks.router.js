@@ -13,8 +13,10 @@ router.get('/', async (req, res) => {
         const data = await models.todo.findAll(
             {where: {
                 userid: pay.sub,
-                folderid: null,
-            }})
+                folderid: null,},
+            include: ['evento']
+            }
+            )
         res.json(data)
     }
     else{

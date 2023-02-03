@@ -1,13 +1,13 @@
 
 import React, { useContext, useEffect } from "react";
-import { useTasks } from "../custom-hooks/useTasks";
-import { FunctionSectionsContext } from "../providers/FuntionSeccions.provider";
-import { useAuth } from "../providers/auth";
-import { DatesContext } from "./datesContext";
-import {OneTodo} from '../components/inbox-components/OneTodo'
-import { SocketContext } from "../providers/socketContext";
-import { UseFetch } from "./useFetch";
-import { useFetchItems } from "../custom-hooks/useFetchItems";
+import { useTasks } from "../../custom-hooks/useTasks";
+import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider";
+import { useAuth } from "../../providers/auth";
+import { DatesContext } from "../../app/datesContext";
+import {OneTodo} from '../inbox-components/OneTodo'
+import { SocketContext } from "../../providers/socketContext";
+import { UseFetch } from "../../custom-hooks/useFetch";
+import { useFetchItems } from "../../custom-hooks/useFetchItems";
 function SectionHome({dataVAlues, functions, index}) {
     const {sectionid, tittle} = dataVAlues
     const {refreshSections} = functions

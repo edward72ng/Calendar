@@ -45,7 +45,7 @@ function OneTodo ({values, functions}){
 
     if(edit){
       return <EditTask
-      values={{id, content, details}}
+      values={{id, content, details, evento, sectionid}}
       functions={{refreshTasks, setEdit, dispatchTasks}}></EditTask>
     }
 

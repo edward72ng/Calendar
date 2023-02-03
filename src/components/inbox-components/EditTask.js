@@ -4,7 +4,8 @@ import { SubOptions } from "../my-projects-components/SubOptions";
 
 function EditTask ({values, functions}) {
     const {id, content: contentVal,
-        details: detailsVal} = values;
+        details: detailsVal,
+    evento: eventVal} = values;
     const {refreshTasks, setEdit, dispatchTasks} = functions
 
     const {editTask} = useContext(FunctionTasksContext)

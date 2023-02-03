@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import {UseFetch} from '../../app/useFetch'
+import {UseFetch} from '../../custom-hooks/useFetch'
 import { DataContext } from "../../providers/DataContext";
 
 

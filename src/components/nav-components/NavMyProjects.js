@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { DatesContext } from '../../app/datesContext'
-import {UseFetch} from '../../app/useFetch'
+import { UseFetch } from '../../custom-hooks/useFetch'
 
 function NavMyProjects ({open, setOpen}) {
 	const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')

@@ -1,5 +1,5 @@
 import React from "react";
-import { UseFetch } from "../../app/useFetch";
+import { UseFetch } from "../../custom-hooks/useFetch";
 import { useAuth } from "../../providers/auth";
 
 function PendingNotifications () {
