@@ -262,18 +262,21 @@ class Todos {
 
             const newTodo = await models.todo.create({
                 ...objeto,
-                userid: userId},{transaction});
+                userid: userId},
+                transaction
+                );
 
             if(notifications){
-                notifications.map( async(elem)=>{
-                    await models.notifications.create(
-                        {
-                            ...elem,
-                            todoid: newTodo.id,
-                        }
-                    ,{transaction});
-                })
+                    await notifications.map( async(elem)=>{
+                        await models.notifications.create(
+                            {
+                                ...elem,
+                                todoid: newTodo.id,
+                            }, 
+                        );
+                    })
             };
+            
         });
         
         

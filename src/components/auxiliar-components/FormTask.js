@@ -3,14 +3,18 @@ import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { SubOptions } from "../my-projects-components/SubOptions";
 
-function FormTask () {
-    const {taskValue, setTaskValue} = useContext(DataContext)
+function FormTask ({functions}) {
+    const {dispatchTasks, refreshTasks} = functions
+
     const { createTask } = useContext(FunctionTasksContext)
-    const [content, setContent] = useState(taskValue.content)
-    const [details, setDetails] = useState(taskValue.details)
+    const [content, setContent] = useState('')
+    const [details, setDetails] = useState('')
 
     const setTask = () => {
-        createTask({content, details})
+        dispatchTasks({type: 'CREATE', payload:{body: {content, details}}})
+        setContent('')
+        setDetails('')
+        createTask({content, details}, refreshTasks)
     }
 
 

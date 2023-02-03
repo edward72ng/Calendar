@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../../providers/DataContext";
 import { FormTask } from "./FormTask";
 
-function Add () {
+function Add ({children}) {
     const {form, setForm, setDefault} = useContext(DataContext)
 
     return <>
@@ -18,7 +18,7 @@ function Add () {
     </div>
     }
     {form &&
-        <FormTask></FormTask>
+        <>{children}</>
     }
     </>
 }

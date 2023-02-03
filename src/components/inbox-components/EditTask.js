@@ -35,6 +35,11 @@ function EditTask ({values, functions}) {
             className="option-item">
             <span className="material-symbols-outlined">send</span><span>Enviar</span>
             </li>
+            <li 
+            onClick={()=>setEdit(false)}
+            className="option-item">
+            <span className="material-symbols-outlined">cancel</span><span>Cancelar</span>
+            </li>
             </SubOptions>
         </div>
     </div>

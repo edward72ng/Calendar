@@ -24,7 +24,6 @@ function Header ({children}) {
         </ul>
     </header>
     {children}
-    <Add></Add>
     </div>
 }
 

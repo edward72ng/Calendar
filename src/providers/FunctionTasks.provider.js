@@ -49,24 +49,25 @@ const editTask = async (body,callback) => {
     
 }
 
-const createTask = async (body) => {
-                if(taskValue.id){
-                    const {id, ...send} = taskValue
-                    //console.log(send)
-                    console.log({...send, ...body})
-                    fetch('/api/v1/inbox/your-todos/'+id, {
-                        method: 'PUT',
-                        body: JSON.stringify({...send, ...body}),
-                        headers: headers
-                      })
-                }else{
-				await fetch('/api/v1/inbox/your-todos/',{
-								method: 'POST',
-								headers: headers,
-								body:  JSON.stringify(Object.assign(taskValue, body)),
-				})
-            }
-				setDefault()
+const createTask = async (body, callback) => {
+    try {
+        const res = await fetch('/api/v1/inbox/your-todos/',{
+            method: 'POST',
+            headers: headers,
+            body:  JSON.stringify(Object.assign(taskValue, body)),
+        })
+        setDefault()
+        if (res.status > 299){
+            throw new Error('Ha ocurrido un error inesperado')
+        }else{
+            console.log('Todo parece aver marchado bien')
+            callback()
+        }
+    } catch (error) {
+        alert('Error al crear')
+        callback()
+    }
+	
 }
 
 return <FunctionTasksContext.Provider
