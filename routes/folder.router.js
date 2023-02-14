@@ -96,4 +96,52 @@ router.get('/collaborative', async (req, res) => {
     }
 })
 
+router.get('/all', async (req, res) => {
+    if (req.headers.authorization){
+        let token = req.headers.authorization;
+        let newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
+
+        const folders = await models.folders.findAll({
+            where: {
+                userid: pay.sub
+            },
+            include: [{
+                model: models.sections,
+                as: 'sectionsInFolder',
+                include: [
+                    {
+                        model: models.todo,
+                        as: 'tasksInSections',
+                        include: ['evento']
+                    }
+                ]
+            }]
+        })
+        res.json(folders)
+    }
+})
+
+router.get('/without-sections', async (req, res) => {
+    if (req.headers.authorization){
+        let token = req.headers.authorization;
+        let newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
+
+        const folders = await models.folders.findAll({
+            where: {
+                userid: pay.sub
+            },
+            include: [{
+                model: models.todo,
+                as: 'blocsInFolder',
+                where: {
+                    sectionid: null
+                }
+            }]
+        })
+        res.json(folders)
+    }
+})
+
 module.exports =  router

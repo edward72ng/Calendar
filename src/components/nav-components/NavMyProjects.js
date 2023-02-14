@@ -2,14 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { DatesContext } from '../../app/datesContext'
 import { UseFetch } from '../../custom-hooks/useFetch'
+import { ItemsContext } from '../../providers/ItemsContext'
 
 function NavMyProjects ({open, setOpen}) {
-	const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')
+	//const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')
+	const { myProjects, dispatchMyProjects, updateMyProjects, section} = useContext(ItemsContext)
 	const {setFilter} = useContext(DatesContext)
-
-	useEffect(()=>{
-		updateMyProjects()
-	},[open])
 
 	return<>
 		<li className='navigation-item'
@@ -24,7 +22,7 @@ function NavMyProjects ({open, setOpen}) {
 			{myProjects.map((elem) => {
 			return <div key={elem.id}><Link  to='/app/my-projects'> 
 			<li className='navigation-sub-items'
-					onClick={()=>setFilter('?folder=' + elem.id)}>
+					onClick={()=>setFilter(elem.id)}>
 						<span className="material-symbols-outlined">folder_open</span>
 						
 						{elem.name}

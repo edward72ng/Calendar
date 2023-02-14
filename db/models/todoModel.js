@@ -3,6 +3,7 @@ const {Sequelize ,DataTypes, Model} = require('sequelize')
 
 const {USUARIOS_TABLE} = require('./usuariosModel')
 const {EVENTS_TABLE} = require('./events.model')
+const { SECTIONS_TABLE } = require('./sections.model')
 // const user = sequelize.define('users',{
 //     uid:{
 //         type: DataTypes.UUID,
@@ -133,6 +134,16 @@ const schemaTodoSeq = {
       },
      assignedto: {
         type: DataTypes.INTEGER,
+     },
+     sectionid: {
+        type: DataTypes.INTEGER.UNSIGNED,
+
+        references: {
+            model: SECTIONS_TABLE, //aunque el parametro dice model, lo que se señala es la tabla
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
      }
   }
 
@@ -163,6 +174,11 @@ class Todoe extends Model{
             as: 'folder'
         }
         )
+
+        this.belongsTo(models.sections,{
+            as: 'tasksInSections',
+            foreignKey: 'sectionid'
+        })
     }
 
     static config(sequelize){
@@ -183,8 +199,8 @@ class Todoe extends Model{
 //         deatails: {
 //             type: DataTypes.STRING
 //          },
-//         creation:{
-//              type: DataTypes.STRING,
+//         sectionid:{
+//              type: DataTypes.I,
 //              allowNull: false
 //          },
         

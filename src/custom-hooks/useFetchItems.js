@@ -13,7 +13,7 @@ function reducer (state, action) {
     case 'UPDATE':
         return state.map((elem)=>{
             if (elem.id == action.payload.id){
-                return action.payload.body;
+                return {...elem, ...action.payload.body};
             };
             return elem;
         });

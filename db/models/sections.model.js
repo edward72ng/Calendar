@@ -30,8 +30,13 @@ class Sections extends Model{
 
     static associate (models){
         this.hasMany(models.todo, {
-            as: 'blocsInSection',
+            as: 'tasksInSections',
             foreignKey: 'sectionid' 
+        })
+
+        this.belongsTo(models.folders, {
+            as: 'sectionsInFolder',
+            foreignKey: 'folderid'
         })
     }
 

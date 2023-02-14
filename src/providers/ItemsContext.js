@@ -1,21 +1,33 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useFetchItems } from "../custom-hooks/useFetchItems";
 
-const productsUrl = '/api/v1/my-items/products-single/1'
-const needUrl = '/api/v1/my-items/need/1'
-const resumeUrl = '/api/v1/my-items/resume'
-
-const ItemsContext = createContext()
-
 const inboxUrl = '/api/v1/inboxtasks/'
 const projectsUrl = '/api/v1/folders/me'
 const myItemsUrls = '/api/v1/inbox/?folder='
+
+const myAll = '/api/v1/folders/all'
+const withoutSections = '/api/v1/folders/without-sections'
+
+const ItemsContext = createContext()
+
+
 function ItemsProvider ({children}) {
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
+    const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
+    const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
+  
+    const section = (id)=> {
+        if(!id){
+            return []
+        }
+        const folder = all.find((elem)=>{
+            return elem.id == id
+        })
+        const {sectionsInFolder} = folder
+        return sectionsInFolder
+    }
     
-    
-    const [loading, setLoading] = useState(true)
 
     /*useEffect(()=>{
         const getFolders = async () => {
@@ -28,18 +40,17 @@ function ItemsProvider ({children}) {
         }
     }, [loadingMyProjects])*/
 
-    useEffect(()=>{
-        setTimeout(()=> {
-            setLoading(false)
-        }, 2000)
-    },[])
-
-    if(loading){
+    if(loadingInbox || loadingMyProjects || loadingAll || loadingWithout){
         return <div>Cargando...</div>
     }
 
     return <ItemsContext.Provider value={
-        {loading
+        {inbox, dispatchInbox, updateInbox,
+            myProjects, dispatchMyProjects, updateMyProjects,
+            all, dispatchAll, updateAll,
+            without, dispatchWithout, updateWithout,
+
+            section
         }
         }>
         {children}

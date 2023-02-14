@@ -33,7 +33,7 @@ class Folders extends Model{
 
         this.hasMany(models.sections, {
             as: 'sectionsInFolder',
-            foreignKey: 'folderid' //un evento puede tener muchos todos
+            foreignKey: 'folderid' //un evento puede tener muchas secciones
         })
     }
 

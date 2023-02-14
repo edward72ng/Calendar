@@ -5,31 +5,36 @@ import { UseFetch } from '../../custom-hooks/useFetch';
 import { SectionHome } from './SectionHome';
 import { DatesContext } from '../../app/datesContext';
 import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provider';
+import { ItemsContext } from '../../providers/ItemsContext';
+import { useUpdate } from '../../custom-hooks/useUpdate';
 
 function MyProjects() {
   const {filter} = useContext(DatesContext)
-  const {createSection} = useContext(FunctionSectionsContext)
-  const [sections, refreshSections] = UseFetch(`/api/v1/inbox/${filter}`) 
+  const {createSection} = useContext(FunctionSectionsContext) 
+  const {section} = useContext(ItemsContext)
+  console.log(section(filter))
+  
+  
+  const [folderId, setFolderid] = useState(null)
+  const [sections, dispatchSections, refreshSections] = useUpdate(section(filter))
+  
   const [input, setInput] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if(!auth.token){
-      navigate('/')
-    }
-
-    refreshSections(filter)
-  },[filter])
+    setFolderid(filter)
+  }, [filter])
 
 return<div className="home-container">  
     {sections.map((elem, i) => {
-        return <SectionHome key={elem.sectionid}
+        return <SectionHome key={elem.id}
         dataVAlues={elem}
         index= {i}
         functions={{refreshSections}}>
         </SectionHome>})
     }  
+
     <div className='section-container'>
     <div className="space-between" id="section">
           <input className='tittle' placeholder='Añadir Secccion'
@@ -42,6 +47,7 @@ return<div className="home-container">
           }}>add</span>
         </div>
     </div>
+    
 </div>
 }
 export {MyProjects} 
