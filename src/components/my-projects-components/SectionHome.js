@@ -10,12 +10,12 @@ import { UseFetch } from "../../custom-hooks/useFetch";
 import { useFetchItems } from "../../custom-hooks/useFetchItems";
 import {useUpdate} from '../../custom-hooks/useUpdate'
 import {OneItem} from '../inbox-components/OneItem'
-function SectionHome({dataVAlues, functions, index}) {
-    const {id, section} = dataVAlues
+function SectionHome({dataValues, functions, index}) {
+    const {id, section} = dataValues
     const {refreshSections} = functions
     const {socket} = useContext(SocketContext)
-    
-    const [task, dispatchTasks ,refreshTasks] = useUpdate(dataVAlues.tasksInSections)
+    console.log('LOG:',dataValues)
+    const [task, dispatchTasks ,refreshTasks] = useUpdate(dataValues.tasksInSections)
     const {moveToSection, move} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DatesContext)
 

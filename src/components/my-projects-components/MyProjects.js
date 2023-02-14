@@ -11,25 +11,18 @@ import { useUpdate } from '../../custom-hooks/useUpdate';
 function MyProjects() {
   const {filter} = useContext(DatesContext)
   const {createSection} = useContext(FunctionSectionsContext) 
-  const {section} = useContext(ItemsContext)
-  console.log(section(filter))
-  
-  
-  const [folderId, setFolderid] = useState(null)
-  const [sections, dispatchSections, refreshSections] = useUpdate(section(filter))
+  const [sections, dispatchSections, refreshSections] = useUpdate()
   
   const [input, setInput] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    setFolderid(filter)
-  }, [filter])
+
 
 return<div className="home-container">  
     {sections.map((elem, i) => {
         return <SectionHome key={elem.id}
-        dataVAlues={elem}
+        dataValues={elem}
         index= {i}
         functions={{refreshSections}}>
         </SectionHome>})

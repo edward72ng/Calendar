@@ -40,9 +40,13 @@ function ItemsProvider ({children}) {
         }
     }, [loadingMyProjects])*/
 
-    if(loadingInbox || loadingMyProjects || loadingAll || loadingWithout){
+    if(loadingInbox && loadingMyProjects && loadingAll && loadingWithout){
         return <div>Cargando...</div>
     }
+
+    
+    
+
 
     return <ItemsContext.Provider value={
         {inbox, dispatchInbox, updateInbox,
