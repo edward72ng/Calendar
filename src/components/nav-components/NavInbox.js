@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function NavInbox ({open, setOpen}) {
 				
-	return<Link to='/inbox'><li className="navigation-item"
+	return<Link to='/app/'><li className="navigation-item"
 		onClick = {() => setOpen(!open)}>
 			
 			<div className='align-items-center'>

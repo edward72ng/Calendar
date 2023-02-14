@@ -37,6 +37,7 @@ function NavBar ({children}) {
 	return<nav className="navigation-container" >
 		<div className={activeMenu ? "active-menu" : "navigation-list"}>
 			<ul className="list-container">
+				
 			<NavInbox
 			open = {inbox}
 			setOpen = {setInbox}
@@ -52,24 +53,16 @@ function NavBar ({children}) {
 			setOpen= {setMyProjects}
 			></NavMyProjects>
 
-			<NavProjectsGroup
-			open = {projectsGroup}
-			setOpen= {setProjectsGroup}
-			></NavProjectsGroup>
 
-			<NavAsignMe
-			open = {assignedToMe}
-			setOpen= {setAssignedToMe}
-			></NavAsignMe>
+
+
 
 			<NavCalendar
 			open = {calendar}
 			setOpen= {setCalendar}
 			></NavCalendar>
 
-			<NavContacts>
-				
-			</NavContacts>
+
 			</ul>
 		</div>
 		{children}

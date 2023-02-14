@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useAuth } from '../providers/auth'
 
 
@@ -32,6 +32,7 @@ function reducer (state, action) {
 
 function useFetchItems(url) {
   const auth = useAuth()
+  const [loading, setLoading] = useState(true)
   const [state, dispatch] = useReducer(reducer, [])
 
   useEffect(() => {
@@ -47,13 +48,13 @@ function useFetchItems(url) {
           })
         const resp = await res.json()
         dispatch({type:'SET', payload: {body: resp}})
-
+        setLoading(false)
       }catch(error){
         console.log(error)
       }
   }
 
-  return [state, dispatch, updateData];
+  return [state, dispatch, updateData, loading];
 }
 
 export {useFetchItems}

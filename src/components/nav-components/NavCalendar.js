@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function NavCalendar ({open, setOpen}) {
 				
 	return <>
-	<Link to='/calendar'>
+	<Link to='/app/calendar'>
 		<li className='navigation-item'>
 			<div className='align-items-center'>
 			<span className="material-symbols-outlined">calendar_month</span>

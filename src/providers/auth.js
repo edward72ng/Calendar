@@ -40,7 +40,7 @@ function AuthProvider({ children }) {
       setToken(data.token);
       const socket = io();
       setSocket(socket);
-      navigate('/home');
+      navigate('/app/');
       console.log('GUARDA TOKEN EN LOCALSTORAGE')
       localStorage.setItem('MANAGER_TOKEN',data.token)
     })

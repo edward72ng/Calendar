@@ -451,10 +451,13 @@ input{
 }
 .viewer-container{
     background-color: var(--global-back);
+    padding: 60px 8px 0 8px;
     border-radius: 24px 0 0 24px;
     width: calc(100vw - 258px);
     position: relative;
-    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .align-items-center{
     display: flex;
@@ -607,16 +610,53 @@ input{
     background-color: lightgray;
 }
 .inbox-container{
-    
-    width: 100%;
     height: calc(100vh - 60px);
     overflow-y: auto;
 }
 .inbox-container::-webkit-scrollbar{
     display: none;
 }
-@media (min-width: 900px){
 
+.floater{
+    position: fixed;
+    top: 0;
+    height: 500px;
+    background-color: var(--global-sup);
+    width: 500px;
+}
+
+
+/*VisualItem*/
+.visual-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--global-sup);
+    box-shadow: 0px 2px 4px hwb(0 0% 100% / 0.1);
+    margin: 0 0 4px 0;
+}
+.visual-item-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.details-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.icon-container{
+    padding: 0 4px 0 8px;
+    display: flex;
+    flex-direction: row;
+}
+/*SUbtask*/
+.sub-item-container{
+    padding-left: 20px;
+}
+
+@media (min-width: 900px){
     .menu-enable{
         display:flex;
         flex-direction: column;

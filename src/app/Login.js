@@ -17,7 +17,7 @@ const loginF =  (e) => {
 
 useEffect(()=>{
     if (auth.checkLocal()){
-        navigate('home')
+        navigate('/app/')
     }
 },[])
 

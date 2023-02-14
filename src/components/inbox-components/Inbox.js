@@ -4,6 +4,7 @@ import { UseFetch } from "../../custom-hooks/useFetch";
 import { useFetchItems } from "../../custom-hooks/useFetchItems";
 import { Add } from "../auxiliar-components/Add";
 import { FormTask } from "../auxiliar-components/FormTask";
+import { OneItem } from "./OneItem";
 
 
 function Inbox () {
@@ -14,11 +15,11 @@ function Inbox () {
         {inboxTasks &&
             inboxTasks.map((elem, i)=>{
                 const {id, content, details, evento, sectionid} = elem
-                return <OneTodo key={id? id : i} 
+                return <OneItem key={id? id : i} 
                 values={{id, content, details, evento, sectionid}}
                 functions = {{refreshTasks, dispatchTasks}}>
                 
-                </OneTodo>
+                </OneItem>
             })
         }
         </ul>

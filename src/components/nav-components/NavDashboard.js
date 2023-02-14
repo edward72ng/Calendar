@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function NavDashboard ({open, setOpen}) {
 				
-	return<Link to='/home'><li className="navigation-item"
+	return<Link to='/app/home'><li className="navigation-item"
 		onClick = {() => setOpen(!open)}>
 			
 			<div className='align-items-center'>

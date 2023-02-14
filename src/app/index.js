@@ -21,15 +21,7 @@ root.render(
         <SocketProvider>
             <DatesProvider>
             <AuthProvider>
-                <DataProvider>
-                <FunctionFoldersProvider>   
-                <FunctionTasksProvider>
-                <FunctionSectionsProvider>
-                    <App/>
-                </FunctionSectionsProvider>
-                </FunctionTasksProvider>
-                </FunctionFoldersProvider>
-                </DataProvider>
+                <App></App>
             </AuthProvider>
             </DatesProvider>
             </SocketProvider>
