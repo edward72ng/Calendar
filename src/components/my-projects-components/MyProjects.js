@@ -12,11 +12,17 @@ import { WithoutSection } from './WithoutSection';
 function MyProjects() {
   const {filter} = useContext(DatesContext)
   const {createSection} = useContext(FunctionSectionsContext) 
+  const {all} = useContext(ItemsContext)
+
+  const [render, setRender] = useState(0)
   const [sections, dispatchSections, refreshSections] = useUpdate()
-  const { task } = useContext(ItemsContext)
   const [input, setInput] = useState('')
   const auth = useAuth()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    setRender(render + 1)
+ },[all])
 
 return<div className="home-container">
   <WithoutSection></WithoutSection>
@@ -24,7 +30,7 @@ return<div className="home-container">
         return <SectionHome key={elem.id}
         dataValues={elem}
         index= {i}
-        functions={{refreshSections}}>
+        functions={{refreshSections, dispatchSections}}>
         </SectionHome>})
     }  
 

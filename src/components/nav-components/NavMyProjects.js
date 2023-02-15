@@ -6,7 +6,7 @@ import { ItemsContext } from '../../providers/ItemsContext'
 
 function NavMyProjects ({open, setOpen}) {
 	//const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')
-	const { myProjects, dispatchMyProjects, updateMyProjects, section} = useContext(ItemsContext)
+	const { myProjects, dispatchMyProjects,  updateAll, section} = useContext(ItemsContext)
 	const {setFilter} = useContext(DatesContext)
 	return<>
 		<li className='navigation-item'
@@ -21,7 +21,7 @@ function NavMyProjects ({open, setOpen}) {
 			{myProjects.map((elem) => {
 			return <div key={elem.id}><Link  to='/app/my-projects'> 
 			<li className='navigation-sub-items'
-					onClick={()=>setFilter(elem.id)}>
+					onClick={()=>{setFilter(elem.id); updateAll()}}>
 						<span className="material-symbols-outlined">folder_open</span>
 						
 						{elem.name}

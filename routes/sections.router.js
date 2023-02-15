@@ -23,7 +23,7 @@ router.get('/:id',async (req,res) =>{
     rsp = await models.sections.findByPk(id,
         {
 
-            include:['blocsInSection']
+            include:['taskInSection']
         }
     )
     res.json(rsp)
@@ -51,4 +51,13 @@ router.post('/',async (req, res)=>{
     
 })
 
+router.get('/with-task/:id', async (req, res) => {
+    const {id} = req.params
+    const tasks = await models.todo.findAll({
+        where: {
+            sectionid: id
+        },
+        include: ['evento']
+    })
+})
 module.exports = router

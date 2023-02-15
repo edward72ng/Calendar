@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { DatesContext } from '../app/datesContext';
 import { DataContext } from '../providers/DataContext';
 import { ItemsContext } from '../providers/ItemsContext';
@@ -33,7 +33,7 @@ function reducer (state, action) {
 
 function useUpdate(initialState){
         const {filter} = useContext(DatesContext)
-        const {section} = useContext(ItemsContext)
+        const {section, all} = useContext(ItemsContext)
 		const [state, dispatch] = useReducer(reducer, initialState? initialState : section(filter))
 		
     useEffect(()=>{
@@ -41,6 +41,8 @@ function useUpdate(initialState){
             dispatch({type: 'SET', payload: {body:section(filter)}})
         }
     }, [filter])
+
+  
 
 		const update = async (url) => {
 				const res = await fetch(url,{

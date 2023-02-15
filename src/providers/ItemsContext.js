@@ -14,9 +14,10 @@ const ItemsContext = createContext()
 function ItemsProvider ({children}) {
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
+    
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
-  
+    console.log('ALL',all)
     const section = (id)=> {
         if(!id){
             return []

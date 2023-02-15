@@ -10,6 +10,7 @@ import { UseFetch } from "../../custom-hooks/useFetch";
 import { useFetchItems } from "../../custom-hooks/useFetchItems";
 import {useUpdate} from '../../custom-hooks/useUpdate'
 import {OneItem} from '../inbox-components/OneItem'
+import AddTask from "./AddTask";
 function SectionHome({dataValues, functions, index}) {
     const {id, section} = dataValues
     const {refreshSections} = functions
@@ -75,14 +76,17 @@ function SectionHome({dataValues, functions, index}) {
             task.map((elem, i)=>{
                 const {id, content, details, evento, sectionid} = elem
                 return (
-                    <OneItem key={id} 
+                    <OneItem key={id? id : i} 
                     values={{id, content, details, evento, sectionid}}
                 functions = {{refreshTasks, dispatchTasks}}>
                     
                     </OneItem>
                 )
             })
-        }  
+        }
+         <AddTask
+         dataValues={{id}}
+         functions={{dispatchTasks, refreshTasks}}></AddTask> 
     </div>
 
     

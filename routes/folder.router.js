@@ -135,7 +135,7 @@ router.get('/without-sections', async (req, res) => {
                 model: models.todo,
                 as: 'blocsInFolder',
                 where: {
-                    sectionid: null
+                    sectionid: null,
                 },
                 include : ['evento']
             }]
