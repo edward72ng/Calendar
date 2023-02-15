@@ -58,7 +58,7 @@ body::-webkit-scrollbar{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: var(--vp-height);
 }
 .center-item{
     display: flex;
@@ -156,7 +156,7 @@ input{
     white-space: pre;
 }
 .mosaics-container{
-    height: calc(100vh - 180px);
+    height: calc(var(--vp-height) - 180px);
 }
 .modal-table{
     background-color: var(--global-back);
@@ -187,7 +187,7 @@ input{
     z-index: 1;
     width: 90%;
     max-width: 396px;
-    height: calc(100vh - 60px);
+    height: calc(var(--vp-height) - 60px);
 }
 .null{
     width: 30%;
@@ -195,7 +195,7 @@ input{
     right: 0;
     bottom: 0;
     z-index: 1;
-    height: calc(100vh - 40px);
+    height: calc(var(--vp-height) - 40px);
 }
 .adding{
     display: grid;
@@ -311,7 +311,7 @@ input{
 }
 .home-container{
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(var(--vp-height) - 60px);
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -386,7 +386,7 @@ input{
 
 
 .navigation-container{
-    height: 100vh;
+    height: var(--vp-height);
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -458,6 +458,8 @@ input{
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: var(--vp-height);
+    box-sizing: border-box;
 }
 .align-items-center{
     display: flex;
@@ -481,7 +483,7 @@ input{
 }
 
 .dashboard-container{
-    height: calc(100vh - 60px);
+    height: calc(var(--vp-height) - 60px);
     box-sizing: border-box;
     padding: 16px;
     overflow-y: auto;
@@ -610,7 +612,7 @@ input{
     background-color: lightgray;
 }
 .inbox-container{
-    height: calc(100vh - 60px);
+    height: calc(var(--vp-height) - 60px);
     overflow-y: auto;
 }
 .inbox-container::-webkit-scrollbar{
@@ -684,7 +686,7 @@ input{
         position: fixed;
         width: 100%;
         z-index: 20;
-        height: calc(100vh - 60px);
+        height: calc(var(--vp-height) - 60px);
         bottom: 0;
         background-color: var(--global-sup);
     }
