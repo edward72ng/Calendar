@@ -5,14 +5,26 @@ import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
 import { EditTask } from "./EditTask";
 import { SubItem } from "./SubItem";
+import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 
 function EditItem ({values, functions}){
     const {id, content, details, evento, sectionid} = values
     const sectionId = sectionid
     const {refreshTasks, dispatchTasks, setEdit} = functions
 
-    
+    const {editTask} = useContext(FunctionTasksContext)
 
+    const initialValues = {
+      content: content,
+      details: details
+    }
+    const [editValues, setEditValues] = useState(initialValues)
+    
+    const sendEdit = () => {
+      dispatchTasks({type: 'UPDATE', payload: {id: id, body: editValues}})
+      setEdit(false)
+      editTask({...values,...editValues}, refreshTasks)
+    }
 
     
 
@@ -21,15 +33,22 @@ function EditItem ({values, functions}){
       <div className="visual-container">
             <span className="material-symbols-outlined"
             onClick={()=>{setEdit(false)}}>
-            cancel</span>
-
+            close</span>
+            <span className="material-symbols-outlined"
+            onClick={()=>{sendEdit()}}>
+            done</span>
+            
             <div className="visual-item-container">
 
               <div className="details-container"
               onClick={() => setEdit(true)}>
-                <p className="content">{content}</p>
-                <p className="details">{details}</p>
-                <SubItem></SubItem>
+                <input className="edit-value"
+                value={editValues.content}
+                onChange={(e)=>setEditValues({...editValues, content: e.target.value})}></input>
+                <textarea className="edit-value" 
+                value={editValues.details}
+                onChange={(e)=>setEditValues({...editValues, details: e.target.value})}></textarea>
+                
 
                 {evento
                 ?
@@ -39,7 +58,7 @@ function EditItem ({values, functions}){
                 :
                 <></>
                 }
-              
+                <SubItem></SubItem>
               
               </div>
 

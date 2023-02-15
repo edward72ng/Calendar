@@ -5,6 +5,7 @@ import { useFetchItems } from "../../custom-hooks/useFetchItems";
 import { Add } from "../auxiliar-components/Add";
 import { FormTask } from "../auxiliar-components/FormTask";
 import { OneItem } from "./OneItem";
+import { FormCreate } from "../auxiliar-components/FormCreate";
 
 
 function Inbox () {
@@ -24,8 +25,8 @@ function Inbox () {
         }
         </ul>
         <Add>
-            <FormTask
-            functions={{dispatchTasks, refreshTasks}}></FormTask>
+            <FormCreate
+            functions={{dispatchTasks, refreshTasks}}></FormCreate>
         </Add>
     </div>
 }

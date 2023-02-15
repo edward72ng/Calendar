@@ -1,18 +1,18 @@
 *{
     --light-back:rgba(239,238,244,255);
-    --dark-back:rgba(19,27,38,255);
+    --dark-back:rgba(43,44,46,255);
     --light-sup:rgba(255,255,255,255);
-    --dark-sup:rgba(39,49,74,255);
+    --dark-sup:rgba(26,26,26,255);
     --dark-filter:brightness(0) saturate(100%) invert(100%) sepia(59%) saturate(417%) hue-rotate(44deg) brightness(110%) contrast(105%);
     --light-filter:brightness(0) saturate(100%);
     --black: black;
     --white: white;
     --gray: rgba(163,163,164,0.5);
     --aquamarine: #07dccc;
-    --global-back:var(--light-back);
-    --global-sup:var(--light-sup);
-    --global-filter:var(--light-filter);
-    --color:var(--black);
+    --global-back:var(--dark-back);
+    --global-sup:var(--dark-sup);
+    --global-filter:var(--dark-filter);
+    --color:var(--white);
 }
 body {
     margin: 0;
@@ -657,7 +657,42 @@ input{
 .sub-item-container{
     padding-left: 20px;
 }
-
+/*EditItem*/
+.edit-value {
+    box-sizing: border-box;
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+    border: none;
+    border-color: var(--global-sup);
+    background-color: var(--global-sup);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+}  
+  textarea.edit-value {
+    height: auto;
+    border: none;
+    border-color: var(--global-sup);
+    background-color: var(--global-sup);
+    font-family: 'Quicksand', sans-serif;
+    color: grey;
+    font-size: 12px;
+}
+.edit-value:focus{
+    outline: none;
+}
+/*FormCreat*/
+.formcreate-container{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 450px;
+    height: 600px;
+    background-color: var(--global-sup);
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px hwb(0 0% 100% / 0.1);
+    overflow-y: auto;
+}
 @media (min-width: 900px){
     .menu-enable{
         display:flex;
@@ -704,5 +739,11 @@ input{
         grid-template-columns: repeat(2, 50%);
         width: 100%;
         height: 400px;
+    }
+    .formcreate-container{
+        width: 100%;
+        height: 500px;
+        max-height: 100%;
+        overflow-y: auto;
     }
 }
