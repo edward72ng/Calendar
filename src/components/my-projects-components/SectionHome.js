@@ -14,7 +14,7 @@ function SectionHome({dataValues, functions, index}) {
     const {id, section} = dataValues
     const {refreshSections} = functions
     const {socket} = useContext(SocketContext)
-    console.log('LOG:',dataValues)
+    
     const [task, dispatchTasks ,refreshTasks] = useUpdate(dataValues.tasksInSections)
     const {moveToSection, move} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DatesContext)

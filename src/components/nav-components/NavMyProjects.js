@@ -8,7 +8,7 @@ function NavMyProjects ({open, setOpen}) {
 	//const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')
 	const { myProjects, dispatchMyProjects, updateMyProjects, section} = useContext(ItemsContext)
 	const {setFilter} = useContext(DatesContext)
-
+console.log('MYPROJECTS', myProjects)
 	return<>
 		<li className='navigation-item'
 		onClick = {() => setOpen(!open)}>

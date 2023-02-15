@@ -28,6 +28,16 @@ function ItemsProvider ({children}) {
         return sectionsInFolder
     }
     
+    const task = (id) => {
+        const folder = without.find((elem) => {
+            return elem.id == id
+        })
+        if (!folder){
+            return []
+        }
+        const {blocsInFolder} = folder
+        return blocsInFolder
+    }
 
     /*useEffect(()=>{
         const getFolders = async () => {
@@ -54,7 +64,7 @@ function ItemsProvider ({children}) {
             all, dispatchAll, updateAll,
             without, dispatchWithout, updateWithout,
 
-            section
+            section, task
         }
         }>
         {children}

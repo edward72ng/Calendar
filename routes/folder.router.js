@@ -72,7 +72,6 @@ router.get('/me', async (req, res) => {
 
         const folders = await models.folders.findAll({
             where: {
-                collaborative: false,
                 userid: pay.sub,
             }
         })
@@ -137,7 +136,8 @@ router.get('/without-sections', async (req, res) => {
                 as: 'blocsInFolder',
                 where: {
                     sectionid: null
-                }
+                },
+                include : ['evento']
             }]
         })
         res.json(folders)
