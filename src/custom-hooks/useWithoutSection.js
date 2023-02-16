@@ -23,7 +23,6 @@ function reducer (state, action) {
         return [...state, action.payload.body];
 
     case 'SET':
-        console.log('colando set')
         return action.payload.body;
 
     default:
@@ -31,11 +30,14 @@ function reducer (state, action) {
     }
 }
 
+
+
 function useWithoutSection(initialState){
         const {filter} = useContext(DatesContext)
         const {task} = useContext(ItemsContext)
 		const [state, dispatch] = useReducer(reducer, initialState? initialState : task(filter))
-		
+	
+
     useEffect(()=>{
         if(!initialState){
             dispatch({type: 'SET', payload: {body:task(filter)}})

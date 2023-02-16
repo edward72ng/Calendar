@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTasks } from "../../custom-hooks/useTasks";
 import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider";
 import { useAuth } from "../../providers/auth";
@@ -13,12 +13,20 @@ import {OneItem} from '../inbox-components/OneItem'
 import AddTask from "./AddTask";
 function SectionHome({dataValues, functions, index}) {
     const {id, section} = dataValues
-    const {refreshSections} = functions
+    const {refreshSections, dispatchSections} = functions
     const {socket} = useContext(SocketContext)
     
     const [task, dispatchTasks ,refreshTasks] = useUpdate(dataValues.tasksInSections)
-    const {moveToSection, move} = useContext(FunctionSectionsContext)
+    const {deleteSection, editSection, move} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DatesContext)
+    const [openEdit, setOpenEdit] = useState(false)
+    const [input, setInput] = useState(section)
+
+    const handleEdit = () => {
+        dispatchSections({type: 'UPDATE', payload: {id: id, body: {section: input}}});
+        editSection(id, {section: input},() => refreshSections(`/api/v1/sections//all/with-task/${filter}`))
+        setOpenEdit(false)
+    }
 
     /*useEffect(()=>{
         const section = document.getElementById('section' + index)
@@ -67,17 +75,35 @@ function SectionHome({dataValues, functions, index}) {
      move(id, refreshTasks)}}>
         
         <div className="space-between" id="section">
-          <div className="section"> {section} </div>
-          <i className="material-icons">delete</i>
-        </div>
+            {openEdit ?
+            <>
+            <input value={input}
+            onChange= {(e)=> setInput(e.target.value)}></input>
+            <div>
+            <span className="material-symbols-outlined"
+            onClick={handleEdit}>done</span>
+            <span className="material-symbols-outlined"
+            onClick={()=> setOpenEdit(!openEdit)}>close</span>
+            </div>
+            </>
+            :
+            <>
+            <div className="section"
+            onClick={()=> setOpenEdit(!openEdit)}> {section} </div>
+          <span className="material-symbols-outlined"
+        onClick={()=>{dispatchSections({type: 'DELETE', payload: {id: id}}) ;deleteSection(id, refreshSections);}}>delete</span>
+            </>
+            }
+          
+        </div> 
         
         
         {
             task.map((elem, i)=>{
-                const {id, content, details, evento, sectionid} = elem
+                const {id, content, details, evento, sectionid, folderid} = elem
                 return (
                     <OneItem key={id? id : i} 
-                    values={{id, content, details, evento, sectionid}}
+                    values={{id, content, details, evento, sectionid, folderid}}
                 functions = {{refreshTasks, dispatchTasks}}>
                     
                     </OneItem>

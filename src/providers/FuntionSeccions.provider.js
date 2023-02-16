@@ -42,22 +42,27 @@ const moveToSection = async (sectionId, callback) => {
 }
 
 const deleteSection = async (id, callback) => {
-				const res = await fetch('/api/v1/inbox/your-todos/'+ id, {
-                    method: 'DELETE',
-                    headers: headers,})
-                if(res){
-                    console.log(res)
-                    callback()
-                }
+    try {
+        const res = await fetch('/api/v1/sections/'+ id, {
+            method: 'DELETE',
+            headers: headers,})
+        const data = await res.json()
+        if (res.status > 299){
+            throw new Error('Algo salio mal')
+        }
+    } catch (error) {
+        callback()
+    }
+				
 				
                 
 }
 
-const updateSection = async (folderId, body, callback) => {
-				const res = await fetch('#' + folderId,{
+const editSection = async (sectionId, body, callback) => {
+				const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
 								method: 'PUT',
 								headers: headers,
-								body: body,
+								body: JSON.stringify(body),
 				})
 				if(res){
                     console.log(res)
@@ -87,7 +92,7 @@ const move = async(sectionId, callback)=>{
 }
 
 return <FunctionSectionsContext.Provider
-value={{createSection, updateSection, deleteSection, moveToSection, move}}>
+value={{createSection, editSection, deleteSection, moveToSection, move}}>
 				{children}
 </FunctionSectionsContext.Provider>
 }

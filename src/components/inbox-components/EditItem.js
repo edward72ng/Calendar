@@ -6,15 +6,18 @@ import { GaleryFromTask } from "./GaleryFromTask";
 import { EditTask } from "./EditTask";
 import { SubItem } from "./SubItem";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
+import { ItemsContext } from "../../providers/ItemsContext";
 
 function EditItem ({values, functions}){
-    const {id, content, details, evento, sectionid} = values
-    const sectionId = sectionid
+    const {id, content, details, evento, sectionid, folderid} = values
+  
     const {refreshTasks, dispatchTasks, setEdit} = functions
-
-    const {editTask} = useContext(FunctionTasksContext)
+    const {updateAll} = useContext(ItemsContext)
+    const {editTask, deleteTask} = useContext(FunctionTasksContext)
 
     const initialValues = {
+      folderid: folderid? folderid : null,
+      sectionid: sectionid? sectionid : null,
       content: content,
       details: details
     }
@@ -26,6 +29,11 @@ function EditItem ({values, functions}){
       editTask({...values,...editValues}, refreshTasks)
     }
 
+    const deleteItem = () => {
+      dispatchTasks({type: 'DELETE', payload: {id: id}})
+      setEdit(false)
+      deleteTask(id, refreshTasks)
+    }
     
 
    
@@ -69,7 +77,10 @@ function EditItem ({values, functions}){
 
 
         <GaleryFromTask></GaleryFromTask>
-
+        <span className="material-symbols-outlined"
+            onClick={()=>{deleteItem()}}>
+            delete</span>
+            
       </div>
     )
 }

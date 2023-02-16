@@ -4,7 +4,6 @@ import { OneItem } from "../inbox-components/OneItem";
 
 function WithoutSection() {
     const [task, dispatchTasks, refreshTasks] = useWithoutSection()
-    console.log(task.length)
 
     if(task.length < 1){
         return <></>
@@ -13,16 +12,15 @@ function WithoutSection() {
     return <div className="section-container">
     <div className="space-between" id="section">
       <div className="section"> Sin Seccion </div>
-      <i className="material-icons">delete</i>
     </div>
     
     
     {
         task.map((elem, i)=>{
-            const {id, content, details, evento, sectionid} = elem
+            const {id, content, details, evento, sectionid, folderid} = elem
             return (
                 <OneItem key={id} 
-                values={{id, content, details, evento, sectionid}}
+                values={{id, content, details, evento, sectionid, folderid}}
             functions = {{refreshTasks, dispatchTasks}}>
                 
                 </OneItem>

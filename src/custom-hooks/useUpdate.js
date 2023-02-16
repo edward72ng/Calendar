@@ -23,7 +23,6 @@ function reducer (state, action) {
         return [...state, action.payload.body];
 
     case 'SET':
-        console.log('colando set')
         return action.payload.body;
 
     default:

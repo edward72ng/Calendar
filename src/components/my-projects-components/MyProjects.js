@@ -12,7 +12,7 @@ import { WithoutSection } from './WithoutSection';
 function MyProjects() {
   const {filter} = useContext(DatesContext)
   const {createSection} = useContext(FunctionSectionsContext) 
-  const {all} = useContext(ItemsContext)
+  const {all, without} = useContext(ItemsContext)
 
   const [render, setRender] = useState(0)
   const [sections, dispatchSections, refreshSections] = useUpdate()
@@ -22,12 +22,12 @@ function MyProjects() {
 
   useEffect(() => {
     setRender(render + 1)
- },[all])
+ },[all, without])
 
 return<div className="home-container">
   <WithoutSection></WithoutSection>
     {sections.map((elem, i) => {
-        return <SectionHome key={elem.id}
+        return <SectionHome key={elem.id ? elem.id : i}
         dataValues={elem}
         index= {i}
         functions={{refreshSections, dispatchSections}}>
@@ -41,7 +41,8 @@ return<div className="home-container">
           onChange={(e)=>setInput(e.target.value)}></input>
           <span className="material-symbols-outlined"
           onClick={()=>{
-            createSection({section:input, folderid:filter.replace("?folder=","")},refreshSections);
+            dispatchSections({type: 'CREATE', payload: {body: {section: input, tasksInSections: []}}});
+            createSection({section:input, folderid:filter},() => refreshSections(`/api/v1/sections//all/with-task/${filter}`));
             setInput('')
           }}>add</span>
         </div>

@@ -5,6 +5,8 @@ import { SubItem } from "../inbox-components/SubItem";
 import { SubOptions } from "../my-projects-components/SubOptions";
 import { Recomended } from "./Recomended";
 
+const inboxUrl = '/api/v1/inboxtasks/'
+
 function FormCreate ({functions}) {
     const {dispatchTasks, refreshTasks} = functions
 
@@ -14,10 +16,10 @@ function FormCreate ({functions}) {
     const [recomended, setRecomended] = useState(false)
 
     const setTask = () => {
-        dispatchTasks({type: 'CREATE', payload:{body: {content, details}}})
+        dispatchTasks({type: 'CREATE', payload:{ body: {content, details}}})
         setContent('')
         setDetails('')
-        createTask({content, details}, refreshTasks)
+        createTask({content, details}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
     }
 
 

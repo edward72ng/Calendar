@@ -28,13 +28,17 @@ router.get('/:id',async (req,res) =>{
     )
     res.json(rsp)
 })
+
 router.put('/:sectionId',async (req, res)=>{
     const {sectionId} = req.params
-    const {todoId} = req.body
-    const todo = await models.todo.findByPk(todoId)
-    const resp = await todo.update({sectionid: sectionId})
+
+    console.log(sectionId)
+    const sectionGet = await models.sections.findByPk(sectionId)
+    console.log('ACTUALIZANDO !!!!!!!!')
+    const resp = await sectionGet.update(req.body)
     res.json(resp)
 })
+
 router.post('/',async (req, res)=>{
     if (req.headers.authorization){
         console.log('hay header authorization :D')
@@ -59,5 +63,29 @@ router.get('/with-task/:id', async (req, res) => {
         },
         include: ['evento']
     })
+})
+
+router.get('/all/with-task/:folderid', async (req, res) => {
+    const {folderid} = req.params
+    const data = await models.sections.findAll({
+        where: {
+            folderid: folderid
+        },
+        include: [{
+            model: models.todo,
+            as: 'tasksInSections',
+            include: ['evento']
+        }]
+    })
+
+    res.json(data)
+}
+)
+router.delete('/:id', async (req, res) => {
+    const {id} = req.params
+    const section = await models.sections.findByPk(id)
+    const data = section.destroy()
+
+    res.json(data)
 })
 module.exports = router

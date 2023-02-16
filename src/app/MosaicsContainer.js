@@ -40,11 +40,11 @@ const getParsedMonth = ()=>{
         }else{
             var d =  String(getElemYear(month + props.cMonth)) +'-' +String(getParsedMonth())+'-'+ i 
         }
-        console.log("dia actual"+d)
+        //console.log("dia actual"+d)
         arr.map((a, ind)=>{
             var fetchtrig = a.evento.event
            
-            console.log("compararndo"+fetchtrig)
+            //console.log("compararndo"+fetchtrig)
             if(d == fetchtrig){
                 boo = true
                 arra.push({

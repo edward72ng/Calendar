@@ -17,7 +17,6 @@ function ItemsProvider ({children}) {
     
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
-    console.log('ALL',all)
     const section = (id)=> {
         if(!id){
             return []

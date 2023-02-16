@@ -19,10 +19,10 @@ function reducer (state, action) {
         });
 
     case 'CREATE':
+      console.log('CREATE', action.payload.body)
         return [...state, action.payload.body];
 
     case 'SET':
-        console.log('colando set')
         return action.payload.body;
 
     default:
