@@ -18,8 +18,8 @@ function NavMyProjects ({open, setOpen}) {
 		</li>
 		{open && 
 			<ul>
-			{myProjects.map((elem) => {
-			return <div key={elem.id}><Link  to='/app/my-projects'> 
+			{myProjects.map((elem, i) => {
+			return <div key={elem.id? elem.id : i}><Link  to='/app/my-projects'> 
 			<li className='navigation-sub-items'
 					onClick={()=>{setFilter(elem.id); updateAll(); updateWithout()}}>
 						<span className="material-symbols-outlined">folder_open</span>

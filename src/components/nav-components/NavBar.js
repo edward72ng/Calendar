@@ -57,10 +57,10 @@ function NavBar ({children}) {
 
 
 
-			<NavCalendar
+			{/*<NavCalendar
 			open = {calendar}
 			setOpen= {setCalendar}
-			></NavCalendar>
+			></NavCalendar>*/}
 
 
 			</ul>

@@ -27,10 +27,10 @@ const deleteFolder = async (id, callback) => {
 }
 
 const updateFolder = async (folderId, body, callback) => {
-				const res = await fetch('#' + folderId,{
+				const res = await fetch('http://localhost:3000/api/v1/folders/' + folderId,{
 								method: 'PUT',
 								headers: headers,
-								body: body,
+								body: JSON.stringify(body),
 				})
 				if(res){
                     console.log(res)

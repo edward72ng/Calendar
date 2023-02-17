@@ -144,4 +144,13 @@ router.get('/without-sections', async (req, res) => {
     }
 })
 
+
+router.put('/:folderId',async (req,res)=>{
+    const {folderId} = req.params
+    const body = req.body
+    const folder = await models.folders.findByPk(folderId)
+    const data = await folder.update(body)
+    res.json(data)
+})
+
 module.exports =  router

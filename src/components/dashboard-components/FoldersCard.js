@@ -1,34 +1,33 @@
-import React, { useState } from "react";
-import { UseFetch } from "../../custom-hooks/useFetch";
+import React, { useContext, useState } from "react";
+import { ItemsContext } from "../../providers/ItemsContext";
+import { FolderItem } from "./FolderItem";
 import { InputFolders } from "./InputFolder";
 
 function FoldersCard () {
     const [open, setOpen] = useState(false)
-    const [folders, updateFolders] = UseFetch('/api/v1/folders/')
+    const {myProjects, dispatchMyProjects, updateMyProjects} = useContext(ItemsContext)
+
 
     return <div className="folder-card-container">
         {
-            folders.map((elem)=>{
-                return <div key={elem.id} className="folder-card-item">
-                    <div>{elem.name}</div>
-                    <div>
-                        {elem.collaborative ?
-                        <span className="material-symbols-outlined">groups</span>
-                        :
-                        <span className="material-symbols-outlined">person_filled</span>
-                        }
-                    </div>
-
-                </div>
-            })
+            myProjects.map((elem, i)=>{
+                const {id, name} = elem
+                return <FolderItem key={elem.id ? elem.id : i}
+                values={{id, name, i}}
+                functions= {{dispatchMyProjects, updateMyProjects}}>
+                </FolderItem>})
         }
-        <div className="folder-card-item" 
-        onClick={()=>setOpen(!open)}>
-            <div>Add</div>
-            <span className="material-symbols-outlined">add</span>
-            {
+        <div className="folder-card-item" >
+            {open ?
                 <InputFolders
-                functions={{updateFolders}}></InputFolders>
+                functions={{updateMyProjects, dispatchMyProjects, setOpen}}></InputFolders>
+            :
+            <>
+                <div>Add</div>
+                <span className="material-symbols-outlined"
+                onClick={()=>setOpen(!open)}>add</span>
+            </>
+                
             }
         </div>
     </div>
