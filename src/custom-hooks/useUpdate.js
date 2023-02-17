@@ -31,7 +31,7 @@ function reducer (state, action) {
 }
 
 function useUpdate(initialState){
-        const {filter} = useContext(DatesContext)
+        const {filter} = useContext(DataContext)
         const {section, all} = useContext(ItemsContext)
 		const [state, dispatch] = useReducer(reducer, initialState? initialState : section(filter))
 		

@@ -11,6 +11,7 @@ import { useFetchItems } from "../../custom-hooks/useFetchItems";
 import {useUpdate} from '../../custom-hooks/useUpdate'
 import {OneItem} from '../inbox-components/OneItem'
 import AddTask from "./AddTask";
+import { DataContext } from "../../providers/DataContext";
 function SectionHome({dataValues, functions, index}) {
     const {id, section} = dataValues
     const {refreshSections, dispatchSections} = functions
@@ -18,7 +19,7 @@ function SectionHome({dataValues, functions, index}) {
     
     const [task, dispatchTasks ,refreshTasks] = useUpdate(dataValues.tasksInSections)
     const {deleteSection, editSection, move} = useContext(FunctionSectionsContext)
-    const {filter} = useContext(DatesContext)
+    const {filter} = useContext(DataContext)
     const [openEdit, setOpenEdit] = useState(false)
     const [input, setInput] = useState(section)
 

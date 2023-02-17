@@ -33,7 +33,7 @@ function reducer (state, action) {
 
 
 function useWithoutSection(initialState){
-        const {filter} = useContext(DatesContext)
+        const {filter} = useContext(DataContext)
         const {task} = useContext(ItemsContext)
 		const [state, dispatch] = useReducer(reducer, initialState? initialState : task(filter))
 	

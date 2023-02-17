@@ -1,12 +1,13 @@
 import React , { useContext, useState } from "react"
 import { DatesContext } from "../../app/datesContext"
+import { DataContext } from "../../providers/DataContext"
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider"
 import { ItemsContext } from "../../providers/ItemsContext"
 import { SubItem } from "../inbox-components/SubItem"
 
 
 function CreateTask ({functions, dataValues}) {
-    const {filter} = useContext(DatesContext)
+    const {filter} = useContext(DataContext)
     const { updateAll} = useContext(ItemsContext)
     const {id} = dataValues
     const {dispatchTasks, refreshTasks, setOpen} = functions

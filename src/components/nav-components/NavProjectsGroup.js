@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { DatesContext } from '../../app/datesContext'
 import { UseFetch } from '../../custom-hooks/useFetch'
+import { DataContext } from '../../providers/DataContext'
 
 function NavProjectsGroup ({open, setOpen}) {
 	const [projectsGroup, updateProjectsGroup] = UseFetch('/api/v1/folders/collaborative')
-	const {setFilter} = useContext(DatesContext)
+	const {setFilter} = useContext(DataContext)
 
 	return<>
 		<li className='navigation-item'

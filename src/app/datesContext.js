@@ -55,7 +55,7 @@ function DatesProvider({children}){
         setFilter
         }}>
         {children}
-    </DatesContext.Provider>
+    </DatesContext.Provider>   
     )
 }
 

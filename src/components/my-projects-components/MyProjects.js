@@ -8,9 +8,10 @@ import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provide
 import { ItemsContext } from '../../providers/ItemsContext';
 import { useUpdate } from '../../custom-hooks/useUpdate';
 import { WithoutSection } from './WithoutSection';
+import { DataContext } from '../../providers/DataContext';
 
 function MyProjects() {
-  const {filter} = useContext(DatesContext)
+  const {filter} = useContext(DataContext)
   const {createSection} = useContext(FunctionSectionsContext) 
   const {all, without} = useContext(ItemsContext)
 

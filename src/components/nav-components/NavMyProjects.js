@@ -2,12 +2,13 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { DatesContext } from '../../app/datesContext'
 import { UseFetch } from '../../custom-hooks/useFetch'
+import { DataContext } from '../../providers/DataContext'
 import { ItemsContext } from '../../providers/ItemsContext'
 
 function NavMyProjects ({open, setOpen}) {
 	//const [myProjects, updateMyProjects] = UseFetch('/api/v1/folders/me')
 	const { myProjects, dispatchMyProjects,  updateAll, section, updateWithout} = useContext(ItemsContext)
-	const {setFilter} = useContext(DatesContext)
+	const {setFilter} = useContext(DataContext)
 	return<>
 		<li className='navigation-item'
 		onClick = {() => setOpen(!open)}>
