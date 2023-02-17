@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { DatesContext } from "../../app/datesContext";
 import { UseFetch } from "../../custom-hooks/useFetch";
+import { DataContext } from "../../providers/DataContext";
 
 const image = 'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'
 
 function NotificationsCard () {
-    const {dateString} = useContext(DatesContext)
-    const [notification, updateNotification] = UseFetch(`api/v1/notifications/notification-today/${dateString}`)
+    const {getToday} = useContext(DataContext)
+    const [notification, updateNotification] = UseFetch(`api/v1/notifications/notification-today/${getToday()}`)
 
     if (notification.length < 1){
         return <div className="cards-item">

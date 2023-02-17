@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { DatesContext } from '../../app/datesContext'
-import { UseFetch } from '../../custom-hooks/useFetch'
+
 import { DataContext } from '../../providers/DataContext'
 import { ItemsContext } from '../../providers/ItemsContext'
 

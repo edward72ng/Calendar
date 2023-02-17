@@ -1,12 +1,11 @@
 import React, { useContext } from "react"
 import {useAuth} from './auth'
-import { DatesContext } from "../app/datesContext"
 
 const FunctionFoldersContext = React.createContext()
 
 function FunctionFoldersProvider({children}){
     const auth = useAuth()
-    const {values, setValues} = useContext(DatesContext)
+
     const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -54,19 +53,11 @@ const moveToFolder = async (folderId, callback) => {
                 const res = await fetch('http://localhost:3000/api/v1/folders/'+folderId,{
                                 method: 'POST',
                                 headers: headers,
-                                body: JSON.stringify({todoId: values.id,}),
+                                body: JSON.stringify({todoId:''}),
                 })
                 if(res){
                     console.log('se movio el item')
                     console.log(res)
-                    setValues(
-                        {
-                          id: null,
-                          content: '',
-                          details: '',
-                          event: '',
-                          notifications: [],
-                        })
                         callback()
                 }
 }

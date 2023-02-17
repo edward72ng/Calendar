@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { DatesContext } from "../../app/datesContext";
 import { UseFetch } from "../../custom-hooks/useFetch";
+import { DataContext } from "../../providers/DataContext";
 
 const image = 'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'
 
 function EventsCard () {
-    const {dateString} = useContext(DatesContext)
-    const [event, updateEvent] = UseFetch(`api/v1/events/day-events/${dateString}`)
+    const {getToday} = useContext(DataContext)
+    const [event, updateEvent] = UseFetch(`api/v1/events/day-events/${getToday()}`)
 
     if (event.length < 1){
         return <div className="cards-item">

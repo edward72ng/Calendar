@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
 import {useAuth} from './auth'
-import { DatesContext } from "../app/datesContext"
 import {SocketContext} from '../providers/socketContext'
 import { DataContext } from "./DataContext"
 

@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../../providers/auth';
 import { UseFetch } from '../../custom-hooks/useFetch';
 import { SectionHome } from './SectionHome';
-import { DatesContext } from '../../app/datesContext';
 import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provider';
 import { ItemsContext } from '../../providers/ItemsContext';
 import { useUpdate } from '../../custom-hooks/useUpdate';

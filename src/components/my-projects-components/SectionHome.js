@@ -1,13 +1,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
-import { useTasks } from "../../custom-hooks/useTasks";
 import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider";
-import { useAuth } from "../../providers/auth";
-import { DatesContext } from "../../app/datesContext";
-import {OneTodo} from '../inbox-components/OneTodo'
 import { SocketContext } from "../../providers/socketContext";
-import { UseFetch } from "../../custom-hooks/useFetch";
-import { useFetchItems } from "../../custom-hooks/useFetchItems";
 import {useUpdate} from '../../custom-hooks/useUpdate'
 import {OneItem} from '../inbox-components/OneItem'
 import AddTask from "./AddTask";

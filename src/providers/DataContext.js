@@ -22,6 +22,18 @@ function DataProvider ({children}) {
         setTaskValue(defaultValue)
     }
 
+    function getToday() {
+        const today = new Date()
+        const year = today.getFullYear()
+        const month = today.getMonth() + 1
+        const day = today.getDate()
+      
+        const monthFormated = month < 10 ? `0${month}` : month
+        const dayFormated = day < 10 ? `0${day}` : day
+      
+        return `${year}-${monthFormated}-${dayFormated}`;
+      }
+
 	return <DataContext.Provider
 			value = {
             {taskValue, 
@@ -32,7 +44,8 @@ function DataProvider ({children}) {
             filter,
             setFilter,
             activeMenu,
-            setActiveMenu}}>
+            setActiveMenu,
+            getToday}}>
 		{children}
 	</DataContext.Provider>
 }
