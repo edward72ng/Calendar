@@ -12,10 +12,6 @@ function Header ({children}) {
     return <div className="viewer-container">
     <header className="header-container">
         <ul className="header-list">
-            <li className="header-item" id="menu"
-            onClick={()=>setActiveMenu(!activeMenu)}>
-                <span className="material-symbols-outlined">menu</span>
-            </li>
             <Search></Search>
         </ul>
         <ul className="header-list">

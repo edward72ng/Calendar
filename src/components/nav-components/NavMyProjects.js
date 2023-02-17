@@ -17,7 +17,7 @@ function NavMyProjects ({open, setOpen}) {
 			</div>
 		</li>
 		{open && 
-			<ul>
+			<ul className='sub-projects-container'>
 			{myProjects.map((elem, i) => {
 			return <div key={elem.id? elem.id : i}><Link  to='/app/my-projects'> 
 			<li className='navigation-sub-items'

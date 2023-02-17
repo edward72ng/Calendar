@@ -220,6 +220,7 @@ input{
     height: auto;
     padding: 12px;
     margin: 12px;
+    z-index: 90;
 }
 .login-container{
     display: flex;
@@ -311,7 +312,7 @@ input{
 }
 .home-container{
     width: 100%;
-    height: calc(var(--vp-height) - 60px);
+    height: calc(100%);
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -483,7 +484,7 @@ input{
 }
 
 .dashboard-container{
-    height: calc(var(--vp-height) - 60px);
+    height: calc(100%);
     box-sizing: border-box;
     padding: 16px;
     overflow-y: auto;
@@ -612,7 +613,7 @@ input{
     background-color: lightgray;
 }
 .inbox-container{
-    height: calc(var(--vp-height) - 60px);
+    height: calc(100%);
     overflow-y: auto;
 }
 .inbox-container::-webkit-scrollbar{
@@ -738,18 +739,56 @@ input{
     }
 }
 @media (max-width: 450px){
-    .navigation-list{
-        display: none;
-    }
+  
     .viewer-container{
         width: 100%;
+        height: calc(var(--vp-height) - 60 px);
+        margin-bottom: 60px;
+        border-radius: 0;
     }
     .cards-item{
         width: 100%;
         box-sizing: border-box;
     }
-    #menu{
+    .navigation-list{
+        display: block;
+        width: 100vw !important;
+        position: absolute;
+        bottom: 0;
+        align-items: center;
+        padding: 1rem;
+        background-color: var(--global-sup);
+        border-top: 1px solid #E0E0E0;
+        height: 60px;
+        margin-top: 0;
+        box-sizing: border-box;
+    }
+    .navigation-list ul{
+        margin-top: 0;
         display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .sub-projects-container{
+        position: fixed;
+        bottom: 60px;
+        z-index: 2;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100vw !important;
+        height: auto;
+        background-color: var(--global-sup);
+        border-radius: 8px;
+        left: 0;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+    .navigation-list li{
+        padding: 0;
+    }
+    .navigation-list span:nth-child(2){
+        display: none;
     }
     .active-menu{
         position: fixed;
