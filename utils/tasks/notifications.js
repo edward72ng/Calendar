@@ -29,7 +29,7 @@ const pushSubscription= {
 const today = new Date().toISOString().slice(0, 10); 
   
   // Tarea principal (main)
-  const mainTask = new cron.CronJob('5 15 * * *', async () => {
+  const mainTask = new cron.CronJob('55 17 * * *', async () => {
     console.log('Ejecutando tarea principal a las 12:00 AM');
     
     const dateArray = await models.notifications.findAll({
