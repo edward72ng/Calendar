@@ -30,4 +30,34 @@ router.post('/',async (req,res) =>{
     
 })
 
+router.get('/all',async (req, res) => {
+    const today = new Date().toISOString().slice(0, 10); 
+    const dateArray = await models.notifications.findAll({
+        where: sequelize.literal(`DATE(date) = '${today}'`),
+        include:[
+          {
+            model: models.todo,
+            as:'todo',
+            include: [
+              {
+                model: models.usuarios,
+                as: 'user',
+                include: [
+                  {
+                    model: models.subscriptions,
+                    as: 'subscriptions',
+                    include: ['keys']
+                  }
+                ]
+              }
+            ],
+          }
+        ]
+      });
+      
+      const values = dateArray.map((row) => row.toJSON())
+      console.log(values)
+      res.json(dateArray)
+})
+
 module.exports = router 

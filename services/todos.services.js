@@ -247,14 +247,13 @@ class Todos {
 //sequelize.where(sequelize.col('event'),objeto.event)
     async createYourTodo (objeto, userId){
         const {event, notifications} = objeto
-        sequelize.transaction( async (transaction) => {
+    
             if (event){
                 const [eventObtained, created] = await models.events.findOrCreate({
                     where:{event : event},
                 defaults: {
                     event: event,
-                },
-            transaction}
+                }}
                 );
                 objeto = {...objeto, eventid : eventObtained.id}
             };
@@ -263,7 +262,7 @@ class Todos {
             const newTodo = await models.todo.create({
                 ...objeto,
                 userid: userId},
-                transaction
+                
                 );
 
             if(notifications){
@@ -277,7 +276,7 @@ class Todos {
                     })
             };
             
-        });
+        ;
         
         
     }

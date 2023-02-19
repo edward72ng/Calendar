@@ -20,6 +20,8 @@ var corsOptions = {
 //middleaware not errors
 app.use(cors(corsOptions ));
 require('./utils/auth/index')
+const mainTask = require('./utils/tasks/notifications')
+mainTask.start()
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'src/public')));

@@ -53,6 +53,11 @@ class Usuarios extends Model{
             foreignKey: 'userid',
             as: 'myNotifications'
         })
+
+        this.hasMany(models.subscriptions,{
+            foreignKey: 'userid',
+            as: 'subscriptions'
+        })
 }
 
     static config(sequelize){

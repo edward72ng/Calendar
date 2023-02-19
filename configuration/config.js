@@ -10,7 +10,9 @@ require('dotenv').config();
     //dbPort:process.env.DB_PORT,
     apiKey:process.env.API_KEY,
     secret:process.env.SECRET,
-    uriLink:process.env.URI
+    uriLink:process.env.URI,
+    publicKey: process.env.PUBLIC_KEY,
+    privateKey: process.env.PRIVATE_KEY
 }
 
  module.exports= config
