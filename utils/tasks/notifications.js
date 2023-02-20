@@ -27,10 +27,16 @@ const pushSubscription= {
 
 
 const today = new Date().toISOString().slice(0, 10); 
-  
+var hoy = new Date();
+
+// Restar un día a la fecha actual
+var ayer = new Date(hoy.getTime() - 24 * 60 * 60 * 1000);
+
+// Formatear la fecha en el formato de año-mes-día
+var ayer_str = ayer.toISOString().slice(0, 10);
   // Tarea principal (main)
-  const mainTask = new cron.CronJob('55 17 * * *', async () => {
-    console.log('Ejecutando tarea principal a las 12:00 AM');
+  const mainTask = new cron.CronJob('1 9 * * *', async () => {
+    console.log(ayer_str);
     
     const dateArray = await models.notifications.findAll({
       where: sequelize.literal(`DATE(date) = '${today}'`),
@@ -75,7 +81,14 @@ const today = new Date().toISOString().slice(0, 10);
           }
       )
        try {
-          await webpush.sendNotification(elem.todo.user.subscriptions[0], payload)
+          await Promise.all(
+            elem.todo.user.subscriptions.map(async (val)=>{
+            await webpush.sendNotification(val, payload)
+        })
+          );
+          
+        
+          
        } catch (error) {
           console.log('ERROR IN SUBSCRIBED', error)
        }
