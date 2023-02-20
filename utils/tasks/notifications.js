@@ -8,7 +8,7 @@ function convertToCron(dateString, timeString) {
   
   const year = date.getFullYear();
   const month = date.getMonth();
-  const day = date.getDate() + 1;
+  const day = date.getDate() ;
   
   const [hour, minute, second] = time.split(':');
 
@@ -35,7 +35,7 @@ var ayer = new Date(hoy.getTime() - 24 * 60 * 60 * 1000);
 // Formatear la fecha en el formato de año-mes-día
 var ayer_str = ayer.toISOString().slice(0, 10);
   // Tarea principal (main)
-  const mainTask = new cron.CronJob('15 9 * * *', async () => {
+  const mainTask = new cron.CronJob('28 9 * * *', async () => {
     console.log(ayer_str);
     
     const dateArray = await models.notifications.findAll({
