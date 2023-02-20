@@ -3,7 +3,8 @@ const express = require('express')
 const router = new express.Router()
 const {models} = require('../db/connec')
 const webpush = require('../utils/webpush')
-
+const AuthService = require('../services/auth.services')
+const authservice = new AuthService()
 let pushSubscription;
 
 router.post('/subscribed', async (req, res)=>{

@@ -29,30 +29,39 @@ function Notifications () {
     }
 
     const subscription = async () => {
-        const register = await navigator.serviceWorker.register('/worker.js',{
-            scope: '/'
-        });
-        console.log('Servide Worker started')
-    
-        const subscription = await register.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY)
-        }); 
-    
-        console.log(subscription);
-    
-        // Send Notification
-        await fetch("/api/v1/workers/subscribed", {
-          method: "POST",
-          body: JSON.stringify(subscription),
-          headers: headers
-        });
-        console.log("Subscribed!");
+        try {
+            const permission = await Notification.requestPermission()
+
+            if(permission === "granted"){
+                const register = await navigator.serviceWorker.register('/worker.js',{
+                    scope: '/'
+                });
+                console.log('Servide Worker started')
+            
+                const subscription = await register.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY)
+                }); 
+            
+                console.log(subscription);
+            
+                // Send Notification
+                await fetch("/api/v1/workers/subscribed", {
+                  method: "POST",
+                  body: JSON.stringify(subscription),
+                  headers: headers
+                });
+                console.log("Subscribed!");
+            }
+            
+        } catch (error) {
+            console.log('Algo a salido mal')
+        }
     }; 
     
     
     const handleClick = () => {
-        if ("serviceWorker" in navigator) {
+        if ("serviceWorker" in navigator && "Notification" in window) {
             console.log('EXISTE SERVICE WORKER')
             subscription().catch(err => console.log(err));
         }else{
