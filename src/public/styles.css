@@ -461,6 +461,7 @@ input{
     align-items: center;
     height: var(--vp-height);
     box-sizing: border-box;
+
 }
 .align-items-center{
     display: flex;
@@ -488,6 +489,9 @@ input{
     box-sizing: border-box;
     padding: 16px;
     overflow-y: auto;
+}
+.dashboard-container::-webkit-scrollbar{
+    display: none;
 }
 .cards-container{
     display: flex;
@@ -683,9 +687,8 @@ input{
     outline: none;
 }
 /*FormCreat*/
-.formcreate-container{
+.formcreate-container {
     position: fixed;
-    bottom: 0;
     right: 0;
     width: 450px;
     height: 600px;
@@ -694,7 +697,33 @@ input{
     box-shadow: 0px 2px 4px hwb(0 0% 100% / 0.1);
     overflow-y: auto;
     max-width: 100%;
+    bottom: -100%;
+    transition: bottom 0.5s;
+} 
+.mount {
+    bottom: 0;
 }
+/*.unmount{
+    animation: slide-down;
+    bottom: -100%;
+}
+  
+  @keyframes slide-up {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0;
+    }
+  }
+  @keyframes slide-down {
+    from {
+      bottom: 0;
+    }
+    to {
+      bottom: -100%;
+    }
+  }*/
 .utils-container{
     width: 100%;
     display: flex;
@@ -741,20 +770,6 @@ input{
     overflow-y: auto;
 }
 /*Provitional class*/
-.component-b {
-  position: fixed;
-  bottom: -100%;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background-color: white;
-  transform: translateY(100%);
-  transition: transform 1.5s ease-in-out;
-}
-
-.component-b.show {
-  transform: translateY(0);
-}
 
 @media (min-width: 900px){
     .menu-enable{

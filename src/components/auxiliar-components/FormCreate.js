@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { SubItem } from "../inbox-components/SubItem";
@@ -25,6 +25,18 @@ function FormCreate ({functions}) {
 
     const [state, setState] = useState(initialstate);
     
+    useEffect(() => {
+      const formCreate = document.querySelector('.formcreate-container')
+      setTimeout(()=>{
+        formCreate.classList.add('mount')
+      }, 5)
+      return (() => {
+        console.log('desmontando Form')
+        formCreate.classList.remove('mount')
+      })
+    },[])
+    
+
       const handleEventChange = (e) => {
         const event = e.target.value;
         setState((prevState) => ({ ...prevState, event }));
@@ -65,10 +77,10 @@ function FormCreate ({functions}) {
       }
 
 
-    return <div className="formcreate-container component-b show">
-      {recomended &&
+    return <div className="formcreate-container" id="form-create">
+      {/*recomended &&
         <Recomended question={content}></Recomended>
-      }
+    */}
         <span className="material-symbols-outlined"
         onClick={()=>{setTask()}}>done</span>
         <div className="form-container">

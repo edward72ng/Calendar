@@ -4,6 +4,7 @@ const id = require('faker/lib/locales/id_ID')
 const { where, Op } = require('sequelize')
 const sequelize = require('./../db/connec')
 const {models} = require('./../db/connec')
+const {createTaskNotification} = require('../utils/helpers/notifications.helper')
 //const {Todo} = require('./../db/models/modelssequelize')
 //
 //EN QUERYS DE SEQUELIZE SE NOS ENVIA [DATA, METADATA]
@@ -15,52 +16,13 @@ class Todos {
         //this.generatedb()
     }
 
+    getToday() {
+        const date = new Date().toISOString().slice(0, 10); 
+        return date
+    }
 
-    // generatedb(){
-    //     connection.query(q,(error, resp )=>{
-    //         if (error){
-    //             console.log('Service error')
-    //         }
-    //         else{
-    //             //console.log(resp)
-    //             this.data = resp
-    //         }
-    //     })
-    // }
-
-    // generate(){
-    //     const limit = 10;
-    //     for (let index = 0; index < limit; index++) {
-    //         if (index % 2 == 0)
-    //         {
-    //             this.data.push(
-    //                 {
-    //                     id: faker.datatype.uuid(),
-    //                     content: faker.animal.dog(),
-    //                     deatails: faker.commerce.product(),
-    //                     creation: faker.date.month(),
-    //                     notifydate: faker.date.future()
-    //                 }
-    //             )
-    //         }
-    //         if (index % 2 == 1)
-    //         {
-    //             this.data.push(
-    //                 {
-    //                     id: faker.datatype.uuid(),
-    //                     content: faker.animal.dog(),
-    //                     deatails: faker.commerce.product(),
-    //                     creation: faker.date.month(),
-    //                     //notifydate: faker.date.future()
-    //                 }
-    //             )
-    //         }
-    //     }
-    // }
     async obtener() {
-        //consulta a la db
-        // this.generatedb()
-        // return this.data
+    
         this.data = await models.todo.findAll()//.then(res=>{console.log(res)}).catch(e=>{console.log(e)})
         return this.data
     }
@@ -267,6 +229,31 @@ class Todos {
 
             if(notifications){
                     await notifications.map( async(elem)=>{
+                        console.log(this.getToday())
+                        if (elem.date == this.getToday()){
+                            const payload = {
+                                title: 'Nueva Alarma',
+                                message: objeto.content
+                            }
+
+                            const userData = await models.usuarios.findByPk(userId, {
+                                include: [{
+                                    model: models.subscriptions,
+                                    as: 'subscriptions',
+                                    include: ['keys']
+                                }]
+                            })
+                            await Promise.all(
+                                userData.subscriptions.map(async (val)=>{
+                                    await createTaskNotification(elem.date, elem.time, {endpoint: val ,payload: payload})
+                                })
+                            )
+                            
+
+                            
+
+                        }
+
                         await models.notifications.create(
                             {
                                 ...elem,
@@ -277,7 +264,8 @@ class Todos {
             };
             
         ;
-        
+        //
+        return newTodo
         
     }
 
