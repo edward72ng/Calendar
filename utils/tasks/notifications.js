@@ -35,7 +35,7 @@ var ayer = new Date(hoy.getTime() - 24 * 60 * 60 * 1000);
 // Formatear la fecha en el formato de año-mes-día
 var ayer_str = ayer.toISOString().slice(0, 10);
   // Tarea principal (main)
-  const mainTask = new cron.CronJob('28 12 21 1 *', async () => {
+  const mainTask = new cron.CronJob('29 12 21 1 *', async () => {
     console.log('MainTask Execute');
     
     const dateArray = await models.notifications.findAll({
