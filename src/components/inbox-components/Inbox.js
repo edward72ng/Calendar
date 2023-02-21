@@ -18,7 +18,7 @@ function Inbox () {
         {
             inbox.map((elem, i)=>{
                 const {id, content, details, evento, sectionid} = elem
-                return <OneItem key={id? id : i} 
+                return <OneItem key={id? id : 'provitionalKey'} 
                 values={{id, content, details, evento, sectionid}}
                 functions = {{refreshTasks, dispatchTasks}}>
                 
