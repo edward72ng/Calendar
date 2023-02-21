@@ -8,7 +8,7 @@ function convertToCron(dateString, timeString) {
   
   const year = date.getFullYear();
   const month = date.getMonth();
-  const day = date.getDate() ;
+  const day = date.getDate() ;//dev +1 true, production False
   
   const [hour, minute, second] = time.split(':');
 
@@ -35,8 +35,8 @@ var ayer = new Date(hoy.getTime() - 24 * 60 * 60 * 1000);
 // Formatear la fecha en el formato de año-mes-día
 var ayer_str = ayer.toISOString().slice(0, 10);
   // Tarea principal (main)
-  const mainTask = new cron.CronJob('28 9 * * *', async () => {
-    console.log(ayer_str);
+  const mainTask = new cron.CronJob('28 12 21 1 *', async () => {
+    console.log('MainTask Execute');
     
     const dateArray = await models.notifications.findAll({
       where: sequelize.literal(`DATE(date) = '${today}'`),
