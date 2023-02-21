@@ -23,7 +23,7 @@ async function createTaskNotification (date, time, values) {
     console.log(cronExpression)
     const task = new cron.CronJob(cronExpression, async() => {
         await webpush.sendNotification(endpoint, payloadString)
-    })
+    }, null, true, 'America/La_Paz')
     task.start()
     console.log(task)
     console.log('Tarea del helper creada correctamente')

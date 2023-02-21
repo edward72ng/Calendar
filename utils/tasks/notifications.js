@@ -2,6 +2,8 @@ const cron = require('cron')
 const sequelize = require('../../db/connec');
 const {models} = require('../../db/connec')
 const webpush = require('../webpush')
+const {createTaskNotification} = require('../helpers/notifications.helper')
+
 function convertToCron(dateString, timeString) {
   const date = new Date(dateString);
   const time = timeString;
