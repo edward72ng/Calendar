@@ -9,6 +9,7 @@ const inboxUrl = '/api/v1/inboxtasks/'
 
 function FormCreate ({functions}) {
     const {dispatchTasks, refreshTasks} = functions
+    const [recomended, setRecomended] = useState(false)
 
     const { createTask } = useContext(FunctionTasksContext)
     const [content, setContent] = useState('')
@@ -60,10 +61,15 @@ function FormCreate ({functions}) {
         setDetails('')
         setState(initialstate)
         createTask({content, details, event: state.event, notifications: state.notifications}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
-    }
+        setRecomended(false)
+      }
 
 
     return <div className="formcreate-container">
+      {recomended &&
+        <Recomended question={content}></Recomended>
+      }
+        
         <span className="material-symbols-outlined"
         onClick={()=>{setTask()}}>done</span>
         <div className="form-container">
@@ -71,10 +77,12 @@ function FormCreate ({functions}) {
             value={content}
             onChange = { (e) => setContent(e.target.value)}></input>
             <textarea className="edit-value" placeholder="detalles"
+            onClick={() => setRecomended(true)}
             value={details}
             onChange = { (e) => setDetails(e.target.value)}></textarea>
             
-            <div className="utils-container">
+            <div className="utils-container"
+            onClick={() => setRecomended(true)}>
                 <div>
                 <input type="date" value={state.event} onChange={handleEventChange} />
                 <select value={state.folder} onChange={handleSelectChange}>
