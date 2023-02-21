@@ -7,7 +7,7 @@ function convertToCron(dateString, timeString) {
     
     const year = date.getFullYear();
     const month = date.getMonth();
-    const day = date.getDate() + 1;//reparar
+    const day = date.getDate();//reparar +1
     
     const [hour, minute, second] = time.split(':');
   
