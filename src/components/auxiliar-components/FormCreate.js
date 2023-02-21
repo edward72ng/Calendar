@@ -65,11 +65,10 @@ function FormCreate ({functions}) {
       }
 
 
-    return <div className="formcreate-container">
+    return <div className="formcreate-container component-b show">
       {recomended &&
         <Recomended question={content}></Recomended>
       }
-        
         <span className="material-symbols-outlined"
         onClick={()=>{setTask()}}>done</span>
         <div className="form-container">
