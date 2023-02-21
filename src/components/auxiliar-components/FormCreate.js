@@ -63,7 +63,7 @@ function FormCreate ({functions}) {
     }
 
 
-    return <div className="formcreate-container">
+    return <div className="formcreate-container component-b show">
         <span className="material-symbols-outlined"
         onClick={()=>{setTask()}}>done</span>
         <div className="form-container">
