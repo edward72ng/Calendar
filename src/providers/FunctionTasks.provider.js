@@ -33,7 +33,6 @@ const deleteTask = async (id, callback) => {
 
 const editTask = async (body,callback) => {
     const {id, ...send} = body
-    
     try{
         const res = await fetch('/api/v1/inbox/your-todos/'+id, {
             method: 'PUT',
@@ -41,6 +40,8 @@ const editTask = async (body,callback) => {
             headers: headers})
         if(res.status > 299){
             throw new Error('Ha ocurrido un error inesperado')
+        }else if (res.status == 200){
+            callback()
         }
     }catch(err){
         alert('error al editar')
@@ -56,11 +57,12 @@ const createTask = async (body, callback) => {
             headers: headers,
             body:  JSON.stringify(Object.assign(taskValue, body)),
         })
-        setDefault()
+        
         if (res.status > 299){
             throw new Error('Ha ocurrido un error inesperado')
         }else{
             console.log('Todo parece aver marchado bien')
+            //setDefault()
             callback()
         }
     } catch (error) {

@@ -11,7 +11,19 @@ import { ItemsContext } from "../../providers/ItemsContext";
 
 function Inbox () {
     const {inbox, dispatchInbox: dispatchTasks, updateInbox: refreshTasks} = useContext(ItemsContext)
+    const [form, setForm] = useState(false)
+    const [isClosing, setIsClosing] = useState(false)
 
+    const closeForm = () => {
+        setIsClosing(true)
+        setTimeout(()=>{
+            setForm(false)
+        }, 1000)
+    }
+    const openForm = () => {
+        setIsClosing(false)
+        setForm(true)
+    }
 
     return <div className="inbox-container">
         <ul>
@@ -26,10 +38,24 @@ function Inbox () {
             })
         }
         </ul>
-        <Add>
-            <FormCreate
-            functions={{dispatchTasks, refreshTasks}}></FormCreate>
-        </Add>
+        {(form && !isClosing) &&
+        <div className="adding"
+        onClick={closeForm}>
+            <span className="material-symbols-outlined">close</span>
+        </div>
+        }
+        {(!form || isClosing) &&
+        <div className="adding"
+        onClick={openForm}>
+            <span className="material-symbols-outlined">add</span>
+        </div>
+        }
+    {form && 
+    <FormCreate
+    values = {{isClosing}}
+    functions={{dispatchTasks, refreshTasks, setForm}}></FormCreate>
+    }
+        
     </div>
 }
 

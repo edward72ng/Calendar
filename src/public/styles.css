@@ -488,6 +488,7 @@ input{
     height: calc(100%);
     box-sizing: border-box;
     padding: 16px;
+    width: 100%;
     overflow-y: auto;
 }
 .dashboard-container::-webkit-scrollbar{
@@ -703,27 +704,7 @@ input{
 .mount {
     bottom: 0;
 }
-/*.unmount{
-    animation: slide-down;
-    bottom: -100%;
-}
-  
-  @keyframes slide-up {
-    from {
-      bottom: -100%;
-    }
-    to {
-      bottom: 0;
-    }
-  }
-  @keyframes slide-down {
-    from {
-      bottom: 0;
-    }
-    to {
-      bottom: -100%;
-    }
-  }*/
+
 .utils-container{
     width: 100%;
     display: flex;

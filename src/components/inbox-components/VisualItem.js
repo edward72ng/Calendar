@@ -1,27 +1,19 @@
 import React,{useContext, useState} from "react";
-import {useAuth} from '../../providers/auth'
-import { Options } from "../my-projects-components/Options";
 import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
-import { EditTask } from "./EditTask";
 import { SubItem } from "./SubItem";
 
 function VisualItem ({values, functions}){
     const {id, content, details, evento, sectionid} = values
-    const sectionId = sectionid
-    const {refreshTasks, dispatchTasks, setEdit} = functions
+    const {setEdit} = functions
 
     
     const [check, setCheck] = useState(false)
     const [expand, setExpand] = useState(false)
     const [subTasks, setSubTasks] = useState(false)
-
-    
-    const {setTaskValue, setForm} = useContext(DataContext)
-
    
     return (
-      <div className="visual-container">
+      <div className="visual-container" data-id={id}>
 
             <div className="visual-item-container">
                 {check ?

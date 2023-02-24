@@ -14,6 +14,10 @@ const schemaSectionsSeq = {
         type: DataTypes.STRING,
         allowNull: false,
      },
+    orders: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     folderid: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull:false,
@@ -37,6 +41,11 @@ class Sections extends Model{
         this.belongsTo(models.folders, {
             as: 'sectionsInFolder',
             foreignKey: 'folderid'
+        })
+
+        this.hasOne(models.orders,{
+            foreignKey: 'sectionid',
+            as: 'myOrder'
         })
     }
 

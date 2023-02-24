@@ -110,6 +110,10 @@ router.get('/all', async (req, res) => {
                 as: 'sectionsInFolder',
                 include: [
                     {
+                    model: models.orders,
+                    as: 'myOrder'
+                    },
+                    {
                         model: models.todo,
                         as: 'tasksInSections',
                         include: ['evento']

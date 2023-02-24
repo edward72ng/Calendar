@@ -20,4 +20,4 @@ function AddTask({dataValues, functions}) {
   
 }
 
-export default AddTask;
+export  {AddTask};

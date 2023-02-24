@@ -15,13 +15,26 @@ function DataProvider ({children}) {
         assignedto: null
     }
 
+    const initialDragInfo = {
+        item: null,
+        body: null,
+        sectionOrigin: null,
+        sectionDestination: null
+    }
+
     const [form, setForm] = useState(false)
 	const [filter, setFilter] = useState('')
 	const [taskValue, setTaskValue] = useState(defaultValue)
+    const [dragInfo, setDragInfo] = useState(initialDragInfo)
+
     const [activeMenu, setActiveMenu] = useState(false)
 	
     const setDefault = () => {
         setTaskValue(defaultValue)
+    }
+
+    const setDragDefault = () => {
+        setDragInfo(initialDragInfo)
     }
 
     function getToday() {
@@ -47,7 +60,11 @@ function DataProvider ({children}) {
             setFilter,
             activeMenu,
             setActiveMenu,
-            getToday}}>
+            getToday,
+            
+            dragInfo,
+            setDragInfo,
+            setDragDefault}}>
 		{children}
 	</DataContext.Provider>
 }

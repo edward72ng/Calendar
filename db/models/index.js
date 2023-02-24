@@ -12,6 +12,7 @@ const { Contacts, schemaContactsSeq} = require('./contacts.model')
 const { Pending, schemaPendingSeq} = require('./pendingNotifications.model')
 const { Subscriptions, schemaSubscriptionsSeq} = require('./subscriptions.model')
 const { Keys, schemaKeysSeq} = require('./keys.model')
+const { Orders, schemaOrdersSeq} = require('./orders.model')
 
 // INICIACION DE MODELOS PARA EXPORTAR
 function setupModels(sequelize) {
@@ -28,6 +29,7 @@ function setupModels(sequelize) {
     Pending.init(schemaPendingSeq, Pending.config(sequelize))
     Subscriptions.init(schemaSubscriptionsSeq, Subscriptions.config(sequelize))
     Keys.init(schemaKeysSeq, Keys.config(sequelize))
+    Orders.init(schemaOrdersSeq, Orders.config(sequelize))
 
     Todoe.associate(sequelize.models)
     Notify.associate(sequelize.models)
@@ -38,6 +40,7 @@ function setupModels(sequelize) {
     Sections.associate(sequelize.models)
     Subscriptions.associate(sequelize.models)
     Keys.associate(sequelize.models)
+    Orders.associate(sequelize.models)
 }
 
 

@@ -1,39 +1,50 @@
 import React,{useContext, useState} from "react";
-import {useAuth} from '../../providers/auth'
-import { Options } from "../my-projects-components/Options";
-import { DataContext } from "../../providers/DataContext";
-import { GaleryFromTask } from "./GaleryFromTask";
-import { EditTask } from "./EditTask";
-import { SubItem } from "./SubItem";
+import { GaleryFromTask } from "../inbox-components/GaleryFromTask";
+import { SubItem } from "../inbox-components/SubItem";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
 
-function EditItem ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid} = values
+function EditItemWithSection ({values, functions}){
+    const {id, content, details, evento, sectionid, folderid, userId, eventId, tasksInSections} = values
   
-    const {refreshTasks, dispatchTasks, setEdit} = functions
+    const {refreshsections, dispatchSections, setEdit} = functions
     const {updateAll} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
 
     const initialValues = {
-      folderid: folderid? folderid : null,
-      sectionid: sectionid? sectionid : null,
+      id: id,
       content: content,
-      details: details
+      details: details,
+      evento: evento,
+      sectionid: sectionid,
+      folderid: folderid,
+      userId: userId,
+      eventId: eventId,
     }
     const [editValues, setEditValues] = useState(initialValues)
     
     const sendEdit = () => {
-      dispatchTasks({type: 'UPDATE', payload: {id: id, body: editValues}})
+      const newTasksItems = tasksInSections.map((elem) => {
+
+        if(elem.id == id){
+          console.log(editValues)
+          return editValues
+        }
+        return elem
+      })
+
+      dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems}}})
       setEdit(false)
-      editTask({...values,...editValues}, refreshTasks)
+      editTask(editValues, ()=>{})
     }
 
     const deleteItem = () => {
-      console.log('Tet estas ejecutando?')
-      dispatchTasks({type: 'DELETE', payload: {id: id}})
+      const newTasksItems = tasksInSections.filter((elem)=>{
+        return elem.id !== id;
+      })
+      dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems}}})
       setEdit(false)
-      deleteTask(id, refreshTasks)
+      deleteTask(id,()=>{})
     }
     
 
@@ -85,4 +96,4 @@ function EditItem ({values, functions}){
       </div>
     )
 }
-export {EditItem}
+export {EditItemWithSection}

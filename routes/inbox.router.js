@@ -189,4 +189,18 @@ router.get('/with-section/:sectionId', async(req, res)=>{
     
 })
 
+router.post('/find-one', async (req, res) => {
+    const {content} = req.body
+    const task = await models.todo.findOne({
+        where: {
+          content: content
+        },
+        attributes: ['id', 'content', 'sectionid', 'folderid'],
+        order: [['id', 'DESC']],
+        limit: 1
+      });
+    console.log(task)
+    res.json(task)
+})
+
 module.exports = router

@@ -7,8 +7,9 @@ import { Recomended } from "./Recomended";
 
 const inboxUrl = '/api/v1/inboxtasks/'
 
-function FormCreate ({functions}) {
-    const {dispatchTasks, refreshTasks} = functions
+function FormCreate ({functions, values}) {
+    const {isClosing} = values
+    const {dispatchTasks, refreshTasks, setForm} = functions
     const [recomended, setRecomended] = useState(false)
 
     const { createTask } = useContext(FunctionTasksContext)
@@ -24,17 +25,17 @@ function FormCreate ({functions}) {
       } 
 
     const [state, setState] = useState(initialstate);
-    
+    console.log('Render', isClosing)
     useEffect(() => {
       const formCreate = document.querySelector('.formcreate-container')
-      setTimeout(()=>{
-        formCreate.classList.add('mount')
-      }, 5)
-      return (() => {
-        console.log('desmontando Form')
+      if(isClosing){
         formCreate.classList.remove('mount')
-      })
-    },[])
+      }else{
+        setTimeout(()=>{
+          formCreate.classList.add('mount')
+        }, 5)
+      }
+    },[isClosing])
     
 
       const handleEventChange = (e) => {

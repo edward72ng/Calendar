@@ -22,10 +22,21 @@ function CreateTask ({functions, dataValues}) {
 
     const setTask = () => {
         dispatchTasks({type: 'CREATE', payload:{body: values}})
-        setValues(initialState)
-        createTask(values, () => {
-            refreshTasks(`/api/v1/sections/with-task/${id}`)
+        
+        createTask(values, async () => {
+            const res = await fetch(`api/v1/inbox/find-one`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body:  JSON.stringify({content: values.content}),
+            })
+            const data = await res.json()
+
+            dispatchTasks({type:'SETID', payload:{content: data.content, id: data.id}})
         })
+        setValues(initialState)
     }
 
 

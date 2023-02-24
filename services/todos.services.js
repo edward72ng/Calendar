@@ -186,7 +186,8 @@ class Todos {
         var yourTodos = await models.todo.update(obj,{
             where:{
                 id: idComp
-            }    }
+            }
+        }
         )
 
         if(objeto.notifications){

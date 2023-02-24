@@ -63,6 +63,9 @@ router.get('/with-task/:id', async (req, res) => {
         },
         include: ['evento']
     })
+    console.log(tasks)
+
+    res.json(tasks)
 })
 
 router.get('/all/with-task/:folderid', async (req, res) => {

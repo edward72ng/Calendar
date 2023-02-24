@@ -2,74 +2,54 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider";
 import { SocketContext } from "../../providers/socketContext";
-import {useUpdate} from '../../custom-hooks/useUpdate'
-import {OneItem} from '../inbox-components/OneItem'
-import AddTask from "./AddTask";
+import { OneItemWithSection} from "./OneItemWithSection"
+import { AddTask } from "./AddTask";
 import { DataContext } from "../../providers/DataContext";
+import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
+import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+
 function SectionHome({dataValues, functions, index}) {
-    const {id, section} = dataValues
+    const {id, section, tasksInSections, myOrder} = dataValues
+    console.log(tasksInSections)
+    const {ordersection} = myOrder
+    const order = ordersection.split('|')
+    const copyTasks = []
+    //console.log('ORDER FROM DB',order)
+    
+    order.forEach((id) => {
+      const element = tasksInSections.find((item) => item.id == id);
+      if (element) {
+        copyTasks.push(element);
+      }
+    });
+
+    //console.log('RENDER',copyTasks)
     const {refreshSections, dispatchSections} = functions
     const {socket} = useContext(SocketContext)
-    
-    const [task, dispatchTasks ,refreshTasks] = useUpdate(dataValues.tasksInSections)
+   
+    //const [task, dispatchTasks ,refreshTasks] = useUpdate(tasksInSections)
     const {deleteSection, editSection, move} = useContext(FunctionSectionsContext)
-    const {filter} = useContext(DataContext)
+    const {editTask} = useContext(FunctionTasksContext)
+    const {filter, dragInfo, setDragInfo, setDragDefault} = useContext(DataContext)
     const [openEdit, setOpenEdit] = useState(false)
     const [input, setInput] = useState(section)
 
+  
     const handleEdit = () => {
         dispatchSections({type: 'UPDATE', payload: {id: id, body: {section: input}}});
-        editSection(id, {section: input},() => refreshSections(`/api/v1/sections//all/with-task/${filter}`))
+        editSection(id, {section: input},() => refreshSections(`/api/v1/sections/all/with-task/${filter}`))
         setOpenEdit(false)
     }
 
-    /*useEffect(()=>{
-        const section = document.getElementById('section' + index)
-        const sortable = new Sortable(section,{
-            group: {
-                name: 'section-home'
-            },
 
-            onEnd: ()=>{ console.log(`onEnd se ejecuto en la seccion: ${section}` )},
-        })
-
-        return ()=>{
-            sortable.destroy()
-        }
-    }, [])*/
-
-    useEffect(()=>{
-        if(socket){
-            socket.on('refrescar',(mesagge)=>{
-                
-                if(mesagge.origen == id || mesagge.destino == id){
-                    console.log('escucho un evento del server')
-                    setTimeout(()=>{
-                        refreshTasks()
-                    }, 2000)
-                    
-                }
-            })
-        }
-        return ()=>{ 
-            if(socket){
-                socket.off('refresh');
-            }
-           
-        }
-    }, [])
-
-    
-
-
-      return <div className="section-container "   id={'section' + index}
-    onDragOver={(e)=>{e.preventDefault();console.log('arrastrando'); 
-    /*e.currentTarget.classList.add('select')*/}}
-    onDrop={()=>{ console.log('DESTINO:' + id); 
-     //moveToSection(id, refreshTask);
-     move(id, refreshTasks)}}>
+      return <div className="section-container"  id={id}>
         
-        <div className="space-between" id="section">
+        <div className="space-between tittle">
             {openEdit ?
             <>
             <input value={input}
@@ -91,23 +71,44 @@ function SectionHome({dataValues, functions, index}) {
             }
           
         </div> 
+         
+       
         
+        <Droppable droppableId={String(id)}>
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+
+            {copyTasks.map((elem, i) => (
+                <Draggable key={elem.id? elem.id : getRandomNumber(10,200)} 
+                draggableId={String(elem.id)} index={i}>
+                {(provided) => (
+                <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}>
+                    <OneItemWithSection key={elem.id? elem.id : getRandomNumber(10,200)} 
+                    values={{...elem, tasksInSections}}
+                    functions = {{refreshSections, dispatchSections}}>
+                    </OneItemWithSection>
+                  </div>
+                )}
+                </Draggable>
+            ))}
+
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+
         
-        {
-            task.map((elem, i)=>{
-                const {id, content, details, evento, sectionid, folderid} = elem
-                return (
-                    <OneItem key={id? id : i} 
-                    values={{id, content, details, evento, sectionid, folderid}}
-                functions = {{refreshTasks, dispatchTasks}}>
-                    
-                    </OneItem>
-                )
-            })
-        }
+       
+
          <AddTask
          dataValues={{id}}
-         functions={{dispatchTasks, refreshTasks}}></AddTask> 
+         functions={{dispatchTasks: dispatchSections, refreshTasks: refreshSections}}></AddTask> 
     </div>
 
     
@@ -115,3 +116,12 @@ function SectionHome({dataValues, functions, index}) {
 }
 
 export {SectionHome}
+
+
+
+
+
+
+
+
+
