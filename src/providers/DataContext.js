@@ -23,7 +23,7 @@ function DataProvider ({children}) {
     }
 
     const [form, setForm] = useState(false)
-	const [filter, setFilter] = useState('')
+	const [filter, setFilter] = useState(null)
 	const [taskValue, setTaskValue] = useState(defaultValue)
     const [dragInfo, setDragInfo] = useState(initialDragInfo)
 

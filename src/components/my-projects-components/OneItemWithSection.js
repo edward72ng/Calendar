@@ -9,7 +9,7 @@ function OneItemWithSection ({values, functions}){
     
     if(edit){
       return <EditItemWithSection
-      values={{id, content, details, evento, sectionid, folderid, tasksInSections}}
+      values={values}
       functions={{refreshSections, dispatchSections, setEdit,}}></EditItemWithSection>
     }
 

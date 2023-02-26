@@ -14,7 +14,7 @@ function OneItem ({values, functions}){
     
     if(edit){
       return <EditItem
-      values={{id, content, details, evento, sectionid, folderid}}
+      values={values}
       functions={{refreshTasks, setEdit, dispatchTasks}}></EditItem>
     }
 

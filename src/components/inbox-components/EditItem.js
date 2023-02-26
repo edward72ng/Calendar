@@ -1,6 +1,6 @@
 import React,{useContext, useState} from "react";
 import {useAuth} from '../../providers/auth'
-import { Options } from "../my-projects-components/Options";
+import { Options } from "../auxiliar-components/Options";
 import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
 import { EditTask } from "./EditTask";
@@ -9,24 +9,41 @@ import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
 
 function EditItem ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid} = values
+    const {id, content, details, evento, sectionid, folderid, notifications} = values
   
     const {refreshTasks, dispatchTasks, setEdit} = functions
     const {updateAll} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
 
     const initialValues = {
-      folderid: folderid? folderid : null,
+      
       sectionid: sectionid? sectionid : null,
       content: content,
       details: details
     }
+    const initialOptions = {
+      folderid: folderid? folderid : null,
+      event: evento? evento.event : '',
+      date: "",
+      time: "",
+      notifications: notifications,
+  } 
+
+
+    
+    const [options, setOptions] = useState(initialOptions)   
     const [editValues, setEditValues] = useState(initialValues)
     
     const sendEdit = () => {
-      dispatchTasks({type: 'UPDATE', payload: {id: id, body: editValues}})
+      const newTask = {
+        ...editValues,
+        evento: {event: options.event},
+        notifications: options.notifications
+      }
+
+      dispatchTasks({type: 'UPDATE', payload: {id: id, body: newTask}})
       setEdit(false)
-      editTask({...values,...editValues}, refreshTasks)
+      editTask({...values,...editValues, ...options}, refreshTasks)
     }
 
     const deleteItem = () => {
@@ -67,7 +84,9 @@ function EditItem ({values, functions}){
                 :
                 <></>
                 }
-                <SubItem></SubItem>
+                <Options 
+                state={options} 
+                setState={setOptions}/>
               
               </div>
 

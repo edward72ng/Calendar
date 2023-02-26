@@ -171,7 +171,7 @@ class Todoe extends Model{
         }
         )
         this.hasMany(models.notifications, {
-            as: 'notifis',
+            as: 'notifications',
             foreignKey: 'todoid' //un todo puede tener muchas notifi
         })
         this.belongsTo(models.folders,{//un todo puede tener un evento

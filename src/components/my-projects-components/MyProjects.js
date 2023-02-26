@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../../providers/auth';
 import { getforSection, reorder } from '../../utils/dragAndDrop'
@@ -9,56 +9,90 @@ import { useUpdate } from '../../custom-hooks/useUpdate';
 import { WithoutSection } from './WithoutSection';
 import { DataContext } from '../../providers/DataContext';
 import { DragDropContext} from 'react-beautiful-dnd'
+import { FunctionTasksContext } from '../../providers/FunctionTasks.provider';
+import { useWithoutSection } from '../../custom-hooks/useWithoutSection';
 
 
 
 function MyProjects() {
   const {filter} = useContext(DataContext)
-  const {createSection} = useContext(FunctionSectionsContext) 
+  const {createSection, editSection} = useContext(FunctionSectionsContext) 
+  const {editTask} = useContext(FunctionTasksContext)
   const {all, without} = useContext(ItemsContext)
-
+  const [task, dispatchTasks, refreshTasks] = useWithoutSection()
   const [render, setRender] = useState(0)
   const [sections, dispatchSections, refreshSections] = useUpdate()
   const [input, setInput] = useState('')
-  const auth = useAuth()
-  const navigate = useNavigate()
-
   useEffect(() => {
     setRender(render + 1)
- },[all, without, sections])
+ },[all, without])
 
  const onDragEnd = (values) => {
   const { source, destination } = values
   if(!destination){
     return;
   }
-  if (source.droppableId === destination.droppableId) {
-    const [section, tasksInsection, orders] = getforSection(destination.droppableId, sections)
-    const tasksInSections = reorder(tasksInsection, source.index, destination.index)
+  if( source.droppableId == 'without-section'){
+    const [sectionDest, tasksInsectionDest, orderDest] = getforSection(destination.droppableId, sections)
+    console.log('Justo despues del Posible error', tasksInsectionDest)
+    const dragItem = task.splice(source.index, 1)
+    tasksInsectionDest.splice(destination.index, 0, ...dragItem)
 
-    const newElem = {
-      ...section,
-      tasksInSections
+    orderDest.splice(destination.index, 0, dragItem[0].id.toString())
+    const orderDestString = orderDest.join("|")
+
+    dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections: tasksInsectionDest, orders: orderDestString}}})
+    const body = {
+      id: dragItem[0].id,
+      sectionid: destination.droppableId
     }
-    dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections: tasksInSections}}})
+    editTask(body,()=>{})
+    editSection(destination.droppableId, {orders: orderDestString}, ()=>{})
     return;
+  }
+
+  if ((source.droppableId === destination.droppableId)&& source.droppableId != 'without-section') {
+    const [section, tasksInsection, order] = getforSection(destination.droppableId, sections)
+    
+    const orders = reorder(order, source.index, destination.index)
+    const newOrderTasks = reorder(tasksInsection, source.index, destination.index)
+    const orderString = orders.join("|")
+    
+    dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections : newOrderTasks, orders: orderString}}})
+    editSection(destination.droppableId, {orders: orderString}, ()=>{})
   } 
   if (source.droppableId !== destination.droppableId) {
-    const [sectionSrc, tasksInsectionSrc] = getforSection(source.droppableId, sections)
-    const [sectionDest, tasksInsectionDest] = getforSection(destination.droppableId, sections)
+    const [sectionSrc, tasksInsectionSrc, orderSrc] = getforSection(source.droppableId, sections)
+    const [sectionDest, tasksInsectionDest, orderDest] = getforSection(destination.droppableId, sections)
     
     const dragItem = tasksInsectionSrc.splice(source.index, 1)
     tasksInsectionDest.splice(destination.index, 0, ...dragItem)
-    console.log(dragItem)
-    dispatchSections({type: 'UPDATE', payload: {id: source.droppableId, body: {tasksInSections: tasksInsectionSrc}}})
-    dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections: tasksInsectionDest}}})
+    
+    orderSrc.splice(source.index, 1)
+    orderDest.splice(destination.index, 0, dragItem[0].id.toString())
+
+    const orderSrcString = orderSrc.join("|") 
+    const orderDestString = orderDest.join("|")
+   
+    dispatchSections({type: 'UPDATE', payload: {id: source.droppableId, body: {tasksInSections: tasksInsectionSrc, orders: orderSrcString}}})
+    dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections: tasksInsectionDest, orders: orderDestString}}})
+    
+    const body = {
+      id: dragItem[0].id,
+      sectionid: destination.droppableId
+    }
+
+    editTask(body,()=>{})
+    editSection(source.droppableId, {orders: orderSrcString}, ()=>{})
+    editSection(destination.droppableId, {orders: orderDestString}, ()=>{})
+    return;
   }
-  console.log(values)
 }
 
 return<div className="home-container">
-  <WithoutSection></WithoutSection>
   <DragDropContext onDragEnd={onDragEnd}>
+  <WithoutSection values={{task}} functions={{dispatchTasks, refreshTasks}}></WithoutSection>
+  
     {sections.map((elem, i) => {
         return <SectionHome key={elem.id ? elem.id : 'provitionalSectionKey'}
         dataValues={elem}
@@ -75,7 +109,7 @@ return<div className="home-container">
           <span className="material-symbols-outlined"
           onClick={()=>{
             dispatchSections({type: 'CREATE', payload: {body: {section: input, tasksInSections: []}}});
-            createSection({section:input, folderid:filter},() => refreshSections(`/api/v1/sections//all/with-task/${filter}`));
+            createSection({section:input, folderid:filter, orders: ""},() => refreshSections(`/api/v1/sections//all/with-task/${filter}`));
             setInput('')
           }}>add</span>
         </div>

@@ -5,14 +5,12 @@ import { ItemsContext } from '../providers/ItemsContext';
 function reducer (state, action) {
     switch (action.type) {
     case 'DELETE':
-        console.log('borrando del estado')
         return state.filter((elem)=>{
             return elem.id !== action.payload.id;
         });
 
     case 'UPDATE':
         console.log('ejecutando update', action.payload.body)
-        console.log(action.payload.id)
         return state.map((elem)=>{
             if (elem.id == action.payload.id){
                 const newElem = {
@@ -29,13 +27,9 @@ function reducer (state, action) {
         return [...state, action.payload.body];
 
     case 'SET':
-        console.log('Seteando un cambio')
-        console.log(action.payload.body)
         return action.payload.body;
 
     case 'SETID':
-        console.log('seteando id')
-
         const resp = state.map((elem)=>{
             if (elem.content == action.payload.content){
                 return {...elem, id: action.payload.id};

@@ -12,7 +12,7 @@ const schemaEventsSeq = {
         
       },
     event: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
      },
   }

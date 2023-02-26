@@ -25,7 +25,24 @@ function ItemsProvider ({children}) {
             return elem.id == id
         })
         const {sectionsInFolder} = folder
-        return sectionsInFolder
+
+        const sectionWithOrderTasks = sectionsInFolder.map((elem)=>{
+            const orderString = elem.orders
+            const order = orderString.split("|")
+            const copyTasks = []
+            order.forEach((id) => {
+              const element = elem.tasksInSections.find((item) => item.id == id);
+              if (element) {
+                copyTasks.push(element);
+              }
+            });
+            return {
+                ...elem,
+                tasksInSections: copyTasks
+            }
+        })
+        console.log(sectionWithOrderTasks)
+        return sectionWithOrderTasks
     }
     
     const task = (id) => {

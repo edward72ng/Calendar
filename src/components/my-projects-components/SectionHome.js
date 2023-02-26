@@ -14,19 +14,7 @@ function getRandomNumber(min, max) {
 
 
 function SectionHome({dataValues, functions, index}) {
-    const {id, section, tasksInSections, myOrder} = dataValues
-    console.log(tasksInSections)
-    const {ordersection} = myOrder
-    const order = ordersection.split('|')
-    const copyTasks = []
-    //console.log('ORDER FROM DB',order)
-    
-    order.forEach((id) => {
-      const element = tasksInSections.find((item) => item.id == id);
-      if (element) {
-        copyTasks.push(element);
-      }
-    });
+    const {id, section, tasksInSections, orders} = dataValues
 
     //console.log('RENDER',copyTasks)
     const {refreshSections, dispatchSections} = functions
@@ -79,9 +67,10 @@ function SectionHome({dataValues, functions, index}) {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
+              style= {{marginBottom: "4px"}}
             >
 
-            {copyTasks.map((elem, i) => (
+            {tasksInSections.map((elem, i) => (
                 <Draggable key={elem.id? elem.id : getRandomNumber(10,200)} 
                 draggableId={String(elem.id)} index={i}>
                 {(provided) => (
@@ -90,7 +79,7 @@ function SectionHome({dataValues, functions, index}) {
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}>
                     <OneItemWithSection key={elem.id? elem.id : getRandomNumber(10,200)} 
-                    values={{...elem, tasksInSections}}
+                    values={{...elem, tasksInSections, orders}}
                     functions = {{refreshSections, dispatchSections}}>
                     </OneItemWithSection>
                   </div>
@@ -107,7 +96,7 @@ function SectionHome({dataValues, functions, index}) {
        
 
          <AddTask
-         dataValues={{id}}
+         dataValues={dataValues}
          functions={{dispatchTasks: dispatchSections, refreshTasks: refreshSections}}></AddTask> 
     </div>
 

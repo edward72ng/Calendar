@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
                 folderid: null,
                 sectionid: null
             },
-            include: ['evento']
+            include: ['evento', 'notifications']
             }
             )
         res.json(data)

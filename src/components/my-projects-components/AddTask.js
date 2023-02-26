@@ -14,7 +14,7 @@ function AddTask({dataValues, functions}) {
   </div>
   }else{
     return <CreateTask 
-    dataValues={{id}}
+    dataValues={dataValues}
     functions= {{...functions, setOpen}}></CreateTask>
   }
   

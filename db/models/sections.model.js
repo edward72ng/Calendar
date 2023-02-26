@@ -17,6 +17,7 @@ const schemaSectionsSeq = {
     orders: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultVAlue: "", 
     },
     folderid: {
         type: DataTypes.INTEGER.UNSIGNED,

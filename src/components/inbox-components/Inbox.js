@@ -24,14 +24,14 @@ function Inbox () {
         setIsClosing(false)
         setForm(true)
     }
-
+    console.log(inbox)
     return <div className="inbox-container">
         <ul>
         {
             inbox.map((elem, i)=>{
-                const {id, content, details, evento, sectionid} = elem
+                const {id, content, details, evento, sectionid, notifications} = elem
                 return <OneItem key={id? id : 'provitionalKey'} 
-                values={{id, content, details, evento, sectionid}}
+                values={{id, content, details, evento, sectionid, notifications}}
                 functions = {{refreshTasks, dispatchTasks}}>
                 
                 </OneItem>

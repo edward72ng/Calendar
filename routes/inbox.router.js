@@ -175,7 +175,7 @@ router.get('/with-section/:sectionId', async(req, res)=>{
                 folderid: folder,
                 sectionid: null
             },
-            include:['notifis','evento']
+            include:['notifications','evento']
         })
         res.json(data)
     }else{
@@ -195,6 +195,7 @@ router.post('/find-one', async (req, res) => {
         where: {
           content: content
         },
+        include: ['evento', 'notifications'],
         attributes: ['id', 'content', 'sectionid', 'folderid'],
         order: [['id', 'DESC']],
         limit: 1

@@ -5,8 +5,9 @@ function getforSection(id, arr){
     })
 
     const {tasksInSections, orders} = section
+    const orderArray = orders.split("|")
 
-    return [section, tasksInSections, orders]
+    return [section, tasksInSections, orderArray]
 }
 
 const reorder = (arr, origin, destination) => {
