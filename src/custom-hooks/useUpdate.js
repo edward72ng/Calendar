@@ -10,7 +10,6 @@ function reducer (state, action) {
         });
 
     case 'UPDATE':
-        console.log('ejecutando update', action.payload.body)
         return state.map((elem)=>{
             if (elem.id == action.payload.id){
                 const newElem = {
@@ -29,32 +28,20 @@ function reducer (state, action) {
     case 'SET':
         return action.payload.body;
 
-    case 'SETID':
-        const resp = state.map((elem)=>{
-            if (elem.content == action.payload.content){
-                return {...elem, id: action.payload.id};
-            };
-            return elem;
-        });
-
-        console.log(resp)
-        return resp
-
     default:
         return state
     }
 }
 
-function useUpdate(initialState){
+function useUpdate(){
         const {filter} = useContext(DataContext)
         const {section, all} = useContext(ItemsContext)
-		const [state, dispatch] = useReducer(reducer, initialState? initialState : section(filter))
-		
+		const [state, dispatch] = useReducer(reducer, [])
+	
     useEffect(()=>{
-        if(!initialState){
-            dispatch({type: 'SET', payload: {body:section(filter)}})
-        }
-    }, [filter])
+        
+        dispatch({type: 'SET', payload: {body:section(filter)}})
+    }, [filter, all])
 
   
 

@@ -40,14 +40,18 @@ function EditItemWithSection ({values, functions}){
     const [options, setOptions] = useState(initialOptions)    
 
     const sendEdit = () => {
+      const newTask = {
+        ...editValues,
+        ...options
+      }
       const newTasksItems = tasksInSections.map((elem) => {
 
         if(elem.id == id){
-          console.log(editValues)
-          return editValues
+            return newTask
         }
         return elem
       })
+      
 
       dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems}}})
       setEdit(false)
@@ -57,7 +61,7 @@ function EditItemWithSection ({values, functions}){
         sectionid: (options.folderid == filter)? options.sectionid : null 
       }
 
-      editTask(sendTask, ()=>{})
+      editTask(sendTask, ()=>{updateAll()})
     }
 
     const deleteItem = () => {
@@ -71,9 +75,11 @@ function EditItemWithSection ({values, functions}){
       })
       const orderString  = newOrder.join("|")
       dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems, orders: orderString}}})
-      deleteTask(id,()=>{})
-      editSection(sectionid, {orders: orderString}, ()=>{})
+      
+      editSection(sectionid, {orders: orderString}, ()=>{updateAll()})
       setEdit(false)
+      
+      deleteTask(id,()=>{})
     }
     
 

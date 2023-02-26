@@ -5,7 +5,6 @@ import { ItemsContext } from '../providers/ItemsContext';
 function reducer (state, action) {
     switch (action.type) {
     case 'DELETE':
-        console.log('borrando del estado')
         return state.filter((elem)=>{
             return elem.id !== action.payload.id;
         });
@@ -31,25 +30,17 @@ function reducer (state, action) {
 
 
 
-function useWithoutSection(initialState){
-        const {filter} = useContext(DataContext)
-        const {task} = useContext(ItemsContext)
-		const [state, dispatch] = useReducer(reducer, initialState? initialState : task(filter))
-	
+function useWithoutSection(){
+    const {filter} = useContext(DataContext)
+    const {task, without, updateWithout} = useContext(ItemsContext)
+	const [state, dispatch] = useReducer(reducer, [])
 
     useEffect(()=>{
-        if(!initialState){
-            dispatch({type: 'SET', payload: {body:task(filter)}})
-        }
-    }, [filter])
+        dispatch({type: 'SET', payload: {body:task(filter)}})
+    }, [filter, without])
 
-		const update = async (url) => {
-				const res = await fetch(url,{
-						method: 'GET',
-						//headers: {auth}
-				})
-				const data = await res.json()
-				dispatch({type: 'SET', payload: {body: data}})
+		const update = async () => {
+            updateWithout()
 		}
 		
 		return [state, dispatch, update]

@@ -12,8 +12,9 @@ function EditItem ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, notifications} = values
   
     const {refreshTasks, dispatchTasks, setEdit} = functions
-    const {updateAll} = useContext(ItemsContext)
+    const {updateWithout} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
+    const {filter} = useContext(DataContext)
 
     const initialValues = {
       
@@ -40,17 +41,30 @@ function EditItem ({values, functions}){
         evento: {event: options.event},
         notifications: options.notifications
       }
+      if (options.folderid == filter){
+        dispatchTasks({type: 'UPDATE', payload: {id: id, body: newTask}})
+      }else{
+        dispatchTasks({type: 'DELETE', payload: {id: id}})
+      }
+      //Here edit move to folder
+      
 
-      dispatchTasks({type: 'UPDATE', payload: {id: id, body: newTask}})
       setEdit(false)
-      editTask({...values,...editValues, ...options}, refreshTasks)
+      editTask({...values,...editValues, ...options}, () => {
+        refreshTasks();
+        updateWithout();
+      })
     }
 
     const deleteItem = () => {
-      console.log('Tet estas ejecutando?')
+      
       dispatchTasks({type: 'DELETE', payload: {id: id}})
+
+      deleteTask(id, () => {
+        refreshTasks();
+        updateWithout();
+      })
       setEdit(false)
-      deleteTask(id, refreshTasks)
     }
     
 

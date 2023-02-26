@@ -5,16 +5,13 @@ import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 import { DataContext } from "../../providers/DataContext";
 
 function WithoutSection({values, functions}) {
-    //const [task, dispatchTasks, refreshTasks] = useWithoutSection()
-
     const {task} = values
     const {dispatchTasks, refreshTasks} = functions
-    const {filter}= useContext(DataContext)
-    console.log(task)
+
     if(task.length < 1){
         return <></>
     }
-
+    else{
     return <div className="section-container">
     <div className="space-between" id="section">
       <div className="section"> Sin Seccion </div>
@@ -50,22 +47,7 @@ function WithoutSection({values, functions}) {
           )}
         </Droppable>
 </div>
-
+    }
 }
 
 export {WithoutSection}
-
-/**
- * {
-        task.map((elem, i)=>{
-            const {id, content, details, evento, sectionid, folderid} = elem
-            return (
-                <OneItem key={id} 
-                values={{id, content, details, evento, sectionid, folderid}}
-            functions = {{refreshTasks, dispatchTasks}}>
-                
-                </OneItem>
-            )
-        })
-    }  
- */

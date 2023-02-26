@@ -21,7 +21,11 @@ function NavMyProjects ({open, setOpen}) {
 			{myProjects.map((elem, i) => {
 			return <div key={elem.id? elem.id : i}><Link  to='/app/my-projects'> 
 			<li className='navigation-sub-items'
-					onClick={()=>{setFilter(elem.id); updateAll(); updateWithout()}}>
+					onClick={()=>{
+						setFilter(elem.id); 
+						//updateAll(); 
+						//updateWithout();
+						}}>
 						<span className="material-symbols-outlined">folder_open</span>
 						
 						{elem.name}

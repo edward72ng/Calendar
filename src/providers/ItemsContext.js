@@ -41,7 +41,7 @@ function ItemsProvider ({children}) {
                 tasksInSections: copyTasks
             }
         })
-        console.log(sectionWithOrderTasks)
+        //console.log('section()')
         return sectionWithOrderTasks
     }
     
@@ -53,39 +53,26 @@ function ItemsProvider ({children}) {
             return []
         }
         const {blocsInFolder} = folder
+        //console.log('task()')
         return blocsInFolder
     }
 
-    /*useEffect(()=>{
-        const getFolders = async () => {
-            await Promise.all(
-                myProjects.map(async (elem) => {
-                    const res = await fetch 
-                    return 
-                })
-            )
-        }
-    }, [loadingMyProjects])*/
 
-    if(loadingInbox && loadingMyProjects && loadingAll && loadingWithout){
-        return <div>Cargando...</div>
+    if(!loadingInbox && !loadingMyProjects && !loadingAll && !loadingWithout){
+        return <ItemsContext.Provider value={
+            {inbox, dispatchInbox, updateInbox,
+                myProjects, dispatchMyProjects, updateMyProjects,
+                all, dispatchAll, updateAll,
+                without, dispatchWithout, updateWithout,
+    
+                section, task
+            }
+            }>
+            {children}
+        </ItemsContext.Provider>
     }
-
+    return <div>Cargando...</div>
     
-    
-
-
-    return <ItemsContext.Provider value={
-        {inbox, dispatchInbox, updateInbox,
-            myProjects, dispatchMyProjects, updateMyProjects,
-            all, dispatchAll, updateAll,
-            without, dispatchWithout, updateWithout,
-
-            section, task
-        }
-        }>
-        {children}
-    </ItemsContext.Provider>
 }
 
 export {ItemsProvider, ItemsContext}

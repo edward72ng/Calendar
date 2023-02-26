@@ -47,6 +47,7 @@ function useFetchItems(url) {
             headers: {'Authorization': 'Bearer ' + auth.token,}
           })
         const resp = await res.json()
+        console.log('executa Update')
         dispatch({type:'SET', payload: {body: resp}})
         setLoading(false)
       }catch(error){

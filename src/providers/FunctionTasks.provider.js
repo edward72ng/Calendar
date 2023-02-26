@@ -25,6 +25,7 @@ const deleteTask = async (id, callback) => {
         if(res.status > 299){
             throw new Error('Ha ocurrido un error inesperado')
         }
+        callback()
     } catch (error) {
         alert('error al borrar')
         callback()
