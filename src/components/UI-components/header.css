@@ -1,0 +1,41 @@
+.head-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.head-container span{
+    font-weight: bold;
+    font-size: large;
+}
+
+.head-container div{
+    height: 100%;
+    padding: 0 8px;
+    width: 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid #e0e0e0;
+    box-sizing: border-box;
+}
+.head-container div span{
+    font-weight: normal;
+    font-size: large;
+}
+
+.view-container{
+    width: 100%;
+    height: calc(100% - 40px);
+    padding: 8px 0 0 0;
+    box-sizing: border-box;
+}
+

@@ -9,19 +9,25 @@
     --white: white;
     --gray: rgba(163,163,164,0.5);
     --aquamarine: #07dccc;
-    --global-back:var(--dark-back);
-    --global-sup:var(--dark-sup);
-    --global-filter:var(--dark-filter);
-    --color:var(--white);
+    --global-back:var(--light-back);
+    --global-sup:var(--light-sup);
+    --global-filter:var(--light-filter);
+    --color:var(--black);
 }
 body {
     margin: 0;
     background-color: var(--global-back);
     color: var(--color);
     font-family: 'Quicksand', sans-serif;
+    width: 100vw;
 }
 body::-webkit-scrollbar{
     display: none;
+}
+#root{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 /*PROPIEDADES*/
 .around{
@@ -420,6 +426,7 @@ input{
     width: 258px;
     height: 100%;
 }
+
 .header-container{
     position: fixed;
     display: flex;
@@ -463,6 +470,8 @@ input{
     box-sizing: border-box;
 
 }
+
+
 .align-items-center{
     display: flex;
     align-items: center;
@@ -618,6 +627,8 @@ input{
     background-color: lightgray;
 }
 .inbox-container{
+    display: flex;
+    flex-direction: row;
     height: calc(100%);
     overflow-y: auto;
 }

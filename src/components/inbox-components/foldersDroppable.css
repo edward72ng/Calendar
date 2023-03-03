@@ -1,0 +1,38 @@
+.folders-droppable{
+    height: fit-content;
+    max-height: 100%;
+    width: 25%;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 8px 8px 0 8px ;
+    box-sizing: border-box;
+    margin-left: 8px;
+}
+.folders-droppable::-webkit-scrollbar{
+    display: none;
+}
+.folders-droppable-item{
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    margin-bottom: 8px;
+    border-radius: 2px;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.folders-droppable-item span{
+    font-size: medium;
+    font-weight: bold;
+}
+.folders-droppable-space{
+    flex: 1;
+    width: 100%;
+}
+
+.list-inbox{
+    width: 75%;
+    box-sizing: border-box;
+}

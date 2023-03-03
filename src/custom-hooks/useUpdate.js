@@ -39,10 +39,15 @@ function useUpdate(){
 		const [state, dispatch] = useReducer(reducer, [])
 	
     useEffect(()=>{
-        
         dispatch({type: 'SET', payload: {body:section(filter)}})
-    }, [filter, all])
 
+    }, [filter])
+
+    useEffect(()=>{
+        console.log('cambio filter')
+        console.log(section(filter))
+        dispatch({type: 'SET', payload: {body:section(filter)}})
+    }, [all])
   
 
 		const update = async (url) => {

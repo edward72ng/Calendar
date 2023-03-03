@@ -16,7 +16,7 @@ import { useWithoutSection } from '../../custom-hooks/useWithoutSection';
 
 function MyProjects() {
     const {filter} = useContext(DataContext)
-
+    const {updateAll} = useContext(ItemsContext)
     const {createSection, editSection} = useContext(FunctionSectionsContext) 
     const {editTask} = useContext(FunctionTasksContext)
 
@@ -45,8 +45,13 @@ function MyProjects() {
         id: dragItem[0].id,
         sectionid: destination.droppableId
       }
-      editTask(body,()=>{})
-      editSection(destination.droppableId, {orders: orderDestString}, ()=>{})
+      editTask(body, () => {
+        editSection(destination.droppableId, {orders: orderDestString}, () => {
+          updateAll() 
+        })
+      })
+      
+       
       return;
     }
 
@@ -59,6 +64,7 @@ function MyProjects() {
       
       dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections : newOrderTasks, orders: orderString}}})
       editSection(destination.droppableId, {orders: orderString}, ()=>{})
+      updateAll()
     } 
     if (source.droppableId !== destination.droppableId) {
       const [sectionSrc, tasksInsectionSrc, orderSrc] = getforSection(source.droppableId, sections)
@@ -83,7 +89,8 @@ function MyProjects() {
 
       editTask(body,()=>{})
       editSection(source.droppableId, {orders: orderSrcString}, ()=>{})
-      editSection(destination.droppableId, {orders: orderDestString}, ()=>{})
+      editSection(destination.droppableId, {orders: orderDestString}, ()=>{updateAll()})
+      
       return;
     }
     }

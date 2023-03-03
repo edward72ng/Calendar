@@ -58,13 +58,11 @@ const createTask = async (body, callback) => {
             headers: headers,
             body:  JSON.stringify(Object.assign(taskValue, body)),
         })
-        
+        const data = await res.json()
         if (res.status > 299){
             throw new Error('Ha ocurrido un error inesperado')
         }else{
-            console.log('Todo parece aver marchado bien')
-            //setDefault()
-            callback()
+            callback(data)
         }
     } catch (error) {
         alert('Error al crear')

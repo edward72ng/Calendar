@@ -11,7 +11,7 @@ function EditItemWithSection ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, userId, eventId, tasksInSections, orders, notifications} = values
   
     const {refreshsections, dispatchSections, setEdit} = functions
-    const {updateAll} = useContext(ItemsContext)
+    const {updateAll, updateWithout} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
     const {editSection} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DataContext)
@@ -45,23 +45,28 @@ function EditItemWithSection ({values, functions}){
         ...options
       }
       const newTasksItems = tasksInSections.map((elem) => {
-
+        if(elem.folderid == filter){
         if(elem.id == id){
             return newTask
         }
-        return elem
-      })
-      
 
+        return elem
+        }
+      })
+
+ 
       dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems}}})
-      setEdit(false)
       const sendTask = {
         ...editValues,
         ...options,
         sectionid: (options.folderid == filter)? options.sectionid : null 
       }
 
-      editTask(sendTask, ()=>{updateAll()})
+      editTask(sendTask, ()=>{
+        updateAll()
+        updateWithout()
+      })
+      setEdit(false)
     }
 
     const deleteItem = () => {
@@ -76,10 +81,10 @@ function EditItemWithSection ({values, functions}){
       const orderString  = newOrder.join("|")
       dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems, orders: orderString}}})
       
-      editSection(sectionid, {orders: orderString}, ()=>{updateAll()})
+      editSection(sectionid, {orders: orderString},() => {
+        deleteTask(id,()=>{updateAll()})
+      })
       setEdit(false)
-      
-      deleteTask(id,()=>{})
     }
     
 

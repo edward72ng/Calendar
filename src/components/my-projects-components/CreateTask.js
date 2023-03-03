@@ -14,8 +14,7 @@ function CreateTask ({functions, dataValues}) {
     const {dispatchTasks, refreshTasks, setOpen} = functions
     const { createTask } = useContext(FunctionTasksContext)
     const { editSection } = useContext(FunctionSectionsContext)
-    const initialState= {
-        id: 'provitionalId',
+    const initialValues= {
         folderid: filter,
         sectionid: id ,
         content: '',
@@ -28,7 +27,7 @@ function CreateTask ({functions, dataValues}) {
             notifications: [],
         } 
 
-    const [values, setValues] = useState(initialState)
+    const [values, setValues] = useState(initialValues)
     const [options, setOptions] = useState(initialOptions)
 
 
@@ -41,42 +40,29 @@ function CreateTask ({functions, dataValues}) {
             },
             notifications: options.notifications
         }
-        console.log('NEW TASK', newTask)
+
         const sendTask = {
             ...values,
             ...options,
         }
+
         copyTasks.push(newTask)
-        console.log('COPIA FINAL',copyTasks)
+
         const copyOrder = orders.split("|")
         copyOrder.push(values.id)
         const orderString = copyOrder.join("|")
 
         dispatchTasks({type: 'UPDATE', payload:{id:id ,body: {tasksInSections: copyTasks, orders: orderString}}})
         
-        delete sendTask.id
-
-        createTask(sendTask, async () => {
-            const res = await fetch(`api/v1/inbox/find-one`,{
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body:  JSON.stringify({content: values.content}),
+        createTask(sendTask,(data) => {
+            const newOrder = orders.split("|") 
+            newOrder.push(data.id)
+            const stringOrder = newOrder.join("|")
+            editSection(id, {orders: stringOrder}, () => {
+                updateAll()
             })
-            const data = await res.json()
-            console.log(data)
-            copyTasks.pop()
-            const tasksWithNew = copyTasks
-            tasksWithNew.push(data)
-            const orderwithId = orders.split("|")
-            orderwithId.push(data.id)
-            const orderString = orderwithId.join("|")
-            dispatchTasks({type:'UPDATE', payload:{id: id, body: {tasksInSections: tasksWithNew, orders: orderString}}})
-            editSection(id, {orders: orderString}, ()=>{})
         })
-        setValues(initialState)
+        setValues(initialValues)
     }
 
 
@@ -106,3 +92,23 @@ function CreateTask ({functions, dataValues}) {
 } 
 
 export {CreateTask}
+
+/**
+ * const res = await fetch(`api/v1/inbox/find-one`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body:  JSON.stringify({content: values.content}),
+            })
+            const data = await res.json()
+            console.log(data)
+            copyTasks.pop()
+            const tasksWithNew = copyTasks
+            tasksWithNew.push(data)
+            const orderwithId = orders.split("|")
+            orderwithId.push(data.id)
+            const orderString = orderwithId.join("|")
+            dispatchTasks({type:'UPDATE', payload:{id: id, body: {tasksInSections: tasksWithNew, orders: orderString}}})
+ */

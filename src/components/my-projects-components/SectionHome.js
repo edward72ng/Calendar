@@ -8,7 +8,7 @@ import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 
-function getRandomNumber(min, max) {
+function getRamdon(max, min) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -71,14 +71,14 @@ function SectionHome({dataValues, functions, index}) {
             >
 
             {tasksInSections.map((elem, i) => (
-                <Draggable key={elem.id? elem.id : getRandomNumber(10,200)} 
+                <Draggable key={elem.id? elem.id : 'Provitional DragId'} 
                 draggableId={String(elem.id)} index={i}>
                 {(provided) => (
                 <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}>
-                    <OneItemWithSection key={elem.id? elem.id : getRandomNumber(10,200)} 
+                    <OneItemWithSection key={elem.id? elem.id : 'Provitional TaskId'} 
                     values={{...elem, tasksInSections, orders}}
                     functions = {{refreshSections, dispatchSections}}>
                     </OneItemWithSection>

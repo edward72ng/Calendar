@@ -26,14 +26,14 @@ function WithoutSection({values, functions}) {
             >
 
             {task.map((elem, i) => (
-                <Draggable key={elem.id? elem.id : getRandomNumber(10,200)} 
+                <Draggable key={elem.id? elem.id : 'withouthSectionDraggable'} 
                 draggableId={String(elem.id)} index={i}>
                 {(provided) => (
                 <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}>
-                    <OneItem key={elem.id? elem.id : getRandomNumber(10,200)} 
+                    <OneItem key={elem.id? elem.id : 'withoutTask'} 
                     values={{...elem}}
                     functions = {{refreshTasks, dispatchTasks}}>
                     </OneItem>
