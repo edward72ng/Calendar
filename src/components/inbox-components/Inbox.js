@@ -59,14 +59,14 @@ function Inbox () {
             >
             {
                 inbox.map((elem, i)=>(
-                <Draggable key={elem.id} 
+                <Draggable key={elem.id? elem.id : 'proovitionalid'} 
                 draggableId={String(elem.id)} index={i}>
                 {(provided) => (
                 <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}>
-                    <OneItem key={elem.id? elem.id : 'provitionalKey'} 
+                    <OneItem
                     values={elem}
                     functions = {{refreshTasks, dispatchTasks}}>
                     

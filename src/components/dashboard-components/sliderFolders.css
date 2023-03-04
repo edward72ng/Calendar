@@ -7,11 +7,13 @@
     padding: 16px;
     margin-bottom: 32px;
   }
-  
+.slider-container::-webkit-scrollbar{
+  display: none;
+}
   .slider-item {
     flex: 0 0 auto;
     width: 200px;
-    height: 200px;
+    height: 150px;
     padding: 8px;
     border-radius: 8px;
     margin-right: 16px;

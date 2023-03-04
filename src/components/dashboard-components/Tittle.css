@@ -1,0 +1,24 @@
+.tittle-container{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+max-width: 964px;
+width: 100%;
+background-color: #fff;
+padding: 8px;
+margin-bottom: 8px;
+border-radius: 8px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+box-sizing: border-box;
+}
+
+.tittle-container h1{
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.hour{
+    font-size: xxx-large;
+    font-weight: normal;
+    display: block;
+}

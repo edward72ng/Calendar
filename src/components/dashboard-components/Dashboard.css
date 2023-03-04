@@ -1,0 +1,6 @@
+.today-cards{
+    display: flex;
+    flex-direction: row;
+    max-width: 964px;
+    width: 100%;
+}
