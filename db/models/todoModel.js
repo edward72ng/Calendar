@@ -184,6 +184,13 @@ class Todoe extends Model{
             as: 'tasksInSections',
             foreignKey: 'sectionid'
         })
+
+        this.belongsToMany(models.tags,{
+            through: models.todotags,
+            foreignKey: 'todoid',
+            otherKey: 'tagid',
+            as: 'myTags'
+        })
     }
 
     static config(sequelize){

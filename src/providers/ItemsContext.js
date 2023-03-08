@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
+import { Loading } from "../components/UI-components/Loading";
 import { useFetchItems } from "../custom-hooks/useFetchItems";
 
 const inboxUrl = '/api/v1/inboxtasks/'
 const projectsUrl = '/api/v1/folders/me'
 const myItemsUrls = '/api/v1/inbox/?folder='
-
+const myTagsUrl = '/api/v1/tags/my-tags'
 const myAll = '/api/v1/folders/all'
 const withoutSections = '/api/v1/folders/without-sections'
 
@@ -17,6 +18,10 @@ function ItemsProvider ({children}) {
     
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
+    const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
+
+    console.log(inbox)
+    
     const section = (id)=> {
         if(!id){
             return []
@@ -58,20 +63,20 @@ function ItemsProvider ({children}) {
     }
 
 
-    if(!loadingInbox && !loadingMyProjects && !loadingAll && !loadingWithout){
+    if(!loadingInbox && !loadingMyProjects && !loadingAll && !loadingWithout && !loadingTags){
         return <ItemsContext.Provider value={
             {inbox, dispatchInbox, updateInbox,
                 myProjects, dispatchMyProjects, updateMyProjects,
                 all, dispatchAll, updateAll,
                 without, dispatchWithout, updateWithout,
-    
+                tags, dispatchTags, updateTags,
                 section, task
             }
             }>
             {children}
         </ItemsContext.Provider>
     }
-    return <div>Cargando...</div>
+    return <Loading></Loading>
     
 }
 

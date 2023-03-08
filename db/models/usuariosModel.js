@@ -58,6 +58,11 @@ class Usuarios extends Model{
             foreignKey: 'userid',
             as: 'subscriptions'
         })
+
+        this.hasMany(models.tags,{
+            foreignKey: 'userid',
+            as: 'myTags'
+        })
 }
 
     static config(sequelize){

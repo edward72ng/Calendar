@@ -14,7 +14,7 @@ function EventsCard () {
         </div>
     }
 
-    return <ul>
+    return <>
         {event.map((elem)=>{
             return <div key={elem.id} className='cards-item'>
                 <p className="content">{elem.content}</p>
@@ -27,7 +27,7 @@ function EventsCard () {
                     </div>
             </div>
         })}
-    </ul>
+    </>
 }
 
 export {EventsCard}

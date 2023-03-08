@@ -4,10 +4,11 @@ import { DataContext } from '../../providers/DataContext';
 import { ItemsContext } from '../../providers/ItemsContext';
 import './lateral.css';
 
+const colors = ['#fff8b9','#e2f6d3','#b4ded4','#afccdc','#f29f75'] 
 function Lateral ({children}) {
   const {setFilter} = useContext(DataContext)
   const {myProjects} = useContext(ItemsContext)
-  const [showText, setShowText] = useState(true);
+  const [showText, setShowText] = useState(false);
   const [open, setOpen] = useState(false)
 
   const toggleText = () => {
@@ -45,17 +46,21 @@ function Lateral ({children}) {
         <span className="material-symbols-outlined">folder</span>
         </div>
         {open &&
-          myProjects.map((elem) => {
+          <div className='folders-modal'>
+            {
+          myProjects.map((elem, i) => {
             return(
               <Link to='/app/my-projects' key={elem.id}>
               <div className={`sub menu-item ${showText? "show" : ""}`}
               onClick={() => {setFilter(elem.id)}}>
-              <span className={`text ${showText ? "show" : ""}`}>{elem.name}</span>
-              <span className="material-symbols-outlined">folder</span>
+              <span className={`text sub-text${showText ? "show" : ""}`}>{elem.name}</span>
+              <span className="material-symbols-outlined" style={{color: colors[i]}}>folder</span>
               </div>
               </Link>
             )
           })
+            }
+          </div>
         }
         <div className={`menu-item ${showText? "show" : ""}`}>
         <span className={`text ${showText ? "show" : ""}`}>Groups</span>

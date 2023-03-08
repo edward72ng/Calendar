@@ -13,6 +13,8 @@ const { Pending, schemaPendingSeq} = require('./pendingNotifications.model')
 const { Subscriptions, schemaSubscriptionsSeq} = require('./subscriptions.model')
 const { Keys, schemaKeysSeq} = require('./keys.model')
 const { Orders, schemaOrdersSeq} = require('./orders.model')
+const { Tags, schemaTagsSeq} = require('./tags.model')
+const { TodoTags, schemaTodoTagsSeq} = require('./todoTag.model')
 
 // INICIACION DE MODELOS PARA EXPORTAR
 function setupModels(sequelize) {
@@ -30,6 +32,8 @@ function setupModels(sequelize) {
     Subscriptions.init(schemaSubscriptionsSeq, Subscriptions.config(sequelize))
     Keys.init(schemaKeysSeq, Keys.config(sequelize))
     Orders.init(schemaOrdersSeq, Orders.config(sequelize))
+    Tags.init(schemaTagsSeq, Tags.config(sequelize))
+    TodoTags.init(schemaTodoTagsSeq, TodoTags.config(sequelize))
 
     Todoe.associate(sequelize.models)
     Notify.associate(sequelize.models)
@@ -41,6 +45,8 @@ function setupModels(sequelize) {
     Subscriptions.associate(sequelize.models)
     Keys.associate(sequelize.models)
     Orders.associate(sequelize.models)
+    Tags.associate(sequelize.models)
+    TodoTags.associate(sequelize.models)
 }
 
 

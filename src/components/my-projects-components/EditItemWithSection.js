@@ -6,9 +6,11 @@ import { ItemsContext } from "../../providers/ItemsContext";
 import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider";
 import { Options } from "../auxiliar-components/Options";
 import { DataContext } from "../../providers/DataContext";
+import { Tags } from "../inbox-components/Tags";
+import { Recomended } from "../auxiliar-components/Recomended";
 
 function EditItemWithSection ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid, userId, eventId, tasksInSections, orders, notifications} = values
+    const {id, content, details, evento, sectionid, folderid, userId, eventId, myTags, tasksInSections, orders, notifications} = values
   
     const {refreshsections, dispatchSections, setEdit} = functions
     const {updateAll, updateWithout} = useContext(ItemsContext)
@@ -33,11 +35,13 @@ function EditItemWithSection ({values, functions}){
       date: "",
       time: "",
       notifications: notifications,
+      myTags: myTags
   } 
 
 
     const [editValues, setEditValues] = useState(initialValues)
     const [options, setOptions] = useState(initialOptions)    
+    const [recomended, setRecomended] = useState(false)
 
     const sendEdit = () => {
       const newTask = {
@@ -87,10 +91,26 @@ function EditItemWithSection ({values, functions}){
       setEdit(false)
     }
     
+    const handleAddTag = (newTag) => {
+      const tags  = [...options.myTags, newTag]
+
+      setOptions((prevState) => ({ ...prevState, myTags: tags }));
+    };
+   
 
    
     return (
       <div className="visual-container" data-id={id}>
+
+
+          {recomended ?
+          <Recomended question={editValues.content} inUse={options.myTags} functions={{handleAddTag}}/>
+          :
+          <div
+          onClick={()=>setRecomended(true)}>
+          Recomendar?</div>
+        }
+
             <span className="material-symbols-outlined"
             onClick={()=>{setEdit(false)}}>
             close</span>
@@ -123,11 +143,11 @@ function EditItemWithSection ({values, functions}){
                 setState={setOptions}/>
               
               </div>
-
+              
     
             </div>
 
-             
+            <Tags myTags={options.myTags}></Tags>
 
 
         <GaleryFromTask></GaleryFromTask>

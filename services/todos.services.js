@@ -150,7 +150,7 @@ class Todos {
                 where: {
                     userid: userId
                 },
-                include:['notifis','evento']
+                include:['notifis','evento','myTags']
             })
             
             return yourTodos
@@ -161,7 +161,7 @@ class Todos {
                     userid: userId,
                     folderid: folderId
                 },
-                include:['notifis','evento']
+                include:['notifis','evento','myTags']
             })
             
             return yourTodos
@@ -174,6 +174,19 @@ class Todos {
         let obj = objeto
         console.log(obj)
         //var obj = {content: objeto.content, details: objeto.details, folderid: objeto.folderid,  assignedto: objeto.assignedto}
+        if(objeto.myTags){
+            await Promise.all(
+                objeto.myTags.map( async (elem) => {
+                    await models.todotags.create({
+                        todoid: idComp,
+                        tagid: elem.id
+                    })
+                })
+            )
+            
+        }
+        
+        
         if(objeto.event){
             const [evento, created] = await models.events.findOrCreate({
                 where: sequelize.where(sequelize.col('event'),objeto.event),
@@ -210,7 +223,7 @@ class Todos {
 //sequelize.where(sequelize.col('event'),objeto.event)
     async createYourTodo (objeto, userId){
         const {event, notifications} = objeto
-    
+        
             if (event){
                 const [eventObtained, created] = await models.events.findOrCreate({
                     where:{event : event},
@@ -263,6 +276,19 @@ class Todos {
                         );
                     })
             };
+
+
+            if(objeto.myTags){
+                await Promise.all(
+                    objeto.myTags.map( async (elem) => {
+                        await models.todotags.create({
+                            todoid: newTodo.id,
+                            tagid: elem.id
+                        })
+                    })
+                )
+                
+            }
             
         ;
         //

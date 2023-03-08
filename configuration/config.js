@@ -12,7 +12,8 @@ require('dotenv').config();
     secret:process.env.SECRET,
     uriLink:process.env.URI,
     publicKey: process.env.PUBLIC_KEY,
-    privateKey: process.env.PRIVATE_KEY
+    privateKey: process.env.PRIVATE_KEY,
+    openaiKey: process.env.OPENAI_KEY
 }
 
  module.exports= config

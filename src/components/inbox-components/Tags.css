@@ -1,0 +1,22 @@
+/* Estilos para el contenedor de etiquetas */
+.tags-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+    max-width: 70%;
+    overflow-x: auto;
+  }
+.tags-container::-webkit-scrollbar{
+    display: none;
+}
+  
+  /* Estilos para cada etiqueta */
+  .tags-container > div {
+    background-color: #2196F3;
+    color: #FFFFFF;
+    border-radius: 16px;
+    padding: 8px 16px;
+    margin-right: 4px;
+    font-size: small;
+  }
+  

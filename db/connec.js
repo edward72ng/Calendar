@@ -20,7 +20,7 @@ const sequelize = new Sequelize(config.uriLink,{
 sequelize.authenticate().then( (e) =>{console.log('conectado con sequelize')}).catch(e=>{console.log(e)})
 
 setupModels(sequelize);
-//sequelize.sync()
+sequelize.sync()
 
 
 

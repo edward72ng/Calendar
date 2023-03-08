@@ -7,9 +7,11 @@ import { EditTask } from "./EditTask";
 import { SubItem } from "./SubItem";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
+import { Recomended } from "../auxiliar-components/Recomended";
+import { Tags } from "./Tags";
 
 function EditItem ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid, notifications} = values
+    const {id, content, details, evento, sectionid, folderid, notifications, myTags} = values
   
     const {refreshTasks, dispatchTasks, setEdit} = functions
     const {updateWithout} = useContext(ItemsContext)
@@ -28,10 +30,11 @@ function EditItem ({values, functions}){
       date: "",
       time: "",
       notifications: notifications,
+      myTags: myTags
   } 
 
 
-    
+    const [recomended, setRecomended] = useState(false)
     const [options, setOptions] = useState(initialOptions)   
     const [editValues, setEditValues] = useState(initialValues)
     
@@ -39,7 +42,8 @@ function EditItem ({values, functions}){
       const newTask = {
         ...editValues,
         evento: {event: options.event},
-        notifications: options.notifications
+        notifications: options.notifications,
+        myTags: options.myTags
       }
       if (options.folderid == filter){
         dispatchTasks({type: 'UPDATE', payload: {id: id, body: newTask}})
@@ -67,10 +71,21 @@ function EditItem ({values, functions}){
       setEdit(false)
     }
     
+    const handleAddTag = (newTag) => {
+      const tags  = [...options.myTags, newTag]
 
+      setOptions((prevState) => ({ ...prevState, myTags: tags }));
+    };
    
     return (
       <div className="visual-container" data-id={id}>
+        {recomended ?
+          <Recomended question={content} inUse={options.myTags} functions={{handleAddTag}}/>
+          :
+          <div
+          onClick={()=>setRecomended(true)}>
+          Recomendar?</div>
+        }
             <span className="material-symbols-outlined"
             onClick={()=>{setEdit(false)}}>
             close</span>
@@ -98,6 +113,8 @@ function EditItem ({values, functions}){
                 :
                 <></>
                 }
+
+                <Tags myTags={options.myTags}/>
                 <Options 
                 state={options} 
                 setState={setOptions}/>

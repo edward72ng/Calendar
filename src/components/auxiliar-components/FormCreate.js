@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
+import { ItemsContext } from "../../providers/ItemsContext";
 import { SubItem } from "../inbox-components/SubItem";
+import { Tags } from "../inbox-components/Tags";
 import { SubOptions } from "../my-projects-components/SubOptions";
+import { CreateTag } from "./CreateTag";
 import { Recomended } from "./Recomended";
 
 const inboxUrl = '/api/v1/inboxtasks/'
@@ -11,10 +14,14 @@ function FormCreate ({functions, values}) {
     const {isClosing} = values
     const {dispatchTasks, refreshTasks, setForm} = functions
     const [recomended, setRecomended] = useState(false)
-
+    const {all} = useContext(ItemsContext)
     const { createTask } = useContext(FunctionTasksContext)
     const [content, setContent] = useState('')
     const [details, setDetails] = useState('')
+
+    useEffect(()=>{
+      //crear opcion desleccion de etiquetas en form create
+    },[all])
 
     const initialstate = {
         event: "",
@@ -22,6 +29,7 @@ function FormCreate ({functions, values}) {
         time: "",
         notifications: [],
         folder: "",
+        myTags:[]
       } 
 
     const [state, setState] = useState(initialstate);
@@ -68,20 +76,26 @@ function FormCreate ({functions, values}) {
         }
       }
 
+      const handleAddTag = (newTag) => {
+        const tags  = [...state.myTags, newTag]
+ 
+        setState((prevState) => ({ ...prevState, myTags: tags }));
+      };
+
     const setTask = () => {
-        dispatchTasks({type: 'CREATE', payload:{ body: {content, details, evento: {event:state.event}}}})
+        dispatchTasks({type: 'CREATE', payload:{ body: {content, details, evento: {event:state.event}, myTags: state.myTags}}})
         setContent('')
         setDetails('')
         setState(initialstate)
-        createTask({content, details, event: state.event, notifications: state.notifications}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
+        createTask({content, details, event: state.event, notifications: state.notifications, myTags : state.myTags}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
         setRecomended(false)
       }
 
 
     return <div className="formcreate-container" id="form-create">
-      {/*recomended &&
-        <Recomended question={content}></Recomended>
-    */}
+      {recomended &&
+        <Recomended question={content} functions={{handleAddTag}}></Recomended>
+    }
         <span className="material-symbols-outlined"
         onClick={()=>{setTask()}}>done</span>
         <div className="form-container">
@@ -124,8 +138,11 @@ function FormCreate ({functions, values}) {
                 onClick={handleAdd}>add</span>
                 </div>
 
+                
+
             </div>
-            
+            <Tags myTags={state.myTags} />
+            <CreateTag functions={{handleAddTag}}/>
         </div>
     </div>
 } 

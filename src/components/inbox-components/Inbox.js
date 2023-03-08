@@ -14,7 +14,7 @@ import { reorder } from "../../utils/dragAndDrop";
 
 const colors = ['#fff8b9','#e2f6d3','#b4ded4','#afccdc','#f29f75'] 
 function Inbox () {
-    const {inbox, dispatchInbox: dispatchTasks, updateInbox: refreshTasks, myProjects} = useContext(ItemsContext)
+    const {inbox, dispatchInbox: dispatchTasks, updateInbox: refreshTasks, myProjects, updateAll, updateWithout} = useContext(ItemsContext)
     const {editTask} = useContext(FunctionTasksContext)
     const [form, setForm] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
@@ -37,8 +37,8 @@ function Inbox () {
           }
         if(source.droppableId == "inbox-list" && destination.droppableId != "inbox-list"){
             console.log(values)
-            dispatchTasks({type: 'DELETE', payload: {id: source.draggableId}});
-            editTask({id: draggableId, folderid: destination.droppableId}, () => {});
+            dispatchTasks({type: 'DELETE', payload: {id: parseInt(draggableId)}});
+            editTask({id: draggableId, folderid: destination.droppableId}, () => {updateWithout()});
             return;
         }
         if(source.droppableId == destination.droppableId){
@@ -125,12 +125,3 @@ function Inbox () {
 }
 
 export {Inbox}
-
-/**
- * const {id, content, details, evento, sectionid, notifications} = elem
-                    return <OneItem key={id? id : 'provitionalKey'} 
-                    values={{id, content, details, evento, sectionid, notifications}}
-                    functions = {{refreshTasks, dispatchTasks}}>
-                    
-                    </OneItem>
- */

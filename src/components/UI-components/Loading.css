@@ -1,0 +1,58 @@
+.sniper-carga {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+  }
+  
+  .sniper-carga div {
+    position: absolute;
+    top: 25px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #666;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  
+  .sniper-carga div:nth-child(1) {
+    left: 6px;
+    animation: sniper-carga 0.8s infinite;
+  }
+  
+  .sniper-carga div:nth-child(2) {
+    left: 6px;
+    animation: sniper-carga 0.8s infinite;
+  }
+  
+  .sniper-carga div:nth-child(2):before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #666;
+  }
+  
+  .sniper-carga div:nth-child(3) {
+    left: 26px;
+    animation: sniper-carga 0.8s infinite;
+  }
+  
+  .sniper-carga div:nth-child(4) {
+    left: 45px;
+    animation: sniper-carga 0.8s infinite;
+  }
+  
+  @keyframes sniper-carga {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+  

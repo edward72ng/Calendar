@@ -19,4 +19,27 @@ const reorder = (arr, origin, destination) => {
   }
   
 
-export {getforSection, reorder}
+
+
+const getNestedValue = (arrayObjects, arrayKeys) => {
+    const copyArr = arrayObjects;
+    const copyKeys = arrayKeys
+
+    if (copyKeys.length === 1) {
+        const arr = copyArr.filter((e)=>{
+            return e.id == copyKeys[0].id
+        })
+        const res = arr[0][copyKeys[0].key]
+        return res
+    }
+
+    const arr = copyArr.filter((e)=>{
+        return e.id == copyKeys[0].id
+    })
+    const newArrObj = arr[0][copyKeys[0].key]
+    copyKeys.shift()
+
+    return getNestedValue(newArrObj, copyKeys)
+} 
+
+export {getforSection, reorder, getNestedValue}

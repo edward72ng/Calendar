@@ -2,9 +2,11 @@ import React,{useContext, useState} from "react";
 import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
 import { SubItem } from "./SubItem";
+import { Tags } from "./Tags";
+import './Tags.css'
 
 function VisualItem ({values, functions}){
-    const {id, content, details, evento, sectionid} = values
+    const {id, content, details, evento, sectionid, myTags} = values
     const {setEdit} = functions
 
     
@@ -39,7 +41,8 @@ function VisualItem ({values, functions}){
                 :
                 <></>
                 }
-              
+
+                <Tags myTags={myTags}/>
               
               </div>
 

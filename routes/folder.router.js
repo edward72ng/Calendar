@@ -112,7 +112,7 @@ router.get('/all', async (req, res) => {
                     {
                         model: models.todo,
                         as: 'tasksInSections',
-                        include: ['evento', 'notifications']
+                        include: ['evento', 'notifications','myTags']
                     }
                 ]
             }]
@@ -137,7 +137,7 @@ router.get('/without-sections', async (req, res) => {
                 where: {
                     sectionid: null,
                 },
-                include : ['evento', 'notifications']
+                include : ['evento', 'notifications','myTags']
             }]
         })
         res.json(folders)
