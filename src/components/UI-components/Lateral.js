@@ -53,7 +53,7 @@ function Lateral ({children}) {
               <Link to='/app/my-projects' key={elem.id}>
               <div className={`sub menu-item ${showText? "show" : ""}`}
               onClick={() => {setFilter(elem.id)}}>
-              <span className={`text sub-text${showText ? "show" : ""}`}>{elem.name}</span>
+              <span className={`sub-text ${showText ? "show" : ""}`}>{elem.name}</span>
               <span className="material-symbols-outlined" style={{color: colors[i]}}>folder</span>
               </div>
               </Link>

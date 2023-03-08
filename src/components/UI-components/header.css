@@ -39,3 +39,8 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 450px){
+    .head-container div{
+        width: 20%;
+    }
+}

@@ -36,3 +36,13 @@
     width: 50%;
     box-sizing: border-box;
 }
+
+@media (max-width: 450px){
+    .folders-droppable{
+        display: none;
+    }
+    .list-inbox{
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
