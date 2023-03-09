@@ -16,7 +16,8 @@ router.get('/my-tags', async (req,res) =>{
             where: {
                 userid: pay.sub
             },
-            attributes: ['id', 'tag']
+            attributes: ['id', 'tag'],
+            include: ['myColor']
         })
         res.json(data)
     }

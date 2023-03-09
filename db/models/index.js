@@ -15,6 +15,8 @@ const { Keys, schemaKeysSeq} = require('./keys.model')
 const { Orders, schemaOrdersSeq} = require('./orders.model')
 const { Tags, schemaTagsSeq} = require('./tags.model')
 const { TodoTags, schemaTodoTagsSeq} = require('./todoTag.model')
+const { Priorities, schemaPrioritiesSeq } = require('./priorities.models')
+const { Colors, schemaColorssSeq} = require('./color.models')
 
 // INICIACION DE MODELOS PARA EXPORTAR
 function setupModels(sequelize) {
@@ -34,6 +36,8 @@ function setupModels(sequelize) {
     Orders.init(schemaOrdersSeq, Orders.config(sequelize))
     Tags.init(schemaTagsSeq, Tags.config(sequelize))
     TodoTags.init(schemaTodoTagsSeq, TodoTags.config(sequelize))
+    Priorities.init(schemaPrioritiesSeq, Priorities.config(sequelize))
+    Colors.init(schemaColorssSeq, Colors.config(sequelize))
 
     Todoe.associate(sequelize.models)
     Notify.associate(sequelize.models)
@@ -47,6 +51,7 @@ function setupModels(sequelize) {
     Orders.associate(sequelize.models)
     Tags.associate(sequelize.models)
     TodoTags.associate(sequelize.models)
+    Priorities.associate(sequelize.models)
 }
 
 

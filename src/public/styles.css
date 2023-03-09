@@ -1,5 +1,5 @@
 *{
-    --light-back:rgba(239,238,244,255);
+    --light-back:rgba(230,238,244,255);
     --dark-back:rgba(43,44,46,255);
     --light-sup:rgba(255,255,255,255);
     --dark-sup:rgba(26,26,26,255);
@@ -336,8 +336,10 @@ input{
 .section-container{
     min-width: 388px;
     max-width: 388px;
+    border-radius: 8px;
     margin: 8px;
-    padding: 4px;
+    /*background-color: rgba(247,245,244,255);*/
+    padding: 12px;
     overflow-y: auto;
 
 }
@@ -627,7 +629,7 @@ input{
 .inbox-container{
     display: flex;
     flex-direction: row;
-    height: calc(100%);
+    height: 100%;
     overflow-y: auto;
 }
 .inbox-container::-webkit-scrollbar{
@@ -650,6 +652,7 @@ input{
     background-color: var(--global-sup);
     box-shadow: 0px 2px 4px hwb(0 0% 100% / 0.1);
     margin: 0 0 4px 0;
+    border-radius: 4px;
 }
 .visual-item-container{
     position: relative;
@@ -657,6 +660,7 @@ input{
     display: flex;
     flex-direction: row;
     align-items: center;
+    border-radius: 4px;
 }
 .details-container{
     width: 100%;

@@ -177,9 +177,11 @@ class Todos {
         if(objeto.myTags){
             await Promise.all(
                 objeto.myTags.map( async (elem) => {
-                    await models.todotags.create({
-                        todoid: idComp,
-                        tagid: elem.id
+                    await models.todotags.findOrCreate({
+                        where:{
+                            todoid: idComp,
+                            tagid: elem.id
+                        }
                     })
                 })
             )

@@ -1,5 +1,5 @@
 const {Sequelize ,DataTypes, Model, INTEGER} = require('sequelize')
-
+const {COLORS_TABLE} = require('./color.models')
 
 const FOLDERS_TABLE = 'folders'
 
@@ -16,6 +16,15 @@ const schemaFoldersSeq = {
      },
     userid: {
         type: INTEGER.UNSIGNED,
+    },
+    colorid: {
+        type: INTEGER.UNSIGNED,
+
+        allowNull: false,
+        references: {
+            model: COLORS_TABLE,
+            key: 'id'
+          }
     },
     collaborative:{
         type: DataTypes.BOOLEAN,
@@ -34,6 +43,11 @@ class Folders extends Model{
         this.hasMany(models.sections, {
             as: 'sectionsInFolder',
             foreignKey: 'folderid' //un evento puede tener muchas secciones
+        })
+
+        this.belongsTo(models.colors,{
+            foreignKey: 'colorid',
+            as: 'myColor'
         })
     }
 

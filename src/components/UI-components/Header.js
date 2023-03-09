@@ -5,6 +5,7 @@ function Header ({children}) {
 
     return(<>
         <header className="head-container">
+            
             <span>Task Management</span>
             <div>
             <span className="material-symbols-outlined">search</span>
@@ -19,3 +20,5 @@ function Header ({children}) {
 }
 
 export {Header}
+
+//<div className="after-head-container"></div>

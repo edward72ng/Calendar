@@ -8,7 +8,10 @@ function Tags({myTags}) {
     {
       myTags?.map((elem, i)=>{
         return(
-        <div key={elem.id}>
+        <div key={elem.id} style={
+          {backgroundColor: `rgba(${elem.myColor.color},0.1)`,
+            color: `rgba(${elem.myColor.color},1)`
+          }}>
           {elem.tag}
         </div>
           )

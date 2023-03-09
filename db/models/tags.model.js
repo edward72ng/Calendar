@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const {USUARIOS_TABLE} = require('./usuariosModel')
+const {COLORS_TABLE} = require('./color.models')
 
 const TAGS_TABLE = 'tags';
 
@@ -13,6 +14,18 @@ const schemaTagsSeq = {
   tag: {
     type: DataTypes.TEXT,
     allowNull: false
+  },
+  color: {
+    type: DataTypes.STRING,
+    defaultValue: 'rgba(217,217,214,255)'
+  },
+  colorid: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+    references: {
+        model: COLORS_TABLE,
+        key: 'id'
+      }
   },
   userid: {
     type: DataTypes.INTEGER.UNSIGNED,
@@ -31,6 +44,11 @@ class Tags extends Model {
         foreignKey: 'tagid',
         otherKey: 'todoid',
         as: 'myTags'
+    })
+
+    this.belongsTo(models.colors,{
+      as: 'myColor',
+      foreignKey: 'colorid'
     })
   }
 

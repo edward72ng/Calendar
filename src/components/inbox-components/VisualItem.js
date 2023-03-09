@@ -6,7 +6,7 @@ import { Tags } from "./Tags";
 import './Tags.css'
 
 function VisualItem ({values, functions}){
-    const {id, content, details, evento, sectionid, myTags} = values
+    const {id, content, details, evento, sectionid, myTags, myPriority, priorityid} = values
     const {setEdit} = functions
 
     
@@ -17,7 +17,7 @@ function VisualItem ({values, functions}){
     return (
       <div className="visual-container" data-id={id}>
 
-            <div className="visual-item-container">
+            <div className="visual-item-container" style={{borderRight: myPriority? `4px solid ${myPriority.color}`: 'none'}}>
                 {check ?
                   <i className="material-icons"
                   onClick={()=>setCheck(false)}
@@ -30,6 +30,8 @@ function VisualItem ({values, functions}){
 
               <div className="details-container"
               onClick={() => setEdit(true)}>
+                <Tags myTags={myTags}/>
+
                 <p className="content">{content}</p>
 
                 <p className="details">{details}</p>
@@ -42,7 +44,7 @@ function VisualItem ({values, functions}){
                 <></>
                 }
 
-                <Tags myTags={myTags}/>
+                
               
               </div>
 

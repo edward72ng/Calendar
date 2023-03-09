@@ -54,7 +54,7 @@ function Lateral ({children}) {
               <div className={`sub menu-item ${showText? "show" : ""}`}
               onClick={() => {setFilter(elem.id)}}>
               <span className={`sub-text ${showText ? "show" : ""}`}>{elem.name}</span>
-              <span className="material-symbols-outlined" style={{color: colors[i]}}>folder</span>
+              <span className="material-symbols-outlined" style={{color: `rgba(${elem.myColor.color}, 1)`}}>folder</span>
               </div>
               </Link>
             )

@@ -4,6 +4,7 @@ const {Sequelize ,DataTypes, Model} = require('sequelize')
 const {USUARIOS_TABLE} = require('./usuariosModel')
 const {EVENTS_TABLE} = require('./events.model')
 const { SECTIONS_TABLE } = require('./sections.model')
+const {PRIORITIES_TABLE} = require('./priorities.models')
 // const user = sequelize.define('users',{
 //     uid:{
 //         type: DataTypes.UUID,
@@ -144,6 +145,16 @@ const schemaTodoSeq = {
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
+     },
+     priorityid:{
+        type: DataTypes.INTEGER.UNSIGNED,
+
+        references: {
+            model: PRIORITIES_TABLE, //aunque el parametro dice model, lo que se señala es la tabla
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
      }
   }
 
@@ -190,6 +201,11 @@ class Todoe extends Model{
             foreignKey: 'todoid',
             otherKey: 'tagid',
             as: 'myTags'
+        })
+
+        this.belongsTo(models.priorities, {
+            as: 'myPriority',
+            foreignKey: 'priorityid'
         })
     }
 

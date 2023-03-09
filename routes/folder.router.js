@@ -73,7 +73,8 @@ router.get('/me', async (req, res) => {
         const folders = await models.folders.findAll({
             where: {
                 userid: pay.sub,
-            }
+            },
+            include: ['myColor']
         })
         res.json(folders)
     }
@@ -112,7 +113,11 @@ router.get('/all', async (req, res) => {
                     {
                         model: models.todo,
                         as: 'tasksInSections',
-                        include: ['evento', 'notifications','myTags']
+                        include: ['evento', 'notifications','myPriority',{
+                            model: models.tags,
+                            as: 'myTags',
+                            include: ['myColor']
+                        }]
                     }
                 ]
             }]
@@ -137,7 +142,11 @@ router.get('/without-sections', async (req, res) => {
                 where: {
                     sectionid: null,
                 },
-                include : ['evento', 'notifications','myTags']
+                include : ['evento', 'notifications', 'myPriority',{
+                    model: models.tags,
+                    as: 'myTags',
+                    include: ['myColor']
+                }]
             }]
         })
         res.json(folders)

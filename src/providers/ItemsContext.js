@@ -20,7 +20,7 @@ function ItemsProvider ({children}) {
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
 
-    console.log(inbox)
+    console.log(myProjects)
     
     const section = (id)=> {
         if(!id){

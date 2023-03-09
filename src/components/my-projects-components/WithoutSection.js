@@ -14,7 +14,7 @@ function WithoutSection({values, functions}) {
     else{
     return <div className="section-container">
     <div className="space-between" id="section">
-      <div className="section"> Sin Seccion </div>
+      <div className="section tittle"> Sin Seccion </div>
     </div>
     
     <Droppable droppableId={'without-section'} isDropDisabled={true}>

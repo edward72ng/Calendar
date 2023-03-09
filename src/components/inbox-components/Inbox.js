@@ -51,6 +51,7 @@ function Inbox () {
     return <div className="inbox-container">
         <DragDropContext onDragEnd={onDragEnd}>
         <div className="list-inbox">
+            <span className="tittle">Inbox</span>
             <Droppable droppableId={'inbox-list'}>
             {(provided) => (
             <div className=""
@@ -101,9 +102,10 @@ function Inbox () {
     
         
             <div className="folders-droppable"> 
+            <span className="tittle">Folders</span>
             {
             myProjects.map((elem, i) => (
-            <div key={elem.id} className="folders-droppable-item" style={{backgroundColor: colors[i]}}>
+            <div key={elem.id} className="folders-droppable-item" style={{backgroundColor: `rgba(${elem.myColor.color}, 0.5)`}}>
                 <span>{elem.name}</span>
                 <Droppable  droppableId={String(elem.id)}>
                 {(provided) => (

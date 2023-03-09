@@ -5,33 +5,29 @@ const sequelize = require('./../db/connec');
 const AuthService = require('./../services/auth.services')
 const authservice = new AuthService
 
-router.get('/', async (req, res) => {
-   if (req.headers.authorization){
+router.post('/',async (req,res) =>{
+    if (req.headers.authorization){
         var token = req.headers.authorization;
         var newToken = token.replace("Bearer ", "");
         const pay = await authservice.getPayload(newToken)
-        const data = await models.todo.findAll(
-            {where: {
-                userid: pay.sub,
-                folderid: null,
-                sectionid: null
-            },
-            include: ['evento', 'notifications', 'myPriority',{
-                model: models.tags,
-                as: 'myTags',
-                include: ['myColor']
-            }]
-            }
-            )
-        res.json(data)
+
+        console.log(req.body)
+        const {destination, message} = req.body
+        console.log('Ha llegado algo')
+        console.log(destination, message)
+        rsp = await models.pendingnotifications.create({
+        message: message,
+        userid: destination,
+        origin: pay.sub
+    })
+    res.json(rsp)
+
     }
     else{
         res.json({error: 'else'})
     }
+
+    
 })
-
-
-
-
 
 module.exports = router 
