@@ -26,13 +26,14 @@ router.get('/',async (req,res)=>{
 })
 
 router.post('/',async (req,res)=>{
-    const {name} = req.body
+    const {name, colorid} = req.body
     if (req.headers.authorization){
         var token = req.headers.authorization.replace("Bearer ", "");
         const pay = await authservice.getPayload(token)
         const data = await models.folders.create({
             name: name,
-            userid: pay.sub
+            userid: pay.sub,
+            colorid: colorid
         })
         res.json(data);
     }

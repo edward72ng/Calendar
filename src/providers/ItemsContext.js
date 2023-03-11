@@ -5,6 +5,7 @@ import { useFetchItems } from "../custom-hooks/useFetchItems";
 const inboxUrl = '/api/v1/inboxtasks/'
 const projectsUrl = '/api/v1/folders/me'
 const myItemsUrls = '/api/v1/inbox/?folder='
+const colorsUrl = '/api/v1/colors'
 const myTagsUrl = '/api/v1/tags/my-tags'
 const myAll = '/api/v1/folders/all'
 const withoutSections = '/api/v1/folders/without-sections'
@@ -13,6 +14,7 @@ const ItemsContext = createContext()
 
 
 function ItemsProvider ({children}) {
+    const [colors, dispatchColors, updateColors, loadingColors] = useFetchItems(colorsUrl)
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
     
@@ -20,7 +22,7 @@ function ItemsProvider ({children}) {
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
 
-    console.log(myProjects)
+    console.log(colors)
     
     const section = (id)=> {
         if(!id){
@@ -63,13 +65,21 @@ function ItemsProvider ({children}) {
     }
 
 
-    if(!loadingInbox && !loadingMyProjects && !loadingAll && !loadingWithout && !loadingTags){
+    if(!loadingInbox && 
+        !loadingMyProjects && 
+        !loadingAll && 
+        !loadingWithout && 
+        !loadingTags &&
+        !loadingColors){
+
         return <ItemsContext.Provider value={
             {inbox, dispatchInbox, updateInbox,
                 myProjects, dispatchMyProjects, updateMyProjects,
                 all, dispatchAll, updateAll,
                 without, dispatchWithout, updateWithout,
                 tags, dispatchTags, updateTags,
+                colors, dispatchColors, updateColors,
+
                 section, task
             }
             }>

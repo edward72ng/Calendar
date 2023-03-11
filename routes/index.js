@@ -12,6 +12,8 @@ const routerInboxTasks = require('./inboxtasks.router')
 const routerWorkers = require('./worker.router')
 const routerTags = require('./tags.router')
 const routerRecomended= require('./recomended.router')
+const routerColors = require('./colors.router')
+
 const express = require('express')
 const router = require('./auth.router')
 
@@ -32,6 +34,8 @@ function routerApi (app){
     routerv1.use('/workers',routerWorkers)
     routerv1.use('/tags', routerTags)
     routerv1.use('/recomended', routerRecomended)
+    routerv1.use('/colors', routerColors)
+
     app.use('/api/v1',routerv1)
 
 }
