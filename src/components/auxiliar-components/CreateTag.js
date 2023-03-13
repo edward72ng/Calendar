@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
+import { Modal } from "../../app/modal";
 import { FunctionTagsContext } from "../../providers/FunctionTags";
 import { ItemsContext } from "../../providers/ItemsContext";
+import { ModalColors } from "../UI-components/ModalTags";
+import './CreateLabel.css'
 
 function CreateTag({functions}) {
     const {handleAddTag} = functions
@@ -8,6 +11,11 @@ function CreateTag({functions}) {
     const { updateAll } = useContext(ItemsContext)
     const [value, setValue] = useState('')
     const [input, setInput] = useState(false)
+    const [selectedColor, setSelectedColor] = useState({
+        id: 1,
+        color: '255,65,51'
+    })
+
 
     const sendTag = () => {
         
@@ -16,20 +24,27 @@ function CreateTag({functions}) {
             handleAddTag(data)})
     }
 
+    const selectColor = (id, color) => {
+        console.log(id, color)
+    }
+
     return(
-        <div 
-        onClick={() => setInput(true)}>
+        <div >
             {input ?
-            <>
+            <Modal>
+                <div className="input-folders-container">
                 <input
                 value={value}
+                placeholder="Nueva Etiqueta"
                 onChange={(e)=>setValue(e.target.value)}
                 />
+                <ModalColors functions={{selectColor}} values={{color: selectedColor}} />
                 <span className="material-symbols-outlined"
                 onClick={sendTag}>add</span>
-            </>
+                </div>
+            </Modal>
                 :
-                <span>Crear Etiqueta</span>
+                <span className="create-label" onClick={() => setInput(true)} >Crear Etiqueta</span>
             }
         </div>
     )

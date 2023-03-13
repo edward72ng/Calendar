@@ -41,12 +41,13 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const {id} = req.params
-    const {tag} = req.body
+    const {tag, colorid} = req.body
 
     const getTag = await models.tags.findByPk(id)
 
     const data = await getTag.update({
-        tag: tag
+        tag: tag,
+        colorid: colorid
     })
 
     res.json(data)

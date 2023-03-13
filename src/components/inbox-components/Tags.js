@@ -9,8 +9,8 @@ function Tags({myTags}) {
       myTags?.map((elem, i)=>{
         return(
         <div key={elem.id} style={
-          {backgroundColor: `rgba(${elem.myColor.color},0.1)`,
-            color: `rgba(${elem.myColor.color},1)`
+          {backgroundColor: `rgba(${elem.myColor?.color ? elem.myColor.color: '204,204,204'},0.1)`,
+            color: `rgba(${elem.myColor?.color ? elem.myColor.color: '204,204,204'},1)`
           }}>
           {elem.tag}
         </div>

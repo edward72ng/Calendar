@@ -10,6 +10,8 @@ function Recomended ({question, inUse, functions}) {
     const {handleAddTag} = functions
     const {tags} = useContext(ItemsContext) 
     const [recomended, setRecomended] = useState(null)
+
+  
     let diff = []
     if (inUse){
         diff = tags.filter(item1 => !inUse.some(item2 => item1.id === item2.id));
@@ -17,7 +19,13 @@ function Recomended ({question, inUse, functions}) {
         diff = tags
     }
     
-    console.log(diff)
+    const sendTags = diff.map(user => {
+        const { myColor, ...rest } = user;
+        return rest;
+      });
+
+
+    console.log(sendTags)
     useEffect(()=>{
         const fetchData = async () =>{
         const res = await fetch(nodeUrl,{
@@ -28,7 +36,7 @@ function Recomended ({question, inUse, functions}) {
             },
             body:JSON.stringify({
                 question: question,
-                myTags: diff
+                myTags: sendTags
               }),
         })
         const data = await res.json()

@@ -7,14 +7,16 @@ import { Tags } from "../inbox-components/Tags";
 import { SubOptions } from "../my-projects-components/SubOptions";
 import { CreateTag } from "./CreateTag";
 import { Recomended } from "./Recomended";
-
+import './InputDate.css'
+import './Select.css'
+import './InputAlarm.css'
 const inboxUrl = '/api/v1/inboxtasks/'
 
 function FormCreate ({functions, values}) {
     const {isClosing} = values
     const {dispatchTasks, refreshTasks, setForm} = functions
     const [recomended, setRecomended] = useState(false)
-    const {all} = useContext(ItemsContext)
+    const {all, priorities, myProjects} = useContext(ItemsContext)
     const { createTask } = useContext(FunctionTasksContext)
     const [content, setContent] = useState('')
     const [details, setDetails] = useState('')
@@ -28,8 +30,11 @@ function FormCreate ({functions, values}) {
         date: "",
         time: "",
         notifications: [],
-        folder: "",
-        myTags:[]
+        folder: null,
+        myTags:[],
+        myPriority: {
+          id: null
+        }
       } 
 
     const [state, setState] = useState(initialstate);
@@ -65,6 +70,14 @@ function FormCreate ({functions, values}) {
         const folder = e.target.value;
         setState((prevState) => ({ ...prevState, folder }));
       };
+      const handleSelectPriorityChange = (e) => {
+        const id = e.target.value;
+        const [myPriority] = priorities.filter((elem) => {
+          return elem.id == id
+        })
+
+        setState((prevState) => ({ ...prevState, myPriority }));
+      }
     
       const handleAdd = (e) => {
         if (state.date && state.time){
@@ -83,11 +96,11 @@ function FormCreate ({functions, values}) {
       };
 
     const setTask = () => {
-        dispatchTasks({type: 'CREATE', payload:{ body: {content, details, evento: {event:state.event}, myTags: state.myTags}}})
+        dispatchTasks({type: 'CREATE', payload:{ body: {content, details, evento: {event:state.event}, myTags: state.myTags, myPriority: state.myPriority}}})
         setContent('')
         setDetails('')
         setState(initialstate)
-        createTask({content, details, event: state.event, notifications: state.notifications, myTags : state.myTags}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
+        createTask({content, details, event: state.event, notifications: state.notifications, myTags : state.myTags, priorityid: state.myPriority?.id}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
         setRecomended(false)
       }
 
@@ -107,23 +120,30 @@ function FormCreate ({functions, values}) {
             value={details}
             onChange = { (e) => setDetails(e.target.value)}></textarea>
             
-            <div className="utils-container"
+            <div
             onClick={() => setRecomended(true)}>
-                <div>
-                <input type="date" value={state.event} onChange={handleEventChange} />
-                <select value={state.folder} onChange={handleSelectChange}>
+                <div className="utils-container">
+                
+                <select className="select-container"
+                value={state.folder ? state.folder : ""} onChange={handleSelectChange}>
                     <option value="">Seleccione una opción</option>
-                    <option value="option1">Opción 1</option>
-                    <option value="option2">Opción 2</option>
-                    <option value="option3">Opción 3</option>
+                    {
+                      myProjects.map((elem) => {
+                        return (<option key={elem.id} value={elem.id}>
+                          {elem.name}
+                        </option>)
+                      })
+                    }
                 </select>
+
+                <input type="date" className="input-date" value={state.event} onChange={handleEventChange} />
                 </div>
                 
-                <div>
-                    <div>
+                <div className="input-alarm">
+                    <div className="notification-container">
                         {
                             state.notifications.map((elem, i)=> {
-                                return<div key={i}>
+                                return<div key={i} className="notification-item">
                                 <span>{elem.date}</span>
                                 <span>{elem.time}</span>
                                 <span className="material-symbols-outlined">delete</span>
@@ -131,9 +151,12 @@ function FormCreate ({functions, values}) {
                             })
                         }
                     </div>
-
+                
+                <div className="utils-container">
                 <input type="date" value={state.date} onChange={handleDateChange} />
                 <input type="time" value={state.time} onChange={handleTimeChange} />
+                </div>
+
                 <span className="material-symbols-outlined"
                 onClick={handleAdd}>add</span>
                 </div>
@@ -141,6 +164,17 @@ function FormCreate ({functions, values}) {
                 
 
             </div>
+
+            <select className="select-container"
+                value={state.myPriority.id ? state.myPriority.id : ""} onChange={handleSelectPriorityChange}>
+                    <option value="">Seleccione una prioridad</option>
+                    {
+                      priorities.map((elem) => {
+                        return <option key={elem.id} value={elem.id}>{elem.prioriti}</option>
+                      })
+                    }
+                </select>
+
             <Tags myTags={state.myTags} />
             <CreateTag functions={{handleAddTag}}/>
         </div>

@@ -9,7 +9,7 @@ const colorsUrl = '/api/v1/colors'
 const myTagsUrl = '/api/v1/tags/my-tags'
 const myAll = '/api/v1/folders/all'
 const withoutSections = '/api/v1/folders/without-sections'
-
+const prioritiesUrl = '/api/v1/priorities/'
 const ItemsContext = createContext()
 
 
@@ -17,12 +17,12 @@ function ItemsProvider ({children}) {
     const [colors, dispatchColors, updateColors, loadingColors] = useFetchItems(colorsUrl)
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
-    
+    const [priorities, dispatchPriorities, updatePriorities, loadingPriorities] = useFetchItems(prioritiesUrl)
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
 
-    console.log(colors)
+    console.log(tags)
     
     const section = (id)=> {
         if(!id){
@@ -70,7 +70,8 @@ function ItemsProvider ({children}) {
         !loadingAll && 
         !loadingWithout && 
         !loadingTags &&
-        !loadingColors){
+        !loadingColors &&
+        !loadingPriorities){
 
         return <ItemsContext.Provider value={
             {inbox, dispatchInbox, updateInbox,
@@ -79,7 +80,7 @@ function ItemsProvider ({children}) {
                 without, dispatchWithout, updateWithout,
                 tags, dispatchTags, updateTags,
                 colors, dispatchColors, updateColors,
-
+                priorities, dispatchPriorities, updatePriorities,
                 section, task
             }
             }>

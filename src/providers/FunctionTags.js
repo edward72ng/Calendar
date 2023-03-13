@@ -13,7 +13,7 @@ function FunctionTagsProvider({children}){
         'Authorization': 'Bearer ' + auth.token,
     }
 
-const deleteTags = async (id, callback) => {
+const deleteTag = async (id, callback) => {
     try {
         const res = await fetch('/api/v1/tags/'+ id, {
             method: 'DELETE',
@@ -29,7 +29,7 @@ const deleteTags = async (id, callback) => {
     }      
 }
 
-const editTags = async (body,callback) => {
+const editTag = async (body,callback) => {
     const {id, ...send} = body
     try{
         const res = await fetch('/api/v1/tags/'+id, {
@@ -69,7 +69,7 @@ const createTags = async (body, callback) => {
 }
 
 return <FunctionTagsContext.Provider
-value={{createTags, editTags, deleteTags}}>
+value={{createTags, editTag, deleteTag}}>
 				{children}
 </FunctionTagsContext.Provider>
 }

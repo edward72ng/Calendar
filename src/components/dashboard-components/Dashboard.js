@@ -4,6 +4,7 @@ import { FoldersCard } from "./FoldersCard";
 import {NotificationsCard} from './NotificationsCard'
 import './Dashboard.css'
 import { Tittle } from "./Tittle";
+import { TagsSlider } from "./TagsSlider";
 const today = [
 {content: 'Lorem Ipsun', details: 'dolor ipsun folum', image:'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'},
 {content: 'Lorem Ipsun', details: 'dolor ipsun folum', image:'https://th.bing.com/th/id/OIP.QAYBKECBqiLPuTScp3FZRwHaD4?pid=ImgDet&rs=1'},
@@ -15,7 +16,7 @@ function Dashboard ({children}) {
         <Tittle></Tittle>
 
         <FoldersCard></FoldersCard>
-
+        <TagsSlider></TagsSlider>
         
         <div className="today-cards">
         <div className="cards-container">

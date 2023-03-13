@@ -18,12 +18,9 @@ function FoldersCard () {
             myProjects.map((elem, i)=>{
                 const {id, name} = elem
                 return (
-                    <Link key={id} to='/app/my-projects'>
-                    <div className="slider-item" style={{backgroundColor: `rgba(${elem.myColor.color}, 0.5)`}}
-                    onClick={() => {setFilter(elem.id)}}>
-                        <span>{name}</span>
-                    </div>
-                    </Link>
+                    
+                    <FolderItem  key={id} values={elem}></FolderItem>
+                    
                 )
             })
         }
