@@ -103,7 +103,12 @@ function FormCreate ({functions, values}) {
         createTask({content, details, event: state.event, notifications: state.notifications, myTags : state.myTags, priorityid: state.myPriority?.id}, () => {setTimeout(()=>{refreshTasks(inboxUrl)}, 2000)})
         setRecomended(false)
       }
-
+    
+    const viewRecomended = () => {
+      if(content.length > 2){
+        setRecomended(true)
+      }
+    }
 
     return <div className="formcreate-container" id="form-create">
       {recomended &&
@@ -116,22 +121,20 @@ function FormCreate ({functions, values}) {
             value={content}
             onChange = { (e) => setContent(e.target.value)}></input>
             <textarea className="edit-value" placeholder="detalles"
-            onClick={() => setRecomended(true)}
+            onClick={() => viewRecomended()}
             value={details}
             onChange = { (e) => setDetails(e.target.value)}></textarea>
             
             <div
-            onClick={() => setRecomended(true)}>
+            onClick={() => viewRecomended()}>
                 <div className="utils-container">
                 
                 <select className="select-container"
-                value={state.folder ? state.folder : ""} onChange={handleSelectChange}>
-                    <option value="">Seleccione una opción</option>
+                value={state.myPriority.id ? state.myPriority.id : ""} onChange={handleSelectPriorityChange}>
+                    <option value="">Seleccione una prioridad</option>
                     {
-                      myProjects.map((elem) => {
-                        return (<option key={elem.id} value={elem.id}>
-                          {elem.name}
-                        </option>)
+                      priorities.map((elem) => {
+                        return <option key={elem.id} value={elem.id}>{elem.prioriti}</option>
                       })
                     }
                 </select>
@@ -165,15 +168,7 @@ function FormCreate ({functions, values}) {
 
             </div>
 
-            <select className="select-container"
-                value={state.myPriority.id ? state.myPriority.id : ""} onChange={handleSelectPriorityChange}>
-                    <option value="">Seleccione una prioridad</option>
-                    {
-                      priorities.map((elem) => {
-                        return <option key={elem.id} value={elem.id}>{elem.prioriti}</option>
-                      })
-                    }
-                </select>
+            
 
             <Tags myTags={state.myTags} />
             <CreateTag functions={{handleAddTag}}/>
