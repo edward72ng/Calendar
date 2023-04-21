@@ -1,7 +1,5 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom'
-import { NavBar } from '../components/nav-components/NavBar';
-//import { Header } from '../components/header-components/Header';
 import { MyProjects } from '../components/my-projects-components/MyProjects';
 import { Dashboard } from '../components/dashboard-components/Dashboard';
 import { Inbox } from '../components/inbox-components/Inbox';
