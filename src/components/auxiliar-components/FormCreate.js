@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
-import { SubItem } from "../inbox-components/SubItem";
 import { Tags } from "../inbox-components/Tags";
-import { SubOptions } from "../my-projects-components/SubOptions";
 import { CreateTag } from "./CreateTag";
-import { Recomended } from "./Recomended";
 import './InputDate.css'
 import './Select.css'
 import './InputAlarm.css'
