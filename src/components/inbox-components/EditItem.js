@@ -1,10 +1,7 @@
 import React,{useContext, useState} from "react";
-import {useAuth} from '../../providers/auth'
 import { Options } from "../auxiliar-components/Options";
 import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
-import { EditTask } from "./EditTask";
-import { SubItem } from "./SubItem";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
 import { Recomended } from "../auxiliar-components/Recomended";
@@ -12,14 +9,13 @@ import { Tags } from "./Tags";
 
 function EditItem ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, notifications, myTags} = values
-  
     const {refreshTasks, dispatchTasks, setEdit} = functions
+
     const {updateWithout} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
     const {filter} = useContext(DataContext)
 
     const initialValues = {
-      
       sectionid: sectionid? sectionid : null,
       content: content,
       details: details
@@ -32,7 +28,6 @@ function EditItem ({values, functions}){
       notifications: notifications,
       myTags: myTags
   } 
-
 
     const [recomended, setRecomended] = useState(false)
     const [options, setOptions] = useState(initialOptions)   
@@ -50,9 +45,6 @@ function EditItem ({values, functions}){
       }else{
         dispatchTasks({type: 'DELETE', payload: {id: id}})
       }
-      //Here edit move to folder
-      
-
       setEdit(false)
       editTask({...values,...editValues, ...options}, () => {
         refreshTasks();

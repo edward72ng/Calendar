@@ -23,7 +23,6 @@ function Aplication () {
         <FunctionTagsProvider>      
             <Routes>
                 <Route path='/' element={<Lateral><Header><Inbox></Inbox></Header></Lateral>}></Route>
-                
                 <Route path='/home' element={<Lateral><Header><Dashboard></Dashboard></Header></Lateral>}></Route>
                 <Route path='/my-projects' element={<Lateral><Header><MyProjects></MyProjects></Header></Lateral>}></Route>
             </Routes>
@@ -31,9 +30,9 @@ function Aplication () {
         </FunctionSectionsProvider>
         </FunctionTasksProvider>
         </FunctionFoldersProvider>
+
         </DataProvider>
-    )
+    );
 }
 
 export default Aplication;
- //<Route path='/home' element={<NavBar><Header><Dashboard></Dashboard></Header></NavBar>}></Route>

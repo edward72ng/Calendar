@@ -112,7 +112,7 @@ function MyProjects() {
     }  
 
     </DragDropContext>
-
+  {/*CreateSection*/}
     <div className='section-container'>
     <div className="space-between" id="section">
           <input className='tittle' placeholder='Añadir Secccion'

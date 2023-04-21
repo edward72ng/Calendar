@@ -1,9 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { OneTodo } from "./OneTodo";
-import { UseFetch } from "../../custom-hooks/useFetch";
-import { useFetchItems } from "../../custom-hooks/useFetchItems";
-import { Add } from "../auxiliar-components/Add";
-import { FormTask } from "../auxiliar-components/FormTask";
+import React, { useContext, useState } from "react";
 import { OneItem } from "./OneItem";
 import { FormCreate } from "../auxiliar-components/FormCreate";
 import { ItemsContext } from "../../providers/ItemsContext";
@@ -12,7 +7,6 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { reorder } from "../../utils/dragAndDrop";
 
-const colors = ['#fff8b9','#e2f6d3','#b4ded4','#afccdc','#f29f75'] 
 function Inbox () {
     const {inbox, dispatchInbox: dispatchTasks, updateInbox: refreshTasks, myProjects, updateAll, updateWithout} = useContext(ItemsContext)
     const {editTask} = useContext(FunctionTasksContext)
