@@ -6,7 +6,7 @@ import { Tags } from "./Tags";
 import './Tags.css'
 
 function VisualItem ({values, functions}){
-    const {id, content, details, evento, sectionid, myTags, myPriority, priorityid} = values
+    const {id, content, details, evento, sectionid, myTags, myPriority, priorityid, mySubtasks} = values
     const {setEdit} = functions
 
     
@@ -69,7 +69,7 @@ function VisualItem ({values, functions}){
                 }
                 </div> 
             </div>
-        { subTasks && <SubItem></SubItem>}
+        { subTasks && <SubItem values={{subTasks: mySubtasks, taskid: id}}/>}
         { expand && <GaleryFromTask></GaleryFromTask> }
       </div>
     )

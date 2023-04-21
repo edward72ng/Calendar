@@ -207,6 +207,12 @@ class Todoe extends Model{
             as: 'myPriority',
             foreignKey: 'priorityid'
         })
+
+        this.hasMany(models.subtask, {
+            as: 'mySubtasks',
+            foreignKey: 'taskid',
+            
+        })
     }
 
     static config(sequelize){

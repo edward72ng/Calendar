@@ -111,9 +111,9 @@ function FormCreate ({functions, values}) {
     }
 
     return <div className="formcreate-container" id="form-create">
-      {recomended &&
+      {/*recomended &&
         <Recomended question={content} functions={{handleAddTag}}></Recomended>
-    }
+  */}
         <span className="material-symbols-outlined"
         onClick={()=>{setTask()}}>done</span>
         <div className="form-container">

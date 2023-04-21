@@ -21,7 +21,6 @@ router.get('/',
             var newToken = token.replace("Bearer ", "");
             const pay = await authservice.getPayload(newToken)
             var data = await service.get(pay.sub, folder)
-            console.log(folder)
             res.json(data)
         }
         else{

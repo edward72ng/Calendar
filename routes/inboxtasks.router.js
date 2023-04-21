@@ -16,13 +16,15 @@ router.get('/', async (req, res) => {
                 folderid: null,
                 sectionid: null
             },
-            include: ['evento', 'notifications', 'myPriority',{
+            include: ['evento', 'notifications', 'myPriority', 'mySubtasks',{
                 model: models.tags,
                 as: 'myTags',
                 include: ['myColor']
             }]
             }
             )
+
+        
         res.json(data)
     }
     else{
@@ -30,6 +32,21 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+   const {id} = req.params
+         const data = await models.todo.findByPk(id, 
+             {
+             include: ['evento', 'notifications', 'myPriority', 'mySubtasks',{
+                 model: models.tags,
+                 as: 'myTags',
+                 include: ['myColor']
+             }]
+             }
+             )
+ 
+         res.json(data)
+
+ })
 
 
 
