@@ -114,7 +114,7 @@ router.get('/all', async (req, res) => {
                     {
                         model: models.todo,
                         as: 'tasksInSections',
-                        include: ['evento', 'notifications','myPriority',{
+                        include: ['evento', 'notifications','myPriority','mySubtasks',{
                             model: models.tags,
                             as: 'myTags',
                             include: ['myColor']

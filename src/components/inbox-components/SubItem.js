@@ -3,7 +3,7 @@ import './SubItem.css'
 import { ItemsContext } from "../../providers/ItemsContext";
 
 function SubItem({values}) {
-  const {updateInbox} = useContext(ItemsContext)
+  const {updateInbox, updateAll} = useContext(ItemsContext)
   const {subTasks, taskid} = values
     console.log(values)
     const inputDefault = {
@@ -29,6 +29,7 @@ function SubItem({values}) {
       console.log('GENERATE', data)
       setSubTask(data)
       updateInbox()
+      updateAll()
     }
 
     const createSubTask = async () => {
@@ -48,8 +49,10 @@ function SubItem({values}) {
 console.log(subTask.length)
     return <div className="sub-item-container">
       {(subTask.length == 0) &&
-        <div 
-        onClick={generateSubTasks}>Generar Subtareas</div>
+        <div className="generate-button"
+        onClick={generateSubTasks}>
+        <span>Generar Subtareas</span>
+        </div>
       }
       {
         subTask.map((elem, i) => {
@@ -57,11 +60,9 @@ console.log(subTask.length)
           <div key={i} className="visual-item-container">
           {elem.completed ?
             <i className="material-icons"
-            onClick={()=>setCheck(false)}
             >check_circle</i>
           :
             <i className="material-icons"
-            onClick={()=>setCheck(true)}
             >radio_button_unchecked</i>
           }
 
