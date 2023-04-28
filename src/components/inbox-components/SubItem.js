@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import './SubItem.css'
 import { ItemsContext } from "../../providers/ItemsContext";
+import { Loading } from "../UI-components/Loading";
 
 function SubItem({values}) {
   const {updateInbox, updateAll} = useContext(ItemsContext)
@@ -15,8 +16,10 @@ function SubItem({values}) {
     const [subTask, setSubTask] = useState(subTasks)
     const [add, setAdd] = useState(false) 
     const [input, setInput] = useState(inputDefault)
+    const [ loadingGenerate, setLoadingGenerate] = useState(false) 
 
     const generateSubTasks = async () =>{
+      setLoadingGenerate(true)
       const res = await fetch('api/v1/subtasks/generate', {
         method: 'POST',
         headers: {
@@ -28,6 +31,7 @@ function SubItem({values}) {
       const data = await res.json()
       console.log('GENERATE', data)
       setSubTask(data)
+      setLoadingGenerate(false)
       updateInbox()
       updateAll()
     }
@@ -51,13 +55,18 @@ console.log(subTask.length)
       {(subTask.length == 0) &&
         <div className="generate-button"
         onClick={generateSubTasks}>
-        <span>Generar Subtareas</span>
+          {
+            loadingGenerate ?
+            <Loading/>
+            :
+            <span>Generar Subtareas</span>
+          }
         </div>
       }
       {
         subTask.map((elem, i) => {
           return (
-          <div key={i} className="visual-item-container">
+          <div key={i} className="visual-item-container appear">
           {elem.completed ?
             <i className="material-icons"
             >check_circle</i>

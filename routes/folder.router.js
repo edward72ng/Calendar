@@ -114,7 +114,7 @@ router.get('/all', async (req, res) => {
                     {
                         model: models.todo,
                         as: 'tasksInSections',
-                        include: ['evento', 'notifications','myPriority','mySubtasks',{
+                        include: ['evento', 'notifications','myPriority','mySubtasks','myImages',{
                             model: models.tags,
                             as: 'myTags',
                             include: ['myColor']
@@ -143,7 +143,7 @@ router.get('/without-sections', async (req, res) => {
                 where: {
                     sectionid: null,
                 },
-                include : ['evento', 'notifications', 'myPriority',{
+                include : ['evento', 'notifications','myPriority','mySubtasks','myImages',{
                     model: models.tags,
                     as: 'myTags',
                     include: ['myColor']

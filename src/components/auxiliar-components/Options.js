@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ItemsContext } from "../../providers/ItemsContext";
+import './Options.css'
 
 function Options({state, setState}) {
     const { myProjects } = useContext(ItemsContext)
@@ -35,8 +36,10 @@ function Options({state, setState}) {
       }
 
     return <div className="utils-container">
+
         <div>
         <input type="date" value={state.event} onChange={handleEventChange} />
+
         <select onChange={handleSelectChange} defaultValue= {state.folderid}>
             {!state.folderid &&
                 <option>Inbox</option>
@@ -61,11 +64,13 @@ function Options({state, setState}) {
                     })
                 }
             </div>
-
+            <div>
         <input type="date" value={state.date} onChange={handleDateChange} />
         <input type="time" value={state.time} onChange={handleTimeChange} />
         <span className="material-symbols-outlined"
         onClick={handleAdd}>add</span>
+            </div>
+        
         </div>
 
     </div>

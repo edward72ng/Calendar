@@ -1,0 +1,27 @@
+.galery-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: none;
+}
+.galery-container::-webkit-scrollbar{
+    display: none;
+}
+.galery-item{
+    height: 300px;
+    max-width: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+    position: relative;
+}
+.galery-item > img{
+    object-fit: cover;
+    height: 100%;
+}
+.galery-item > span{
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    
+}

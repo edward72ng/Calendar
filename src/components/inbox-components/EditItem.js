@@ -6,9 +6,16 @@ import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
 import { Recomended } from "../auxiliar-components/Recomended";
 import { Tags } from "./Tags";
+import { SelectTag } from "../auxiliar-components/SelectTag";
+import { EditTag } from "./EditTag";
+import { InputImage } from "../UI-components/InputImage";
+import { EditGalery } from "./EditGalery";
+import { NotificationsModal } from "../auxiliar-components/NotiificationsModal";
+import { EventModal } from "../auxiliar-components/EventModal";
+import { FoldersModal } from "../auxiliar-components/FoldersModal";
 
 function EditItem ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid, notifications, myTags} = values
+    const {id, content, details, evento, sectionid, folderid, notifications, myTags, myImages} = values
     const {refreshTasks, dispatchTasks, setEdit} = functions
 
     const {updateWithout} = useContext(ItemsContext)
@@ -26,13 +33,34 @@ function EditItem ({values, functions}){
       date: "",
       time: "",
       notifications: notifications,
-      myTags: myTags
+      myTags: myTags,
+      myImages: myImages
   } 
 
     const [recomended, setRecomended] = useState(false)
     const [options, setOptions] = useState(initialOptions)   
     const [editValues, setEditValues] = useState(initialValues)
     
+    const handleFolderChange = (folderid) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        folderid: folderid
+      }))
+    }
+
+    const handleEventChange =  (event) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        event: event
+      }))
+    }
+    const handleAdd = (alarms) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        notifications: alarms
+      }))
+    }
+
     const sendEdit = () => {
       const newTask = {
         ...editValues,
@@ -68,23 +96,35 @@ function EditItem ({values, functions}){
 
       setOptions((prevState) => ({ ...prevState, myTags: tags }));
     };
+
+    const handleDeleteTag = (id) => {
+      const tags = options.myTags.filter((elem) => {
+        return elem.id != id
+      })
+      
+
+      setOptions((prevState) => ({ ...prevState, myTags: tags }));
+    };
+
+    const handleAddImage = (image) => {
+      const images = [...options.myImages, image]
+
+      setOptions((prevState) => ({...prevState, myImages: images}))
+    }
    
     return (
       <div className="visual-container" data-id={id}>
-        {recomended ?
-          <Recomended question={content} inUse={options.myTags} functions={{handleAddTag}}/>
-          :
-          <div
-          onClick={()=>setRecomended(true)}>
-          Recomendar?</div>
-        }
-            <span className="material-symbols-outlined"
+        
+        <div className="close-options">
+          <span className="material-symbols-outlined"
             onClick={()=>{setEdit(false)}}>
             close</span>
             <span className="material-symbols-outlined"
             onClick={()=>{sendEdit()}}>
             done</span>
+        </div>
             
+        
             <div className="visual-item-container">
 
               <div className="details-container"
@@ -104,22 +144,27 @@ function EditItem ({values, functions}){
                 </p>
                 :
                 <></>
-                }
-
-                <Tags myTags={options.myTags}/>
-                <Options 
-                state={options} 
-                setState={setOptions}/>
+                } 
+                <EditTag myTags={options.myTags} handleDeleteTag={handleDeleteTag}/>
+                <SelectTag functions={{handleAddTag}}/>
+                
+                
+                
               
               </div>
 
     
             </div>
 
-             
-
-
-        <GaleryFromTask></GaleryFromTask>
+        <div className="added-to-item">
+        <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
+        <EventModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
+        <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
+        <FoldersModal functions={{handleAdd: handleFolderChange}}/>
+        </div>
+        
+        <EditGalery myImages={options.myImages}/>
+        <InputImage values={{todoid: id}} functions={{handleAddImage}}/>
         <span className="material-symbols-outlined"
             onClick={()=>{deleteItem()}}>
             delete</span>
@@ -128,3 +173,13 @@ function EditItem ({values, functions}){
     )
 }
 export {EditItem}
+
+/**
+ * {recomended ?
+          <Recomended question={content} inUse={options.myTags} functions={{handleAddTag}}/>
+          :
+          <div
+          onClick={()=>setRecomended(true)}>
+          Recomendar?</div>
+        }
+ */

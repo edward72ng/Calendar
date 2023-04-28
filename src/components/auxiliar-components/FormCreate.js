@@ -6,6 +6,10 @@ import { CreateTag } from "./CreateTag";
 import './InputDate.css'
 import './Select.css'
 import './InputAlarm.css'
+import { SelectTag } from "./SelectTag";
+import {EventModal} from '../auxiliar-components/EventModal'
+import {NotificationsModal} from '../auxiliar-components/NotiificationsModal'
+import { FoldersModal } from "./FoldersModal";
 const inboxUrl = '/api/v1/inboxtasks/'
 
 function FormCreate ({functions, values}) {
@@ -45,7 +49,24 @@ function FormCreate ({functions, values}) {
         }, 5)
       }
     },[isClosing])
-    
+    const handleFolderChange = (folderid) => {
+      setState((prevState) => ({
+        ...prevState,
+        folder: folderid
+      }))
+    }
+    const handleEvent = (event) => {
+      setState((prevState) => ({
+        ...prevState,
+        event: event
+      }))
+    }
+    const handleNotifications = (notifications) => {
+      setState(() => ({
+        ...prevState,
+        notifications: notifications
+      }))
+    }
 
       const handleEventChange = (e) => {
         const event = e.target.value;
@@ -120,53 +141,16 @@ function FormCreate ({functions, values}) {
             onClick={() => viewRecomended()}
             value={details}
             onChange = { (e) => setDetails(e.target.value)}></textarea>
+        <div className="added-to-item">
+        <EventModal functions={{handleAdd: handleEvent}} values={{event: state.event}}/>
+            <NotificationsModal functions={{handleAdd: handleNotifications}} values={{notifications: state.notifications}}/>
             
-            <div
-            onClick={() => viewRecomended()}>
-                <div className="utils-container">
-                
-                <select className="select-container"
-                value={state.myPriority.id ? state.myPriority.id : ""} onChange={handleSelectPriorityChange}>
-                    <option value="">Seleccione una prioridad</option>
-                    {
-                      priorities.map((elem) => {
-                        return <option key={elem.id} value={elem.id}>{elem.prioriti}</option>
-                      })
-                    }
-                </select>
-
-                <input type="date" className="input-date" value={state.event} onChange={handleEventChange} />
-                </div>
-                
-                <div className="input-alarm">
-                    <div className="notification-container">
-                        {
-                            state.notifications.map((elem, i)=> {
-                                return<div key={i} className="notification-item">
-                                <span>{elem.date}</span>
-                                <span>{elem.time}</span>
-                                <span className="material-symbols-outlined">delete</span>
-                                </div>
-                            })
-                        }
-                    </div>
-                
-                <div className="utils-container">
-                <input type="date" value={state.date} onChange={handleDateChange} />
-                <input type="time" value={state.time} onChange={handleTimeChange} />
-                </div>
-
-                <span className="material-symbols-outlined"
-                onClick={handleAdd}>add</span>
-                </div>
-
-                
-
-            </div>
-
+            <FoldersModal functions={{handleAdd: handleFolderChange}}/>
+        </div>
             
 
             <Tags myTags={state.myTags} />
+            <SelectTag functions={{handleAddTag}}/>
             <CreateTag functions={{handleAddTag}}/>
         </div>
     </div>

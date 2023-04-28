@@ -213,6 +213,11 @@ class Todoe extends Model{
             foreignKey: 'taskid',
             
         })
+
+        this.hasMany(models.images, {
+            foreignKey: 'todoid',
+            as: 'myImages'
+        })
     }
 
     static config(sequelize){

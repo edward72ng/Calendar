@@ -4,7 +4,32 @@
     width: 100%;
     box-sizing: border-box;
     padding-right: 36px;
+    
 }
+.visual-item-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+    opacity: 0;
+    animation: appear 0.5s ease forwards;
+}
+.appear{
+    animation-delay: 0.2s;
+}
+@keyframes appear {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
 .generate-button{
     display: flex;
     flex-direction: row;

@@ -18,6 +18,7 @@ const { TodoTags, schemaTodoTagsSeq} = require('./todoTag.model')
 const { Priorities, schemaPrioritiesSeq } = require('./priorities.models')
 const { Colors, schemaColorssSeq} = require('./color.models')
 const { Subtask, schemaSubtaskSeq } = require('./subtasks.model')
+const { Images, schemaImagesSeq } = require('./images.model')
 
 // INICIACION DE MODELOS PARA EXPORTAR
 function setupModels(sequelize) {
@@ -40,6 +41,7 @@ function setupModels(sequelize) {
     Priorities.init(schemaPrioritiesSeq, Priorities.config(sequelize))
     Colors.init(schemaColorssSeq, Colors.config(sequelize))
     Subtask.init(schemaSubtaskSeq, Subtask.config(sequelize))
+    Images.init(schemaImagesSeq, Images.config(sequelize))
 
     Todoe.associate(sequelize.models)
     Notify.associate(sequelize.models)
@@ -55,6 +57,7 @@ function setupModels(sequelize) {
     TodoTags.associate(sequelize.models)
     Priorities.associate(sequelize.models)
     Subtask.associate(sequelize.models)
+    Images.associate(sequelize.models)
 }
 
 

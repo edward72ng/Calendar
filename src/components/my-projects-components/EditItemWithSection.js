@@ -8,9 +8,16 @@ import { Options } from "../auxiliar-components/Options";
 import { DataContext } from "../../providers/DataContext";
 import { Tags } from "../inbox-components/Tags";
 import { Recomended } from "../auxiliar-components/Recomended";
+import { SelectTag } from "../auxiliar-components/SelectTag";
+import { EditTag } from "../inbox-components/EditTag";
+import { InputImage } from "../UI-components/InputImage";
+import { EditGalery } from "../inbox-components/EditGalery";
+import { NotificationsModal } from "../auxiliar-components/NotiificationsModal";
+import { EventModal } from "../auxiliar-components/EventModal";
+import { FoldersModal } from "../auxiliar-components/FoldersModal";
 
 function EditItemWithSection ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid, userId, eventId, myTags, tasksInSections, orders, notifications} = values
+    const {id, content, details, evento, sectionid, folderid, userId, eventId, myTags, myImages, tasksInSections, orders, notifications} = values
   
     const {refreshsections, dispatchSections, setEdit} = functions
     const {updateAll, updateWithout} = useContext(ItemsContext)
@@ -35,7 +42,8 @@ function EditItemWithSection ({values, functions}){
       date: "",
       time: "",
       notifications: notifications,
-      myTags: myTags
+      myTags: myTags,
+      myImages: myImages
   } 
 
 
@@ -97,8 +105,35 @@ function EditItemWithSection ({values, functions}){
       setOptions((prevState) => ({ ...prevState, myTags: tags }));
     };
    
+    const handleDeleteTag = (id) => {
+      const tags = options.myTags.filter((elem) => {
+        return elem.id != id
+      })
+    }
+    const handleAddImage = (image) => {
+      const images = [...options.myImages, image]
 
-   
+      setOptions((prevState) => ({...prevState, myImages: images}))
+    }
+    const handleFolderChange = (folderid) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        folderid: folderid
+      }))
+    }
+    const handleEventChange =  (event) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        event: event
+      }))
+    }
+    const handleAdd = (alarms) => {
+      setOptions((prevState) => ({
+        ...prevState,
+        notifications: alarms
+      }))
+    }
+    
     return (
       <div className="visual-container" data-id={id}>
 
@@ -138,19 +173,26 @@ function EditItemWithSection ({values, functions}){
                 :
                 <></>
                 }
-                <Options
-                state={options}
-                setState={setOptions}/>
+                
               
               </div>
               
     
             </div>
 
-            <Tags myTags={options.myTags}></Tags>
+            <div className="added-to-item">
+            <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
+            <EventModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
+            <FoldersModal functions={{handleAdd: handleFolderChange}}/>
+           </div>
 
-
-        <GaleryFromTask></GaleryFromTask>
+            <EditTag myTags={options.myTags} handleDeleteTag={handleDeleteTag}/>
+            <SelectTag functions={{handleAddTag}}/>
+            
+            <EditGalery myImages={options.myImages}/>
+            <InputImage values={{todoid: id}} functions={{handleAddImage}}/> 
+            
+        
         <span className="material-symbols-outlined"
             onClick={()=>{deleteItem()}}>
             delete</span>

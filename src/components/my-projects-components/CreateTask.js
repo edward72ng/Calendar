@@ -4,8 +4,8 @@ import { FunctionTasksContext } from "../../providers/FunctionTasks.provider"
 import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider"
 import { ItemsContext } from "../../providers/ItemsContext"
 import { Options } from "../auxiliar-components/Options"
-import { SubItem } from "../inbox-components/SubItem"
-
+import {EventModal} from '../auxiliar-components/EventModal'
+import {NotificationsModal} from '../auxiliar-components/NotiificationsModal'
 
 function CreateTask ({functions, dataValues}) {
     const {filter} = useContext(DataContext)
@@ -64,7 +64,18 @@ function CreateTask ({functions, dataValues}) {
         })
         setValues(initialValues)
     }
-
+    const handleEvent = (event) => {
+        setOptions((prevState) => ({
+          ...prevState,
+          event: event
+        }))
+      }
+      const handleNotifications = (notifications) => {
+        setOptions(() => ({
+          ...prevState,
+          notifications: notifications
+        }))
+      }
 
     return <div className="createtask-container">
         <span className="material-symbols-outlined"
@@ -82,6 +93,12 @@ function CreateTask ({functions, dataValues}) {
             state={options}
             setState={setOptions}
             />
+        <div className="added-to-item">
+        
+            <EventModal functions={{handleAdd: handleEvent}} values={{event: options.event}}/>
+            <NotificationsModal functions={{handleAdd: handleNotifications}} values={{notifications: options.notifications}}/>
+        </div>
+            
         </div>
     </div>
     {/*recomended && 

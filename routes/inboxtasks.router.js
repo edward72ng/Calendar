@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
                 folderid: null,
                 sectionid: null
             },
-            include: ['evento', 'notifications', 'myPriority', 'mySubtasks',{
+            include: ['evento', 'notifications', 'myPriority', 'mySubtasks', 'myImages',{
                 model: models.tags,
                 as: 'myTags',
                 include: ['myColor']

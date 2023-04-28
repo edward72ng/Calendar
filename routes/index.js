@@ -15,6 +15,7 @@ const routerRecomended= require('./recomended.router')
 const routerColors = require('./colors.router')
 const routerPriorities = require('./priorities.router')
 const routerSubTasks = require('./subtask.router')
+const routerImages = require('./images.router')
 const express = require('express')
 const router = require('./auth.router')
 
@@ -38,6 +39,7 @@ function routerApi (app){
     routerv1.use('/colors', routerColors)
     routerv1.use('/priorities', routerPriorities)
     routerv1.use('/subtasks', routerSubTasks)
+    routerv1.use('/images', routerImages)
 
     app.use('/api/v1',routerv1)
 

@@ -173,6 +173,46 @@ class Todos {
         console.log(objeto)
         let obj = objeto
         console.log(obj)
+
+        const actualTags = await models.todotags.findAll({
+            where: {
+                todoid: idComp
+            }
+        })
+
+        const actualTagsParse = actualTags.map(
+            elem => elem.get({ plain: true })
+        )
+
+        const difference = actualTagsParse.filter((element) => {
+            let flag = true
+            console.log('ELEMENT',element)
+
+            objeto.myTags?.map((elem) => {
+                
+                console.log('ELEM',elem)
+                if(elem.id == element.tagid){
+                    flag = false
+                }
+            })
+            return flag
+        });
+
+            console.log('DIFERENCIA',difference)
+//borrando
+            await Promise.all(
+                difference.map( async (elem) => {
+                    await models.todotags.destroy({
+                        where: {
+                            todoid: idComp,
+                            tagid: elem.tagid
+                        }
+                    })
+                })
+            )
+            
+       
+
         //var obj = {content: objeto.content, details: objeto.details, folderid: objeto.folderid,  assignedto: objeto.assignedto}
         if(objeto.myTags){
             await Promise.all(
