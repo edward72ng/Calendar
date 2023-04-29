@@ -713,6 +713,7 @@ input{
 /*FormCreat*/
 .formcreate-container {
     position: fixed;
+    z-index: 15;
     right: 0;
     width: 450px;
     height: 600px;

@@ -10,6 +10,7 @@ const myTagsUrl = '/api/v1/tags/my-tags'
 const myAll = '/api/v1/folders/all'
 const withoutSections = '/api/v1/folders/without-sections'
 const prioritiesUrl = '/api/v1/priorities/'
+const tasksUrl = '/api/v1/inbox/get-all/2'
 const ItemsContext = createContext()
 
 
@@ -21,7 +22,7 @@ function ItemsProvider ({children}) {
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
-
+    const [taks, dispatchTaks, updateTaks, loadingTaks] = useFetchItems(tasksUrl)
 
     console.log('INBOX', inbox)
     
@@ -82,6 +83,7 @@ function ItemsProvider ({children}) {
                 tags, dispatchTags, updateTags,
                 colors, dispatchColors, updateColors,
                 priorities, dispatchPriorities, updatePriorities,
+                taks, dispatchTaks, updateTaks,
                 section, task
             }
             }>

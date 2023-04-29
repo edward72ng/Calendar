@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './NotificationsModal.css'
+import { Overlay } from "./Overlay";
 
 function EventModal ({functions, values}) {
     const {handleAdd} = functions
@@ -29,6 +30,8 @@ function EventModal ({functions, values}) {
         </div>
 
         {!isclosed &&
+        <>
+        <Overlay/>
             <div className="sub-modal-container">
         
             
@@ -42,6 +45,7 @@ function EventModal ({functions, values}) {
             className="generic-button"
             onClick={() => saveChanges()}>Guardar</div>
             </div>
+            </>
         }
 
         </div>);

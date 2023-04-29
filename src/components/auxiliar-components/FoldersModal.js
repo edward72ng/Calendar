@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import './NotificationsModal.css'
 import { ItemsContext } from "../../providers/ItemsContext";
+import { Overlay } from "./Overlay";
 
 function FoldersModal ({functions, values}) {
     const {myProjects} = useContext(ItemsContext)
@@ -24,7 +25,8 @@ function FoldersModal ({functions, values}) {
         <span>Folders</span>
         </div>
 
-        {!isclosed &&
+        {!isclosed && <>
+            <Overlay/>
             <div className="sub-modal-container">
 
             {
@@ -39,13 +41,11 @@ function FoldersModal ({functions, values}) {
             <div
             className="generic-button"
             onClick={() => setIsClosed(!isclosed)}>Cancelar</div>
-
             </div>
-        }
-            
-        
+            </>}
 
-        </div>);
+        </div>
+        );
 }
 
 export {FoldersModal}

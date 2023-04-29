@@ -1,5 +1,6 @@
 import React from "react";
 import './header.css';
+import { Search } from "./Search";
 
 function Header ({children}) {
 
@@ -8,7 +9,7 @@ function Header ({children}) {
             
             <span>Task Management</span>
             <div>
-            <span className="material-symbols-outlined">search</span>
+            <Search/>
             <span className="material-symbols-outlined">notifications</span>
             </div>
         </header>

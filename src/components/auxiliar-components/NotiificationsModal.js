@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './NotificationsModal.css'
+import { Overlay } from "./Overlay";
 
 function NotificationsModal ({functions, values}) {
     const {handleAdd} = functions
@@ -42,7 +43,8 @@ function NotificationsModal ({functions, values}) {
         <span>Alarmas</span>
         </div>
 
-        {isOpen ?
+        {isOpen ?<>
+            <Overlay/>
             <div className="sub-modal-container">
         
             {alarms.map((elem, i) => {
@@ -71,6 +73,7 @@ function NotificationsModal ({functions, values}) {
             className="generic-button"
             onClick={() => saveChanges()}>Guardar</div>
             </div>
+            </>
             : 
             <></>
         }

@@ -203,4 +203,14 @@ router.post('/find-one', async (req, res) => {
     res.json(task)
 })
 
+router.get('/get-all/:userid', async (req, res) => {
+    const {userid} = req.params
+    const tasks = await models.todo.findAll({
+        where: {
+            userid: userid
+        }
+    });
+    
+    res.json(tasks)
+})
 module.exports = router
