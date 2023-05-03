@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import './SubItem.css'
 import { ItemsContext } from "../../providers/ItemsContext";
 import { Loading } from "../UI-components/Loading";
+import { FunctionSubTaskContext } from "../../providers/FunctionSubItem.provider";
 
 function SubItem({values}) {
   const {updateInbox, updateAll} = useContext(ItemsContext)
+  const {editSubTask, deleteSubTask, generateSubTasks, createSubTask} = useContext(FunctionSubTaskContext)
   const {subTasks, taskid} = values
     console.log(values)
     const inputDefault = {
@@ -18,43 +20,36 @@ function SubItem({values}) {
     const [input, setInput] = useState(inputDefault)
     const [ loadingGenerate, setLoadingGenerate] = useState(false) 
 
-    const generateSubTasks = async () =>{
+    const handleGenerate = async () =>{
       setLoadingGenerate(true)
-      const res = await fetch('api/v1/subtasks/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({taskid: taskid})
+      generateSubTasks(taskid, (data) => {
+        setSubTask(data)
+        setLoadingGenerate(false)
       })
-      const data = await res.json()
-      console.log('GENERATE', data)
-      setSubTask(data)
-      setLoadingGenerate(false)
       updateInbox()
       updateAll()
     }
 
-    const createSubTask = async () => {
+    const handleCreate = async () => {
       console.log(input)
-      const res = await fetch('api/v1/subtasks/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(input)
-      })
-      const data = await res.json()
-      console.log('CREADO', data)
       setSubTask([...subTask, input])
+      createSubTask(input, taskid, (data) => {
+
+      })
     }
+
+    const handleDelete = (id) =>{
+      //dispatch que lo elimine del estado
+      deleteSubTask(id, () => {
+        
+      })
+    }
+
 console.log(subTask.length)
     return <div className="sub-item-container">
       {(subTask.length == 0) &&
         <div className="generate-button"
-        onClick={generateSubTasks}>
+        onClick={handleGenerate}>
           {
             loadingGenerate ?
             <Loading/>
@@ -79,6 +74,13 @@ console.log(subTask.length)
           <p className="content">{elem.content}</p>
           <p className="details">{elem.details}</p>
           </div>
+
+          <div className="icon-container">
+          <span 
+          className="material-symbols-outlined"
+          onClick={()=>{handleDelete(elem.id)}}>
+          delete</span>
+          </div>
       </div>)
         })
       }
@@ -94,7 +96,7 @@ console.log(subTask.length)
           onChange={(e) => setInput({...input, details: e.target.value})}/>
           <div className="cancel-sub-item">
           <span className="material-symbols-outlined"
-          onClick={createSubTask}>done</span>
+          onClick={handleCreate}>done</span>
           <span className="material-symbols-outlined"
           onClick={() => setAdd(false)}
           >close</span>

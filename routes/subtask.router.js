@@ -15,6 +15,25 @@ router.post('/create', async (req,res) =>{
     
 })
 
+router.delete('/delete/:id', async (req,res) =>{
+    const {id} = req.params
+    
+        const subtask = await models.subtask.findByPk(id)
+        const data = await subtask.destroy()
+        res.json(data)
+    
+})
+
+router.put('/update/:id', async (req,res) =>{
+    const {id} = req.params
+    const {content, details} = req.body
+    console.log(req.body)
+        const subtask = await models.subtask.findByPk(id)
+    const data = await subtask.update(req.body)
+        res.json(data)
+    
+})
+
 router.post('/generate', async (req,res) =>{
     const {taskid} = req.body
     const KEY = config.openaiKey

@@ -23,6 +23,7 @@ function ItemsProvider ({children}) {
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
     const [taks, dispatchTaks, updateTaks, loadingTaks] = useFetchItems(tasksUrl)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     console.log('INBOX', inbox)
     
@@ -84,7 +85,8 @@ function ItemsProvider ({children}) {
                 colors, dispatchColors, updateColors,
                 priorities, dispatchPriorities, updatePriorities,
                 taks, dispatchTaks, updateTaks,
-                section, task
+                section, task,
+                errorMessage, setErrorMessage
             }
             }>
             {children}

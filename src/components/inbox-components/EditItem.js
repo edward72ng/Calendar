@@ -13,12 +13,15 @@ import { EditGalery } from "./EditGalery";
 import { NotificationsModal } from "../auxiliar-components/NotiificationsModal";
 import { EventModal } from "../auxiliar-components/EventModal";
 import { FoldersModal } from "../auxiliar-components/FoldersModal";
+import { Modal } from "../../app/modal";
+import { ErrorMessage } from "../auxiliar-components/ErrorMessage";
 
 function EditItem ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, notifications, myTags, myImages} = values
     const {refreshTasks, dispatchTasks, setEdit} = functions
 
-    const {updateWithout} = useContext(ItemsContext)
+    const [error, setError] = useState(false)
+    const {updateWithout, setErrorMessage} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
     const {filter} = useContext(DataContext)
 
@@ -73,22 +76,33 @@ function EditItem ({values, functions}){
       }else{
         dispatchTasks({type: 'DELETE', payload: {id: id}})
       }
+
       setEdit(false)
-      editTask({...values,...editValues, ...options}, () => {
-        refreshTasks();
-        updateWithout();
-      })
+      
+        editTask({...values,...editValues, ...options}, (data) => {
+          
+          refreshTasks();
+          updateWithout();
+
+          
+        })
+      
+      
     }
 
     const deleteItem = () => {
       
       dispatchTasks({type: 'DELETE', payload: {id: id}})
+      
+        deleteTask(id, (data) => {
+          refreshTasks();
+          updateWithout();
 
-      deleteTask(id, () => {
-        refreshTasks();
-        updateWithout();
-      })
-      setEdit(false)
+          
+        })
+        setEdit(false)
+      
+     
     }
     
     const handleAddTag = (newTag) => {
@@ -114,6 +128,7 @@ function EditItem ({values, functions}){
    
     return (
       <div className="visual-container" data-id={id}>
+        
         
         <div className="close-options">
           <span className="material-symbols-outlined"

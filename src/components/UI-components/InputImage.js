@@ -1,58 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "../../app/modal";
 import './InputImage.css'
-
-const CLOUDINARY_UPLOAD_PRESET = 'sclhqfzp'
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/ds2egvrc7/image/upload'
-
+import { FunctionImagesContext } from "../../providers/FuctionImages.provider";
 
 function InputImage({values, functions}) {
     const {todoid} = values
     const [isClosed, setIsClosed] = useState(true)
+    const { createImage } = useContext(FunctionImagesContext)
+    const [ succesful, setSuccesful] = useState(false)
 
-    useEffect(() => {
-        const sendImg = document.getElementById('send-img')
-        const previewImg = document.getElementById('preview-img')
-        if(sendImg && previewImg){
-            sendImg.addEventListener('change', (e) => {
-                console.log(e)
-    
-                const file = e.target.files[0];
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-    //send image
-                fetch(CLOUDINARY_URL,{
-                    method: 'POST',
-                    body :formData,
-                 
-                })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data)
-                    previewImg.src = data.secure_url
-
-                    fetch('api/v1/images/create',{
-                        method: 'POST',
-                        headers:  {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                          },
-                        body: JSON.stringify({
-                            imageurl: data.secure_url,
-                            todoid: todoid
-                        })
-                    })
-                    .then(res => res.json())
-                    .then((data) => {
-                        
-                    })
-                })
-                .catch((err) => console.log('ERROR IN FETCH'))
-            })
-        }
-
-    }, [isClosed])
+    const handleImage = (e) => {
+        const file = e.target.files[0] 
+        createImage({file, todoid}, () => {
+            setSuccesful(true)
+        })
+    }
 
     if(isClosed){
         return (<div 
@@ -63,13 +25,24 @@ function InputImage({values, functions}) {
     }
 
     return (<Modal>
+        {succesful ?
+        <div className="succes-save">
+        <p>Imagen guardada exitosamente</p>
+        <button 
+            onClick={() => setIsClosed(true)}>Cerrar</button>
+        </div>
+        :
         <div 
         className="select-image-container">
-            <img src="" id="preview-img"></img>
-            <input type="file" id="send-img"></input>
+            <input 
+            type="file" 
+            id="send-img"
+            onChange={(e) => handleImage(e)}></input>
             <button 
             onClick={() => setIsClosed(true)}>Cancelar</button>
         </div>
+        }
+        
     </Modal>);
 }
 

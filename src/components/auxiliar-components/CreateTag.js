@@ -18,10 +18,14 @@ function CreateTag({functions}) {
 
 
     const sendTag = () => {
+        try {
+            createTags({tag: value, colorid: selectedColor.id}, (data) => {
+                //deberia añadir el callback aqui
+                handleAddTag(data)})
+        } catch (error) {
+            
+        }
         
-        createTags({tag: value}, (data) => {
-            //deberia añadir el callback aqui
-            handleAddTag(data)})
     }
 
     const selectColor = (id, color) => {

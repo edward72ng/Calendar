@@ -2,10 +2,12 @@ import React, { useContext } from "react"
 import {useAuth} from './auth'
 import {SocketContext} from '../providers/socketContext'
 import { DataContext } from "./DataContext"
+import { ItemsContext } from "./ItemsContext"
 
 const FunctionSectionsContext = React.createContext()
 
 function FunctionSectionsProvider({children}){
+    const { setErrorMessage } = useContext(ItemsContext)
     const {socket} = useContext(SocketContext)
     const auth = useAuth()
     const {taskValue, setTaskValue, setDefault} = useContext(DataContext)
@@ -16,13 +18,17 @@ function FunctionSectionsProvider({children}){
     }
 
 const moveToSection = async (sectionId, callback) => {
-    const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
+    try {
+        const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
                     method: 'POST',
                     headers: headers,
                     body:JSON.stringify({
                         todoId: taskValue.id
                       }),
     })
+    if(res.status > 299){
+        throw new Error('Ha ocurrido un error inesperado')
+    }
     if(res){
         socket.emit('moveToSection',{origen: taskValue.section, destino: sectionId, user: socket.id,})
         console.log(`se movio ${taskValue.id} a ${sectionId}`,res)
@@ -38,6 +44,11 @@ const moveToSection = async (sectionId, callback) => {
         setTimeout(()=>callback(), 1000)
         
     }
+    } catch (error) {
+        setErrorMessage('Error al mover a seccion')
+        console.log(error)
+    }
+    
 }
 
 const deleteSection = async (id, callback) => {
@@ -50,7 +61,8 @@ const deleteSection = async (id, callback) => {
             throw new Error('Algo salio mal')
         }
     } catch (error) {
-        callback()
+        setErrorMessage('Error al borrar seccion')
+        console.log(error)
     }
 				
 				
@@ -58,27 +70,45 @@ const deleteSection = async (id, callback) => {
 }
 
 const editSection = async (sectionId, body, callback) => {
-				const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
+    try {
+        const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
 								method: 'PUT',
 								headers: headers,
 								body: JSON.stringify(body),
 				})
+                if(res.status > 299){
+                    throw new Error('Ha ocurrido un error inesperado')
+                }
 				if(res){
                     console.log(res)
                     callback()
                 }
+    } catch (error) {
+        setErrorMessage('Error al editar aseccion')
+        console.log(error)
+    }
+				
 }
 
 const createSection = async (body, callback) => {
-				const res = await fetch('http://localhost:3000/api/v1/sections',{
+    try {
+        const res = await fetch('http://localhost:3000/api/v1/sections',{
 								method: 'POST',
 								headers: headers,
 								body:  JSON.stringify(body),
 				})
+                if(res.status > 299){
+                    throw new Error('Ha ocurrido un error inesperado')
+                }
 				if(res){
                     console.log(res)
                     callback()
                 }
+    } catch (error) {
+        setErrorMessage('Error al Crear seccion')
+        console.log(error)
+    }
+				
 }
 
 

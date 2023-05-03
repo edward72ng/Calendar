@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from "react"
 import {useAuth} from './auth'
 import { DataContext } from "./DataContext"
+import { ItemsContext } from "./ItemsContext"
 
 const FunctionTasksContext = React.createContext()
 
 function FunctionTasksProvider({children}){
     const auth = useAuth()
     const { taskValue, setDefault } = useContext(DataContext)
+    const { setErrorMessage } = useContext(ItemsContext)
     const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -26,9 +28,9 @@ const deleteTask = async (id, callback) => {
             throw new Error('Ha ocurrido un error inesperado')
         }
         callback()
-    } catch (error) {
-        alert('error al borrar')
-        callback()
+    } catch (err) {
+        setErrorMessage('error al borrar')
+        callback({error: true})
     }      
 }
 
@@ -39,14 +41,18 @@ const editTask = async (body,callback) => {
             method: 'PUT',
             body: JSON.stringify(send),
             headers: headers})
+
+        console.log(res.status)
+        
         if(res.status > 299){
+            console.log('PRIMERO AQUI')
             throw new Error('Ha ocurrido un error inesperado')
-        }else if (res.status == 200){
-            callback()
         }
-    }catch(err){
-        alert('error al editar')
         callback()
+    }catch(err){
+        console.log('AQUIII', err)
+        setErrorMessage('error al editar')
+        
     }
     
 }
@@ -65,8 +71,8 @@ const createTask = async (body, callback) => {
             callback(data)
         }
     } catch (error) {
-        alert('Error al crear')
-        callback()
+        setErrorMessage('Error al crear')
+        callback({error: true})
     }
 	
 }

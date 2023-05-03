@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from "react"
 import {useAuth} from './auth'
 import { DataContext } from "./DataContext"
+import { ItemsContext } from "./ItemsContext"
 
 const FunctionTagsContext = React.createContext()
 
+
 function FunctionTagsProvider({children}){
+    const { setErrorMessage } = useContext(ItemsContext)
     const auth = useAuth()
 
     const headers = {
@@ -24,8 +27,8 @@ const deleteTag = async (id, callback) => {
         }
         callback()
     } catch (error) {
-        alert('error al borrar')
-        callback()
+        setErrorMessage('Error al borrar Etiqueta ')
+        console.log(error)
     }      
 }
 
@@ -36,35 +39,38 @@ const editTag = async (body,callback) => {
             method: 'PUT',
             body: JSON.stringify(send),
             headers: headers})
+            
         if(res.status > 299){
             throw new Error('Ha ocurrido un error inesperado')
         }else if (res.status == 200){
             callback()
         }
     }catch(err){
-        alert('error al editar')
-        callback()
+        setErrorMessage('Error al editar Etiqueta ')
+        console.log(err)
     }
     
 }
 
 const createTags = async (body, callback) => {
+    console.log(body)
     try {
         const res = await fetch('/api/v1/tags/',{
             method: 'POST',
             headers: headers,//here user
-            body:  JSON.stringify(Object.assign(body)),
+            body:  JSON.stringify(body),
         })
         const data = await res.json()
-
+        
         if (res.status > 299){
             throw new Error('Ha ocurrido un error inesperado')
         }else{
             callback(data)
         }
     } catch (error) {
-        alert('Error al crear')
-        callback()
+        setErrorMessage('Error al Crear Etiqueta ')
+        console.log(error)
+        //callback() 
     }
 }
 

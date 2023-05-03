@@ -10,24 +10,35 @@ import { FunctionSectionsProvider } from '../providers/FuntionSeccions.provider'
 import { Lateral } from '../components/UI-components/Lateral';
 import { Header } from '../components/UI-components/Header';
 import { FunctionTagsProvider } from '../providers/FunctionTags';
+import { ErrorMessage } from '../components/auxiliar-components/ErrorMessage';
+import { FunctionImagesProvider } from '../providers/FuctionImages.provider';
+import { FunctionSubTaskProvider } from '../providers/FunctionSubItem.provider';
 
 function Aplication () {
     return(
         <DataProvider>
-            
+        
+        <ErrorMessage>
         <FunctionFoldersProvider>   
         <FunctionTasksProvider>
         <FunctionSectionsProvider>  
-        <FunctionTagsProvider>      
+        <FunctionTagsProvider>
+        <FunctionImagesProvider>    
+        <FunctionSubTaskProvider>  
+        <Lateral><Header>
             <Routes>
-                <Route path='/' element={<Lateral><Header><Inbox></Inbox></Header></Lateral>}></Route>
-                <Route path='/home' element={<Lateral><Header><Dashboard></Dashboard></Header></Lateral>}></Route>
-                <Route path='/my-projects' element={<Lateral><Header><MyProjects></MyProjects></Header></Lateral>}></Route>
+                <Route path='/' element={<Inbox></Inbox>}></Route>
+                <Route path='/home' element={<Dashboard></Dashboard>}></Route>
+                <Route path='/my-projects' element={<MyProjects></MyProjects>}></Route>
             </Routes>
+        </Header></Lateral>
+        </FunctionSubTaskProvider>
+        </FunctionImagesProvider>
         </FunctionTagsProvider>
         </FunctionSectionsProvider>
         </FunctionTasksProvider>
         </FunctionFoldersProvider>
+        </ErrorMessage>
 
         </DataProvider>
     );

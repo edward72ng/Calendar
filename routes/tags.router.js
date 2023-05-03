@@ -24,7 +24,7 @@ router.get('/my-tags', async (req,res) =>{
 })
 
 router.post('/', async (req, res) => {
-    const {tag} = req.body
+    const {tag, colorid} = req.body
 
     if (req.headers.authorization){
         var token = req.headers.authorization;
@@ -33,7 +33,8 @@ router.post('/', async (req, res) => {
 
         const data = await models.tags.create({
             tag: tag,
-            userid: pay.sub
+            userid: pay.sub,
+            colorid: colorid
         })
         res.json(data)
     }

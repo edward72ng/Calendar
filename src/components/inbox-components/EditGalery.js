@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { FunctionImagesContext } from "../../providers/FuctionImages.provider";
 
 function EditGalery ({myImages}) {  
+  const { deleteImage} = useContext(FunctionImagesContext)
 
   const handleDeleteImage = async (id) => {
-    const res = await fetch(`api/v1/images/${id}`,{
-      method: 'DELETE'
-    })
-    const data = res.json()
-   
     
+    //insertar dispatch que edite la existencia de imagem en el estado
+    deleteImage(id, () => {
+      //ejecutar luego de que la accion sea correta
+    })
   }
 
     return <div className="galery-container">
