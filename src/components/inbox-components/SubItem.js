@@ -3,8 +3,10 @@ import './SubItem.css'
 import { ItemsContext } from "../../providers/ItemsContext";
 import { Loading } from "../UI-components/Loading";
 import { FunctionSubTaskContext } from "../../providers/FunctionSubItem.provider";
+import { OneSubItem } from "./OneSubItem";
 
-function SubItem({values}) {
+function SubItem({values, functions}) {
+  const {dispatchTasks} = functions
   const {updateInbox, updateAll} = useContext(ItemsContext)
   const {editSubTask, deleteSubTask, generateSubTasks, createSubTask} = useContext(FunctionSubTaskContext)
   const {subTasks, taskid} = values
@@ -23,7 +25,7 @@ function SubItem({values}) {
     const handleGenerate = async () =>{
       setLoadingGenerate(true)
       generateSubTasks(taskid, (data) => {
-        setSubTask(data)
+        dispatchTasks({type: 'UPDATE', payload: {id: taskid, body: {mySubtasks: [...subTasks, ...data]}}})
         setLoadingGenerate(false)
       })
       updateInbox()
@@ -32,18 +34,13 @@ function SubItem({values}) {
 
     const handleCreate = async () => {
       console.log(input)
-      setSubTask([...subTask, input])
+      dispatchTasks({type: 'UPDATE', payload: {id: taskid, body: {mySubtasks: [...subTasks, input]}}})
+      
       createSubTask(input, taskid, (data) => {
 
       })
     }
 
-    const handleDelete = (id) =>{
-      //dispatch que lo elimine del estado
-      deleteSubTask(id, () => {
-        
-      })
-    }
 
 console.log(subTask.length)
     return <div className="sub-item-container">
@@ -59,30 +56,13 @@ console.log(subTask.length)
         </div>
       }
       {
-        subTask.map((elem, i) => {
-          return (
-          <div key={i} className="visual-item-container appear">
-          {elem.completed ?
-            <i className="material-icons"
-            >check_circle</i>
-          :
-            <i className="material-icons"
-            >radio_button_unchecked</i>
-          }
-
-          <div className="details-container">
-          <p className="content">{elem.content}</p>
-          <p className="details">{elem.details}</p>
-          </div>
-
-          <div className="icon-container">
-          <span 
-          className="material-symbols-outlined"
-          onClick={()=>{handleDelete(elem.id)}}>
-          delete</span>
-          </div>
-      </div>)
-        })
+        subTasks.map((elem, i) => {
+          return (<OneSubItem 
+            key={i} 
+            values={{...elem, mySubtasks: subTasks}}
+            functions={{dispatchTasks}}
+            />)
+          })
       }
       {add ?
         <div className="create-sub-item">
@@ -114,3 +94,11 @@ console.log(subTask.length)
 }
 
 export {SubItem}
+/**
+ * <input className="edit-value"
+                value={editValues.content}
+                onChange={(e)=>setEditValues({...editValues, content: e.target.value})}></input>
+                <textarea className="edit-value" 
+                value={editValues.details}
+                onChange={(e)=>setEditValues({...editValues, details: e.target.value})}></textarea>
+ */

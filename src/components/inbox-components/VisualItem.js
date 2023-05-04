@@ -7,7 +7,7 @@ import './Tags.css'
 
 function VisualItem ({values, functions}){
     const {id, content, details, evento, sectionid, myTags, myPriority, priorityid, mySubtasks, myImages} = values
-    const {setEdit} = functions
+    const {setEdit, dispatchTasks} = functions
 
     
     const [check, setCheck] = useState(false)
@@ -69,7 +69,7 @@ function VisualItem ({values, functions}){
                 }
                 </div> 
             </div>
-        { subTasks && <SubItem values={{subTasks: mySubtasks, taskid: id}}/>}
+        { subTasks && <SubItem values={{subTasks: mySubtasks, taskid: id}} functions={{dispatchTasks}}/>}
         { expand && <GaleryFromTask myImages={myImages}></GaleryFromTask> }
       </div>
     )

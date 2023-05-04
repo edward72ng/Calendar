@@ -54,7 +54,8 @@ function EditItemWithSection ({values, functions}){
     const sendEdit = () => {
       const newTask = {
         ...editValues,
-        ...options
+        ...options,
+        evento: options.event ? {event: options.event} : null
       }
       const newTasksItems = tasksInSections.map((elem) => {
         if(elem.folderid == filter){
@@ -189,8 +190,8 @@ function EditItemWithSection ({values, functions}){
             <EditTag myTags={options.myTags} handleDeleteTag={handleDeleteTag}/>
             <SelectTag functions={{handleAddTag}}/>
             
-            <EditGalery myImages={options.myImages}/>
-            <InputImage values={{todoid: id}} functions={{handleAddImage}}/> 
+            <EditGalery values={{id, myImages}}  functions={{dispatchTasks: dispatchSections}}/>
+            <InputImage values={{todoid: id, myImages}} functions={{handleAddImage, dispatchTasks: dispatchSections}}/> 
             
         
         <span className="material-symbols-outlined"

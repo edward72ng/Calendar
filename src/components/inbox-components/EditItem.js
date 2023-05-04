@@ -67,7 +67,7 @@ function EditItem ({values, functions}){
     const sendEdit = () => {
       const newTask = {
         ...editValues,
-        evento: {event: options.event},
+        evento: options.event ? {event: options.event} : null,
         notifications: options.notifications,
         myTags: options.myTags
       }
@@ -178,8 +178,8 @@ function EditItem ({values, functions}){
         <FoldersModal functions={{handleAdd: handleFolderChange}}/>
         </div>
         
-        <EditGalery myImages={options.myImages}/>
-        <InputImage values={{todoid: id}} functions={{handleAddImage}}/>
+        <EditGalery values={{id, myImages}} functions={{dispatchTasks}}/>
+        <InputImage values={{todoid: id, myImages}} functions={{handleAddImage, dispatchTasks}}/>
         <span className="material-symbols-outlined"
             onClick={()=>{deleteItem()}}>
             delete</span>

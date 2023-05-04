@@ -76,7 +76,15 @@ function FormCreate ({functions, values}) {
 
     const setTask = () => {
       
-        dispatchTasks({type: 'CREATE', payload:{ body: {content, details, evento: {event:state.event}, myTags: state.myTags, myPriority: state.myPriority}}})
+        dispatchTasks(
+          {type: 'CREATE', 
+          payload:{
+            body: {
+              content, 
+              details, 
+              evento: state.event ? {event: state.event} : null, 
+              myTags: state.myTags, 
+              myPriority: state.myPriority}}})
         setContent('')
         setDetails('')
         setState(initialstate)

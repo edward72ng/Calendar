@@ -13,6 +13,9 @@ function Inbox () {
     const [form, setForm] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
 
+    console.log('INBOX', inbox)
+    
+
     const closeForm = () => {
         setIsClosing(true)
         setTimeout(()=>{

@@ -4,15 +4,19 @@ import './InputImage.css'
 import { FunctionImagesContext } from "../../providers/FuctionImages.provider";
 
 function InputImage({values, functions}) {
-    const {todoid} = values
+    const {todoid, myImages} = values
     const [isClosed, setIsClosed] = useState(true)
     const { createImage } = useContext(FunctionImagesContext)
     const [ succesful, setSuccesful] = useState(false)
+    const {dispatchTasks} = functions
 
     const handleImage = (e) => {
         const file = e.target.files[0] 
-        createImage({file, todoid}, () => {
+
+        createImage({file, todoid}, (data) => {
             setSuccesful(true)
+            console.log(data)
+            dispatchTasks({type: 'UPDATE', payload: {id: todoid, body: {myImages: [...myImages, data]}}})
         })
     }
 

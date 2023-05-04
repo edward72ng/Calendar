@@ -25,8 +25,7 @@ function ItemsProvider ({children}) {
     const [taks, dispatchTaks, updateTaks, loadingTaks] = useFetchItems(tasksUrl)
     const [errorMessage, setErrorMessage] = useState(null)
 
-    console.log('INBOX', inbox)
-    
+  
     const section = (id)=> {
         if(!id){
             return []
@@ -74,7 +73,8 @@ function ItemsProvider ({children}) {
         !loadingWithout && 
         !loadingTags &&
         !loadingColors &&
-        !loadingPriorities){
+        !loadingPriorities &&
+        !loadingTaks){
 
         return <ItemsContext.Provider value={
             {inbox, dispatchInbox, updateInbox,

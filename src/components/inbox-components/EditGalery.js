@@ -1,13 +1,19 @@
 import React, { useContext } from "react";
 import { FunctionImagesContext } from "../../providers/FuctionImages.provider";
 
-function EditGalery ({myImages}) {  
+function EditGalery ({values, functions}) {  
   const { deleteImage} = useContext(FunctionImagesContext)
+  const {id, myImages} = values
+  const {dispatchTasks} = functions
 
-  const handleDeleteImage = async (id) => {
-    
+  const handleDeleteImage = async (imageId) => {
+    const newMyImages = myImages.filter((elem) => {
+      return elem.id !== imageId
+    })
+
+    dispatchTasks({type: 'UPDATE', payload: {id: id, body: {myImages: newMyImages}}})
     //insertar dispatch que edite la existencia de imagem en el estado
-    deleteImage(id, () => {
+    deleteImage(imageId, () => {
       //ejecutar luego de que la accion sea correta
     })
   }

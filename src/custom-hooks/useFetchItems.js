@@ -11,12 +11,15 @@ function reducer (state, action) {
         });
 
     case 'UPDATE':
-        return state.map((elem)=>{
+      console.log('UPDATE', action.payload.body)
+        const value = state.map((elem)=>{
             if (elem.id == action.payload.id){
                 return {...elem, ...action.payload.body};
             };
             return elem;
         });
+        console.log('EDICION' ,value)
+        return value;
 
     case 'CREATE':
       console.log('CREATE', action.payload.body)
@@ -47,7 +50,7 @@ function useFetchItems(url) {
             headers: {'Authorization': 'Bearer ' + auth.token,}
           })
         const resp = await res.json()
-        console.log('executa Update')
+        
         dispatch({type:'SET', payload: {body: resp}})
         setLoading(false)
       }catch(error){

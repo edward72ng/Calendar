@@ -41,8 +41,14 @@ const createImage = async ({file, todoid}, callback) => {
                     todoid: todoid
                 })
             })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log('DATA',data)
+                callback(data)
+            })
+            
         })
-        callback()
+        
                 
     } catch (error) {
         setErrorMessage('Error al Guardar La imagen')

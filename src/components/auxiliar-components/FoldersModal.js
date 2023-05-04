@@ -6,9 +6,8 @@ import { Overlay } from "./Overlay";
 function FoldersModal ({functions, values}) {
     const {myProjects} = useContext(ItemsContext)
     const {handleAdd} = functions
-    //const {folderid} = values
     const [isclosed, setIsClosed] = useState(true)
-    console.log(myProjects)
+    
 
     const saveChanges = (id) => {
         setIsClosed(!isclosed)
