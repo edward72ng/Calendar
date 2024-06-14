@@ -15,6 +15,7 @@ import { EventModal } from "../auxiliar-components/EventModal";
 import { FoldersModal } from "../auxiliar-components/FoldersModal";
 import { Modal } from "../../app/modal";
 import { ErrorMessage } from "../auxiliar-components/ErrorMessage";
+import { TimeBlockModal } from "../auxiliar-components/TimeBlockModal";
 
 function EditItem ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, notifications, myTags, myImages} = values
@@ -37,13 +38,22 @@ function EditItem ({values, functions}){
       time: "",
       notifications: notifications,
       myTags: myTags,
-      myImages: myImages
+      myImages: myImages,
+      timeblockstart: null,
+      timeblockend: null
   } 
 
     const [recomended, setRecomended] = useState(false)
     const [options, setOptions] = useState(initialOptions)   
     const [editValues, setEditValues] = useState(initialValues)
     
+    const handleTimeBlockChange = (timeBlock) =>{
+      setOptions((prevState) => ({
+        ...prevState,
+        ...timeBlock
+      }))
+    }
+
     const handleFolderChange = (folderid) => {
       setOptions((prevState) => ({
         ...prevState,
@@ -174,7 +184,7 @@ function EditItem ({values, functions}){
         <div className="added-to-item">
         <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
         <EventModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
-        <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
+        <TimeBlockModal functions={{handleAdd: handleTimeBlockChange}}/>
         <FoldersModal functions={{handleAdd: handleFolderChange}}/>
         </div>
         

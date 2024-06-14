@@ -29,7 +29,26 @@ router.get('/',
     }
 )
 
+router.get('/time-block/:date', async (req,res,next)=>{
+    const {date} = req.params;
+    if (req.headers.authorization){
+        var token = req.headers.authorization;
+        var newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
 
+        var data = await models.todo.findAll({
+            where: {
+                userid: pay.sub,
+                timeblockdate: date,
+            }
+        })
+        res.json(data)
+    }
+    else{
+        res.send('unauthorized')
+    }
+    }
+)
 
 router.post('/',
 validate(createTodo, 'body'),

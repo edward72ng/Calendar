@@ -35,9 +35,7 @@ function CreateTask ({functions, dataValues}) {
         const copyTasks = tasksInSections
         const newTask = {
             ...values,
-            evento: {
-                event: options.event
-            },
+            evento: options.event ? {event: options.event} : null,
             notifications: options.notifications
         }
 
@@ -58,8 +56,14 @@ function CreateTask ({functions, dataValues}) {
             const newOrder = orders.split("|") 
             newOrder.push(data.id)
             const stringOrder = newOrder.join("|")
+
+            copyTasks.pop()
+            copyTasks.push(data)
+            console.log('RECIPERANDO ID ANTES DE EDTAR SECCION')
+            dispatchTasks({type: 'UPDATE', payload:{id:id ,body: {tasksInSections: copyTasks, orders: stringOrder}}})
+
             editSection(id, {orders: stringOrder}, () => {
-                updateAll()
+                
             })
         })
         setValues(initialValues)

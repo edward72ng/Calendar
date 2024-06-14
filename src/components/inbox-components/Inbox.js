@@ -9,7 +9,7 @@ import { reorder } from "../../utils/dragAndDrop";
 
 function Inbox () {
     const {inbox, dispatchInbox: dispatchTasks, updateInbox: refreshTasks, myProjects, updateAll, updateWithout} = useContext(ItemsContext)
-    const {editTask} = useContext(FunctionTasksContext)
+    const { editTask } = useContext(FunctionTasksContext)
     const [form, setForm] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
 

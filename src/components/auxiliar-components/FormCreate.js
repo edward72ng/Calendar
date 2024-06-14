@@ -62,7 +62,7 @@ function FormCreate ({functions, values}) {
       }))
     }
     const handleNotifications = (notifications) => {
-      setState(() => ({
+      setState((prevState) => ({
         ...prevState,
         notifications: notifications
       }))
@@ -76,10 +76,12 @@ function FormCreate ({functions, values}) {
 
     const setTask = () => {
       
+      //crear para el estado interno
         dispatchTasks(
           {type: 'CREATE', 
           payload:{
             body: {
+              id: 'provitionalid',
               content, 
               details, 
               evento: state.event ? {event: state.event} : null, 
@@ -89,6 +91,7 @@ function FormCreate ({functions, values}) {
         setDetails('')
         setState(initialstate)
           
+        //crear para la base de datos
         createTask({
             content, 
             details, 
@@ -97,12 +100,8 @@ function FormCreate ({functions, values}) {
             myTags : state.myTags, 
             priorityid: state.myPriority?.id
           }, (data) => {
-            if (data.error){
-              throw new Error('error al crear')
-            }
-            setTimeout(() => {
-              refreshTasks()
-            }, 2000)
+            console.log('RECUPERANDO ID')
+            dispatchTasks({type: 'UPDATE', payload: {id: 'provitionalid', body: data}})
           })
         setRecomended(false)
 

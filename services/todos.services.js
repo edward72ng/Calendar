@@ -236,7 +236,7 @@ class Todos {
                     event: objeto.event
                 }
             })
-            obj = {content: objeto.content, deatails:objeto.deatails, eventid:evento.id}
+            obj = {...objeto, eventid:evento.id}
         }
         var yourTodos = await models.todo.update(obj,{
             where:{
@@ -299,6 +299,9 @@ class Todos {
                                     include: ['keys']
                                 }]
                             })
+                            console.log("CREANDO ALARMA")
+                            console.log(userData.subscriptions)
+
                             await Promise.all(
                                 userData.subscriptions.map(async (val)=>{
                                     await createTaskNotification(elem.date, elem.time, {endpoint: val ,payload: payload})

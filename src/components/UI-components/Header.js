@@ -1,6 +1,7 @@
 import React from "react";
 import './header.css';
 import { Search } from "./Search";
+import { Notifications } from "../header-components/Notifications";
 
 function Header ({children}) {
 
@@ -10,7 +11,7 @@ function Header ({children}) {
             <span>Task Management</span>
             <div>
             <Search/>
-            <span className="material-symbols-outlined">notifications</span>
+            <Notifications/>
             </div>
         </header>
         <div className="view-container">
@@ -23,3 +24,4 @@ function Header ({children}) {
 export {Header}
 
 //<div className="after-head-container"></div>
+//<span className="material-symbols-outlined">notifications</span>

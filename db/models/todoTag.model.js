@@ -20,7 +20,7 @@ const schemaTodoTagsSeq = {
       }
   },
   todoid: {
-    type:DataTypes.INTEGER.UNSIGNED,
+    type:DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: TODO_TABLE,

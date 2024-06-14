@@ -34,6 +34,8 @@ app.use(midd.logErrors)
 app.use(midd.boomErrorHandler)
 app.use(midd.errorHandler)
 
+
+
 const io = SocketIO(server)
 
 io.on('connection',(socket)=>{

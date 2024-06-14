@@ -70,4 +70,13 @@
     background-color: rgba(0,0,0,0.3); /* fondo oscuro con transparencia */
     z-index: 5;
   }
-  
+.time-block-items{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+.time-block-items > span{
+    align-items: center;
+    padding: 4px;
+}

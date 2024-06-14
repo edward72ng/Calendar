@@ -11,6 +11,7 @@ const myAll = '/api/v1/folders/all'
 const withoutSections = '/api/v1/folders/without-sections'
 const prioritiesUrl = '/api/v1/priorities/'
 const tasksUrl = '/api/v1/inbox/get-all/2'
+const timeBlockDate = '/api/v1/inbox/time-block/2023-05-06'
 const ItemsContext = createContext()
 
 
@@ -23,6 +24,7 @@ function ItemsProvider ({children}) {
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
     const [taks, dispatchTaks, updateTaks, loadingTaks] = useFetchItems(tasksUrl)
+    const [timeBlock, dispatchTimeBlock, updateTimeBlock, loadingTimeBlock] = useFetchItems(timeBlockDate)
     const [errorMessage, setErrorMessage] = useState(null)
 
   
@@ -74,7 +76,8 @@ function ItemsProvider ({children}) {
         !loadingTags &&
         !loadingColors &&
         !loadingPriorities &&
-        !loadingTaks){
+        !loadingTaks &&
+        !loadingTimeBlock){
 
         return <ItemsContext.Provider value={
             {inbox, dispatchInbox, updateInbox,
@@ -85,6 +88,7 @@ function ItemsProvider ({children}) {
                 colors, dispatchColors, updateColors,
                 priorities, dispatchPriorities, updatePriorities,
                 taks, dispatchTaks, updateTaks,
+                timeBlock, dispatchTimeBlock, updateTimeBlock,
                 section, task,
                 errorMessage, setErrorMessage
             }

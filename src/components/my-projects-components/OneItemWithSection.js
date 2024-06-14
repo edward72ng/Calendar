@@ -7,14 +7,32 @@ function OneItemWithSection ({values, functions}){
     const {refreshSections, dispatchSections} = functions
     const [edit, setEdit] = useState(false)
     
+    const dispatchTasks = (action) => {
+      switch (action.type) {
+        case 'UPDATE':
+          const newTasksInsections = tasksInSections.map((elem) => {
+
+            if(elem.id == action.payload.id){
+              return {
+                ...elem,
+                ...action.payload.body
+              }
+            }
+            return elem
+          })
+          dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksInsections}}})  
+          
+        }
+    }
+
     if(edit){
       return <EditItemWithSection
       values={values}
-      functions={{refreshSections, dispatchSections, setEdit,}}></EditItemWithSection>
+      functions={{refreshSections, dispatchSections, dispatchTasks , setEdit,}}></EditItemWithSection>
     }
 
     return <VisualItem
     values={values}
-    functions={{setEdit}}></VisualItem>
+    functions={{setEdit, dispatchTasks}}></VisualItem>
 }
 export {OneItemWithSection}

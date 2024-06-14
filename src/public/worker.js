@@ -1,12 +1,11 @@
-console.log('Service Worker')
-
 self.addEventListener('push', (e) => {
     const data = e.data.json()
-
-    console.log(data)
-
-    self.registration.showNotification(data.title, {
+    const options = {
         body: data.message,
         icon: './assets/favicon.ico'
-    });
+    }
+
+    console.log("Datos de la llamada",data)
+
+    self.registration.showNotification(data.title, options);
 })

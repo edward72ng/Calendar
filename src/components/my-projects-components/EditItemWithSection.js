@@ -19,7 +19,7 @@ import { FoldersModal } from "../auxiliar-components/FoldersModal";
 function EditItemWithSection ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, userId, eventId, myTags, myImages, tasksInSections, orders, notifications} = values
   
-    const {refreshsections, dispatchSections, setEdit} = functions
+    const {refreshsections, dispatchSections, dispatchTasks, setEdit} = functions
     const {updateAll, updateWithout} = useContext(ItemsContext)
     const {editTask, deleteTask} = useContext(FunctionTasksContext)
     const {editSection} = useContext(FunctionSectionsContext)
@@ -134,6 +134,8 @@ function EditItemWithSection ({values, functions}){
         notifications: alarms
       }))
     }
+
+
     
     return (
       <div className="visual-container" data-id={id}>
@@ -190,8 +192,8 @@ function EditItemWithSection ({values, functions}){
             <EditTag myTags={options.myTags} handleDeleteTag={handleDeleteTag}/>
             <SelectTag functions={{handleAddTag}}/>
             
-            <EditGalery values={{id, myImages}}  functions={{dispatchTasks: dispatchSections}}/>
-            <InputImage values={{todoid: id, myImages}} functions={{handleAddImage, dispatchTasks: dispatchSections}}/> 
+            <EditGalery values={{id, myImages}}  functions={{dispatchTasks}}/>
+            <InputImage values={{todoid: id, myImages}} functions={{handleAddImage, dispatchTasks}}/> 
             
         
         <span className="material-symbols-outlined"

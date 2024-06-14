@@ -15,7 +15,7 @@ const schemaOrdersSeq = {
         allowNull: false
     },
     sectionid: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: SECTIONS_TABLE,

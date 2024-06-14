@@ -28,7 +28,7 @@ const schemaTagsSeq = {
       }
   },
   userid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
         model: USUARIOS_TABLE,

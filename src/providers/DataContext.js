@@ -5,6 +5,7 @@ const DataContext = React.createContext()
 
 
 function DataProvider ({children}) {
+
     const defaultValue = {
         id: null,
         content: '',
@@ -22,6 +23,27 @@ function DataProvider ({children}) {
         sectionDestination: null
     }
 
+    const getWorkerValue = () => {
+        if ("serviceWorker" in navigator) {
+            return (true);
+        }else{
+            return (false);
+        }
+    }
+
+    const getPermissionValue = (worker) => {
+        if(Notification.permission == 'granted' 
+            && "Notification" in window 
+            && worker == true){
+            return (true);
+        }else{//permission == 'denied' || 'default' 
+            return (false);
+        }
+    }
+
+    const worker = getWorkerValue();
+
+    const [permission, setPermission] = useState(getPermissionValue(worker))
     const [form, setForm] = useState(false)
 	const [filter, setFilter] = useState(null)
 	const [taskValue, setTaskValue] = useState(defaultValue)
@@ -64,7 +86,10 @@ function DataProvider ({children}) {
             
             dragInfo,
             setDragInfo,
-            setDragDefault}}>
+            setDragDefault,
+            worker,
+            permission,
+            setPermission}}>
 		{children}
 	</DataContext.Provider>
 }

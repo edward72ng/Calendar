@@ -25,7 +25,7 @@ function SubItem({values, functions}) {
     const handleGenerate = async () =>{
       setLoadingGenerate(true)
       generateSubTasks(taskid, (data) => {
-        dispatchTasks({type: 'UPDATE', payload: {id: taskid, body: {mySubtasks: [...subTasks, ...data]}}})
+        dispatchTasks({type: 'UPDATE', payload: {id: taskid, body: {mySubtasks: [...subTasks, data]}}})
         setLoadingGenerate(false)
       })
       updateInbox()
@@ -37,7 +37,8 @@ function SubItem({values, functions}) {
       dispatchTasks({type: 'UPDATE', payload: {id: taskid, body: {mySubtasks: [...subTasks, input]}}})
       
       createSubTask(input, taskid, (data) => {
-
+        console.log('recuperando ID')
+        dispatchTasks({type: 'UPDATE', payload: {id: taskid, body: {mySubtasks: [...subTasks, data]}}})
       })
     }
 

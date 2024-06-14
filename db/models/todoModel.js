@@ -1,94 +1,18 @@
 const {Sequelize ,DataTypes, Model} = require('sequelize')
-
-
 const {USUARIOS_TABLE} = require('./usuariosModel')
 const {EVENTS_TABLE} = require('./events.model')
 const { SECTIONS_TABLE } = require('./sections.model')
 const {PRIORITIES_TABLE} = require('./priorities.models')
-// const user = sequelize.define('users',{
-//     uid:{
-//         type: DataTypes.UUID,
-//         allowNull: false
-//     },
-//     email: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     password: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     }
-// })
-
-// const Todo = sequelize.define('todo',{
-//     // id:{
-//     //     type: DataTypes.UUID,
-//     //     allowNull: false
-//     // },
-//     content: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     deatails: {
-//         type: DataTypes.STRING
-//     },
-//     creation:{
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-    
-//     //FK
-//     // userid: {
-//     //     type: DataTypes.INTEGER,
-//     //     allowNull: false
-//     // }
-// },
-// {
-//     freezeTableName: true
-// }
-// )
-
-// const notifydate = sequelize.define('notifydates',{
-//     ndid:{
-//         type: DataTypes.UUID,
-//         allowNull: false
-//     },
-
-//     todid: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
-//     },
-//     notifyid: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
-//     }
-// })
-
-// const notify = sequelize.define('notifys',{
-//     nid:{
-//         type: DataTypes.UUID,
-//         allowNull: false
-//     },
-//     date: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     }
-// })
-
-//Todo.findByPk(3).then(res=>{console.log(res)}).catch(e=>{console.log(e)})
-
-
-//primer parametro: descripsion de tabla,campos
-//segundo parametro: conneccion sequelize y model name
 
 const TODO_TABLE = 'todo'
 
 const schemaTodoSeq = {
     id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER.UNSIGNED,
+        
         
       },
     content: {
@@ -155,16 +79,25 @@ const schemaTodoSeq = {
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
-     }
+     },
+    timeblockdate: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    timeblockstart: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+    timeblockend: {
+        type: DataTypes.STRING,
+        allowNull: true
+      }
   }
+  
 
 class Todoe extends Model{
 
     static associate (models){
-        //  this.hasMany(models.notifydate,{
-        //      foreignKey: 'todoid',
-        //      as: 'todonotify', 
-        // })
         this.belongsTo(models.usuarios,{//un todo puede tener un evento
             foreignKey: 'userid', //aqui la fk es el eventid
             as: 'user'
@@ -228,27 +161,5 @@ class Todoe extends Model{
         }
     }
 }
-
-//  Todoe.init(
-//      {
-//        content: {
-//            type: DataTypes.STRING,
-//             allowNull: false
-//         },
-//         deatails: {
-//             type: DataTypes.STRING
-//          },
-//         sectionid:{
-//              type: DataTypes.I,
-//              allowNull: false
-//          },
-        
-//      },
-//      {
-//         sequelize,
-//         modelName: 'todo',
-       
-//      }
-//  )
 
 module.exports = {TODO_TABLE ,Todoe, schemaTodoSeq}
