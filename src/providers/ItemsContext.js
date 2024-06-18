@@ -1,17 +1,17 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Loading } from "../components/UI-components/Loading";
 import { useFetchItems } from "../custom-hooks/useFetchItems";
+import {
+    tasksUrl,
+    timeBlockDate,
+    inboxUrl,
+    colorsUrl,
+    myTagsUrl,
+    prioritiesUrl,
+    projectsUrl,
+    myAll,
+    withoutSections} from "./URLS"
 
-const inboxUrl = '/api/v1/inboxtasks/'
-const projectsUrl = '/api/v1/folders/me'
-const myItemsUrls = '/api/v1/inbox/?folder='
-const colorsUrl = '/api/v1/colors'
-const myTagsUrl = '/api/v1/tags/my-tags'
-const myAll = '/api/v1/folders/all'
-const withoutSections = '/api/v1/folders/without-sections'
-const prioritiesUrl = '/api/v1/priorities/'
-const tasksUrl = '/api/v1/inbox/get-all/2'
-const timeBlockDate = '/api/v1/inbox/time-block/2023-05-06'
 const ItemsContext = createContext()
 
 
@@ -87,7 +87,7 @@ function ItemsProvider ({children}) {
                 tags, dispatchTags, updateTags,
                 colors, dispatchColors, updateColors,
                 priorities, dispatchPriorities, updatePriorities,
-                taks, dispatchTaks, updateTaks,
+                //taks, dispatchTaks, updateTaks,
                 timeBlock, dispatchTimeBlock, updateTimeBlock,
                 section, task,
                 errorMessage, setErrorMessage

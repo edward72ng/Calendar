@@ -3,6 +3,7 @@ import {useAuth} from './auth'
 import {SocketContext} from '../providers/socketContext'
 import { DataContext } from "./DataContext"
 import { ItemsContext } from "./ItemsContext"
+import {funcSectionsBaseUrl} from "./URLS"
 
 const FunctionSectionsContext = React.createContext()
 
@@ -17,43 +18,9 @@ function FunctionSectionsProvider({children}){
         'Authorization': 'Bearer ' + auth.token,
     }
 
-const moveToSection = async (sectionId, callback) => {
-    try {
-        const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
-                    method: 'POST',
-                    headers: headers,
-                    body:JSON.stringify({
-                        todoId: taskValue.id
-                      }),
-    })
-    if(res.status > 299){
-        throw new Error('Ha ocurrido un error inesperado')
-    }
-    if(res){
-        socket.emit('moveToSection',{origen: taskValue.section, destino: sectionId, user: socket.id,})
-        console.log(`se movio ${taskValue.id} a ${sectionId}`,res)
-        console.log(`origen: ${taskValue.section} destino:  ${sectionId}`,res)
-        setTaskValue(
-            {
-              id: null,
-              content: '',
-              details: '',
-              event: '',
-              notifications: [],
-            })
-        setTimeout(()=>callback(), 1000)
-        
-    }
-    } catch (error) {
-        setErrorMessage('Error al mover a seccion')
-        console.log(error)
-    }
-    
-}
-
 const deleteSection = async (id, callback) => {
     try {
-        const res = await fetch('/api/v1/sections/'+ id, {
+        const res = await fetch(funcSectionsBaseUrl+ id, {
             method: 'DELETE',
             headers: headers,})
         const data = await res.json()
@@ -71,7 +38,7 @@ const deleteSection = async (id, callback) => {
 
 const editSection = async (sectionId, body, callback) => {
     try {
-        const res = await fetch('http://localhost:3000/api/v1/sections/' + sectionId,{
+        const res = await fetch(funcSectionsBaseUrl + sectionId,{
 								method: 'PUT',
 								headers: headers,
 								body: JSON.stringify(body),
@@ -92,7 +59,7 @@ const editSection = async (sectionId, body, callback) => {
 
 const createSection = async (body, callback) => {
     try {
-        const res = await fetch('http://localhost:3000/api/v1/sections',{
+        const res = await fetch(funcSectionsBaseUrl,{
 								method: 'POST',
 								headers: headers,
 								body:  JSON.stringify(body),
@@ -113,7 +80,6 @@ const createSection = async (body, callback) => {
 
 
 
-
 const move = async(sectionId, callback)=>{
     socket.emit('refrescar', {origen: taskValue.section, destino: sectionId, todo: taskValue.id, exclude: socket.id})
     setTimeout(()=>callback(), 1000)
@@ -121,7 +87,7 @@ const move = async(sectionId, callback)=>{
 }
 
 return <FunctionSectionsContext.Provider
-value={{createSection, editSection, deleteSection, moveToSection, move}}>
+value={{createSection, editSection, deleteSection,  move}}>
 				{children}
 </FunctionSectionsContext.Provider>
 }

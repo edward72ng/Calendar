@@ -4,7 +4,7 @@ const {models} = require('./../db/connec')
 const sequelize = require('./../db/connec');
 
 
-router.post('/create',async (req,res) =>{
+router.post('/',async (req,res) =>{
     const {todoid, imageurl} = req.body
 
     const rsp = await models.images.create({

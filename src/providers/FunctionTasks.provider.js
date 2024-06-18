@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react"
 import {useAuth} from './auth'
 import { DataContext } from "./DataContext"
 import { ItemsContext } from "./ItemsContext"
+import {funcTaksBaseUrl} from "./URLS"
 
 const FunctionTasksContext = React.createContext()
 
@@ -21,7 +22,7 @@ useEffect(()=>{
 
 const deleteTask = async (id, callback) => {
     try {
-        const res = await fetch('/api/v1/inbox/your-todos/'+ id, {
+        const res = await fetch(funcTaksBaseUrl+ id, {
             method: 'DELETE',
             headers: headers,})
         if(res.status > 299){
@@ -37,7 +38,7 @@ const deleteTask = async (id, callback) => {
 const editTask = async (body,callback) => {
     const {id, ...send} = body
     try{
-        const res = await fetch('/api/v1/inbox/your-todos/'+id, {
+        const res = await fetch(funcTaksBaseUrl+id, {
             method: 'PUT',
             body: JSON.stringify(send),
             headers: headers})
@@ -59,7 +60,7 @@ const editTask = async (body,callback) => {
 
 const createTask = async (body, callback) => {
     try {
-        const res = await fetch('/api/v1/inbox/your-todos/',{
+        const res = await fetch(funcTaksBaseUrl,{
             method: 'POST',
             headers: headers,
             body:  JSON.stringify(Object.assign(taskValue, body)),

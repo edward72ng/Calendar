@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import {useAuth} from './auth'
 import { ItemsContext } from "./ItemsContext"
+import {funcFoldersUrl} from "./URLS"
 
 const FunctionFoldersContext = React.createContext()
 
@@ -16,7 +17,7 @@ function FunctionFoldersProvider({children}){
 
 const deleteFolder = async (id, callback) => {
     try {
-        const res = await fetch('http://localhost:3000/api/v1/folders/'+id,{
+        const res = await fetch(funcFoldersUrl+id,{
 								method: 'DELETE',
 								headers: headers,
 				})
@@ -37,7 +38,7 @@ const deleteFolder = async (id, callback) => {
 
 const updateFolder = async (folderId, body, callback) => {
     try {
-        const res = await fetch('http://localhost:3000/api/v1/folders/' + folderId,{
+        const res = await fetch(funcFoldersUrl + folderId,{
 								method: 'PUT',
 								headers: headers,
 								body: JSON.stringify(body),
@@ -57,7 +58,7 @@ const updateFolder = async (folderId, body, callback) => {
 
 const createFolder = async (body, callback) => {
     try {
-        const res = await fetch('http://localhost:3000/api/v1/folders',{
+        const res = await fetch(funcFoldersUrl,{
 								method: 'POST',
 								headers: headers,
 								body:  JSON.stringify(body),
@@ -77,7 +78,7 @@ const createFolder = async (body, callback) => {
 
 const moveToFolder = async (folderId, callback) => {
     try {
-        const res = await fetch('http://localhost:3000/api/v1/folders/'+folderId,{
+        const res = await fetch(funcFoldersUrl+folderId,{
                                 method: 'POST',
                                 headers: headers,
                                 body: JSON.stringify({todoId:''}),

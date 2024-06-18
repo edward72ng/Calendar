@@ -11,7 +11,7 @@ import { DataContext } from '../../providers/DataContext';
 import { DragDropContext} from 'react-beautiful-dnd'
 import { FunctionTasksContext } from '../../providers/FunctionTasks.provider';
 import { useWithoutSection } from '../../custom-hooks/useWithoutSection';
-
+import {reloadSectionsUrl} from '../../providers/URLS'
 
 
 function MyProjects() {
@@ -121,7 +121,7 @@ function MyProjects() {
           <span className="material-symbols-outlined"
           onClick={()=>{
             dispatchSections({type: 'CREATE', payload: {body: {section: input, tasksInSections: []}}});
-            createSection({section:input, folderid:filter, orders: ""},() => refreshSections(`/api/v1/sections//all/with-task/${filter}`));
+            createSection({section:input, folderid:filter, orders: ""},() => refreshSections(`${reloadSectionsUrl}${filter}`));
             setInput('')
           }}>add</span>
     </div>

@@ -7,6 +7,7 @@ import { AddTask } from "./AddTask";
 import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
+import {reloadSectionsUrl} from '../../providers/URLS'
 
 function getRamdon(max, min) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -30,7 +31,7 @@ function SectionHome({dataValues, functions, index}) {
   
     const handleEdit = () => {
         dispatchSections({type: 'UPDATE', payload: {id: id, body: {section: input}}});
-        editSection(id, {section: input},() => refreshSections(`/api/v1/sections/all/with-task/${filter}`))
+        editSection(id, {section: input},() => refreshSections(`${reloadSectionsUrl}${filter}`))
         setOpenEdit(false)
     }
 

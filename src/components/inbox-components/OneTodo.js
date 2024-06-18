@@ -19,30 +19,6 @@ function OneTodo ({values, functions}){
     
     const {setTaskValue, setForm} = useContext(DataContext)
 
-    const editTodo= (id)=>{
-      fetch('/api/v1/inbox/your-todos/'+ id, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + auth.token,
-        }
-      }).then((res)=>res.json())
-      .then((data)=>{
-      setTaskValue(
-        {
-          id: data.id,
-          content: data.content,
-          details: data.details,
-          event: data.evento? data.evento.event: '',
-          notifications: data.notifis,
-          folderid: null,
-          assignedto: null
-        }
-      )
-      setForm(true)
-    })}
-
     if(edit){
       return <EditTask
       values={{id, content, details, evento, sectionid}}

@@ -3,6 +3,7 @@ import {useAuth} from './auth'
 import {SocketContext} from '../providers/socketContext'
 import { DataContext } from "./DataContext"
 import { ItemsContext } from "./ItemsContext"
+import {subTasksBaseUrl} from "./URLS"
 
 const FunctionSubTaskContext = React.createContext()
 
@@ -20,7 +21,7 @@ function FunctionSubTaskProvider({children}){
 
 const deleteSubTask = async (id, callback) => {
     try {
-        const res = await fetch('/api/v1/subtasks/delete/'+ id, {
+        const res = await fetch(`${subTasksBaseUrl}delete/${id}`, {
             method: 'DELETE',
             headers: headers,})
 
@@ -41,7 +42,7 @@ const deleteSubTask = async (id, callback) => {
 const editSubTask = async ( id, body, callback) => {
     const {content, details} = body
     try {
-        const res = await fetch('/api/v1/subtasks/update/' + id,{
+        const res = await fetch(`${subTasksBaseUrl}updatee/${id}`,{
 								method: 'PUT',
 								headers: headers,
 								body: JSON.stringify(body),
@@ -60,30 +61,9 @@ const editSubTask = async ( id, body, callback) => {
 				
 }
 
-const generateSubTasks = async (taskid, callback) =>{
-    try {
-        const res = await fetch('api/v1/subtasks/generate', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({taskid: taskid})
-          })
-          const data = await res.json()
-          if(res.status > 299){
-            throw new Error('Ha ocurrido un error inesperado')
-        }
-          callback(data)
-    } catch (error) {
-        setErrorMessage('Error al generar subtarea')
-        console.log(error)
-    }    
-  }
-
   const createSubTask = async (body, taskid, callback) => {
     try {
-        const res = await fetch('api/v1/subtasks/create', {
+        const res = await fetch(subTasksBaseUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -102,6 +82,26 @@ const generateSubTasks = async (taskid, callback) =>{
     }
   }
 
+  const generateSubTasks = async (taskid, callback) =>{
+    try {
+        const res = await fetch(`${subTasksBaseUrl}generate`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({taskid: taskid})
+          })
+          const data = await res.json()
+          if(res.status > 299){
+            throw new Error('Ha ocurrido un error inesperado')
+        }
+          callback(data)
+    } catch (error) {
+        setErrorMessage('Error al generar subtarea')
+        console.log(error)
+    }    
+  }
 
 return <FunctionSubTaskContext.Provider
 value={{editSubTask, deleteSubTask, generateSubTasks, createSubTask }}>

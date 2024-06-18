@@ -113,23 +113,3 @@ function CreateTask ({functions, dataValues}) {
 } 
 
 export {CreateTask}
-
-/**
- * const res = await fetch(`api/v1/inbox/find-one`,{
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body:  JSON.stringify({content: values.content}),
-            })
-            const data = await res.json()
-            console.log(data)
-            copyTasks.pop()
-            const tasksWithNew = copyTasks
-            tasksWithNew.push(data)
-            const orderwithId = orders.split("|")
-            orderwithId.push(data.id)
-            const orderString = orderwithId.join("|")
-            dispatchTasks({type:'UPDATE', payload:{id: id, body: {tasksInSections: tasksWithNew, orders: orderString}}})
- */

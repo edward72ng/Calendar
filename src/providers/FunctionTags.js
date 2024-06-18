@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react"
 import {useAuth} from './auth'
 import { DataContext } from "./DataContext"
 import { ItemsContext } from "./ItemsContext"
+import {tagsBaseUrl} from "./URLS"
 
 const FunctionTagsContext = React.createContext()
 
@@ -18,7 +19,7 @@ function FunctionTagsProvider({children}){
 
 const deleteTag = async (id, callback) => {
     try {
-        const res = await fetch('/api/v1/tags/'+ id, {
+        const res = await fetch(tagsBaseUrl+ id, {
             method: 'DELETE',
             headers: headers,})
 
@@ -35,7 +36,7 @@ const deleteTag = async (id, callback) => {
 const editTag = async (body,callback) => {
     const {id, ...send} = body
     try{
-        const res = await fetch('/api/v1/tags/'+id, {
+        const res = await fetch(tagsBaseUrl+id, {
             method: 'PUT',
             body: JSON.stringify(send),
             headers: headers})
@@ -55,7 +56,7 @@ const editTag = async (body,callback) => {
 const createTags = async (body, callback) => {
     console.log(body)
     try {
-        const res = await fetch('/api/v1/tags/',{
+        const res = await fetch(tagsBaseUrl,{
             method: 'POST',
             headers: headers,//here user
             body:  JSON.stringify(body),

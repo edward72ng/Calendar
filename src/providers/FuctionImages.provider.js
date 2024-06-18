@@ -1,8 +1,7 @@
 import React, { useContext } from "react"
 import {useAuth} from './auth'
-import {SocketContext} from '../providers/socketContext'
-import { DataContext } from "./DataContext"
 import { ItemsContext } from "./ItemsContext"
+import {imagesBaseUrl} from "./URLS"
 
 const FunctionImagesContext = React.createContext()
 
@@ -33,7 +32,7 @@ const createImage = async ({file, todoid}, callback) => {
         .then((res) => res.json())
         .then((data) => {
 
-            fetch('api/v1/images/create',{
+            fetch(imagesBaseUrl,{
                 method: 'POST',
                 headers:  headers,
                 body: JSON.stringify({
@@ -60,7 +59,7 @@ const createImage = async ({file, todoid}, callback) => {
 
 const deleteImage = async (id, callback) => {
     try {
-        const res = await fetch(`api/v1/images/${id}`,{
+        const res = await fetch(`${imagesBaseUrl}${id}`,{
             method: 'DELETE',
             headers:  headers,
           })

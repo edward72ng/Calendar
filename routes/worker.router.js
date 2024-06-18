@@ -59,15 +59,3 @@ router.post('/subscribed', async (req, res)=>{
 })
 
 module.exports = router
-
-/**   const payload = JSON.stringify(
-        {
-            title: 'Custom Notificacion',
-            message: 'Hello world'
-        }
-    )
-     try {
-        await webpush.sendNotification(pushSubscription, payload)
-    } catch (error) {
-        console.log('ERROR IN SUBSCRIBED', error)
-    } */
