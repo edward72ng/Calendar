@@ -1,7 +1,20 @@
 import React, { useContext, useState } from "react";
-import './NotificationsModal.css'
 import { ItemsContext } from "../../providers/ItemsContext";
 import { Overlay } from "./Overlay";
+import style from './NotificationsModal.module.css';
+
+const { 
+    positionContainer, 
+    buttonModal, 
+    materialSymbolsOutlined, 
+    subModalContainer, 
+    alarmaDataItem, 
+    genericButton, 
+    folderDataItem, 
+    overlay, 
+    timeBlockItems, 
+    timeBlockItemsSpan 
+  } = style;
 
 function TimeBlockModal ({functions, values}) {
     const [timeBlock, setTimeBlock] = useState({

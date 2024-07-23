@@ -685,56 +685,9 @@ input{
     position: relative;
 }
 /*EditItem*/
-.edit-value {
-    box-sizing: border-box;
-    padding: 20px 8px;
-    width: 100%;
-    margin-bottom: 16px;
-    border: none;
-    border-color: var(--global-sup);
-    background-color: #e5e6ea;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 13px;
-    border-radius: 0;
-}  
-  textarea.edit-value {
-    height: auto;
-    border: none;
-    border-color: var(--global-sup);
-    background-color: #e5e6ea;
-    font-family: 'Quicksand', sans-serif;
-    color: grey;
-    font-size: 12px;
-    border-radius: 0;
-}
-.edit-value:focus{
-    outline: none;
-}
-/*FormCreat*/
-.formcreate-container {
-    position: fixed;
-    z-index: 15;
-    right: 0;
-    width: 450px;
-    height: 600px;
-    background-color: var(--global-sup);
-    border-radius: 4px;
-    box-shadow: 0px 2px 4px hwb(0 0% 100% / 0.1);
-    overflow-y: auto;
-    max-width: 100%;
-    bottom: -100%;
-    transition: bottom 0.5s;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    padding: 8px;
-    box-sizing: border-box;
-} 
-.mount {
-    bottom: 0;
-}
 
-ddTask*/
+/*FormCreat*/
+
 .add-task {
     display: flex;
     justify-content: space-between;

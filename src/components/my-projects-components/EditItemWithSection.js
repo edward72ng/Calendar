@@ -8,13 +8,12 @@ import { Options } from "../auxiliar-components/Options";
 import { DataContext } from "../../providers/DataContext";
 import { Tags } from "../inbox-components/Tags";
 import { Recomended } from "../auxiliar-components/Recomended";
-import { SelectTag } from "../auxiliar-components/SelectTag";
 import { EditTag } from "../inbox-components/EditTag";
 import { InputImage } from "../UI-components/InputImage";
 import { EditGalery } from "../inbox-components/EditGalery";
 import { NotificationsModal } from "../auxiliar-components/NotiificationsModal";
-import { EventModal } from "../auxiliar-components/EventModal";
-import { FoldersModal } from "../auxiliar-components/FoldersModal";
+import { TagModal } from "../auxiliar-components/TagModal";
+import { PriorityModal } from "../auxiliar-components/PriorityModal";
 
 function EditItemWithSection ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, userId, eventId, myTags, myImages, tasksInSections, orders, notifications} = values
@@ -185,12 +184,11 @@ function EditItemWithSection ({values, functions}){
 
             <div className="added-to-item">
             <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
-            <EventModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
-            <FoldersModal functions={{handleAdd: handleFolderChange}}/>
+            <TagModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
+            <PriorityModal functions={{handleAdd: handleFolderChange}}/>
            </div>
 
             <EditTag myTags={options.myTags} handleDeleteTag={handleDeleteTag}/>
-            <SelectTag functions={{handleAddTag}}/>
             
             <EditGalery values={{id, myImages}}  functions={{dispatchTasks}}/>
             <InputImage values={{todoid: id, myImages}} functions={{handleAddImage, dispatchTasks}}/> 

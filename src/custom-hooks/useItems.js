@@ -1,7 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
 import { useAuth } from '../providers/auth'
 
-
 function reducer (state, action) {
     switch (action.type) {
     case 'DELETE':
@@ -21,6 +20,35 @@ function reducer (state, action) {
         console.log('EDICION' ,value)
         return value;
 
+    case 'EDIT-ITEM':
+
+        let partOfItem; 
+        let path = []
+        function getUpdatedState (npath, body, count){
+            
+            if(path.length  == 0){
+                return res
+            }else{
+                
+
+                if(typeof path(count) === 'number' && !isNaN(variable)){
+                    const idPath = path(count)
+                    const element = body.filter(() => {
+                        return elem.id == idPath.id
+                    })
+
+                    partOfItem = element;
+                }else{
+                    const textPath = path(count)
+                    const propertyArr = body[textPath]
+
+                    
+                }
+            }   
+        }
+
+        return [...state, action.payload.body];
+
     case 'CREATE':
       console.log('CREATE', action.payload.body)
         return [...state, action.payload.body];
@@ -33,14 +61,13 @@ function reducer (state, action) {
     }
 }
 
-function useFetchItems(url) {
+function useItems(url) {
   const auth = useAuth()
   
   const [loading, setLoading] = useState(true)
   const [state, dispatch] = useReducer(reducer, [])
 
   useEffect(() => {
-    console.log(url)
     updateData();
   }, [])
 
@@ -63,4 +90,4 @@ function useFetchItems(url) {
   return [state, dispatch, updateData, loading];
 }
 
-export {useFetchItems}
+export {useItems}

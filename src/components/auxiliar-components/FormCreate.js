@@ -1,19 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
-import { Tags } from "../inbox-components/Tags";
-import { CreateTag } from "./CreateTag";
 import './InputDate.css'
 import './Select.css'
 import './InputAlarm.css'
-import { SelectTag } from "./SelectTag";
-import {EventModal} from '../auxiliar-components/EventModal'
+import formCreateStyle from "./FormCreate.module.css"
+import {TagModal} from './TagModal'
 import {NotificationsModal} from '../auxiliar-components/NotiificationsModal'
-import { FoldersModal } from "./FoldersModal";
+import { PriorityModal } from "./PriorityModal";
 import { Modal } from "../../app/modal";
 import { ErrorMessage } from "./ErrorMessage";
+import { CancelButton } from "./CancelButton";
+import { ConfirmButton } from "./ConfirmButton";
+import { EventScheduler } from "./EventScheduler";
+import { AddImage } from "./AddImage";
+import { ColorItemSelector } from "./ColorItemSelector";
+import { FolderModal } from "./FolderModal";
+import { TaskModalContext } from "../../providers/TaskModalContext";
 
-
+const {inputDetails, 
+  inputTittle,
+  headerButtons,
+  formcreateContainer,
+  formContainer,
+  addButtons} = formCreateStyle
 const initialstate = {
   event: "",
   date: "",
@@ -28,9 +38,10 @@ const initialstate = {
 
 function FormCreate ({functions, values}) {
     const {isClosing} = values
-    const {dispatchTasks, refreshTasks, setForm} = functions
+    const {dispatchTasks} = functions
     
     const {setErrorMessage} = useContext(ItemsContext)
+    const {setForm} = useContext(TaskModalContext)
     const { createTask } = useContext(FunctionTasksContext)
 
     const [recomended, setRecomended] = useState(false)
@@ -39,13 +50,14 @@ function FormCreate ({functions, values}) {
     const [state, setState] = useState(initialstate);
 
     useEffect(() => {
-      const formCreate = document.querySelector('.formcreate-container')
+      const formCreate = document.getElementById("form-create")
       if(isClosing){
         formCreate.classList.remove('mount')
       }else{
         setTimeout(()=>{
-          formCreate.classList.add('mount')
+          formCreate.classList.add(formCreateStyle.mount)
         }, 5)
+        document.getElementById('inputFocus').focus();
       }
     },[isClosing])
 
@@ -72,6 +84,7 @@ function FormCreate ({functions, values}) {
         const tags  = [...state.myTags, newTag]
  
         setState((prevState) => ({ ...prevState, myTags: tags }));
+        
       };
 
     const setTask = () => {
@@ -115,37 +128,51 @@ function FormCreate ({functions, values}) {
       }
     }
 
-    return <div className="formcreate-container" id="form-create">
-      {/*recomended &&
-        <Recomended question={content} functions={{handleAddTag}}></Recomended>
-  */}
-  
-        <span className="material-symbols-outlined"
-        onClick={()=>{setTask()}}>done</span>
-        <span className="material-symbols-outlined"
-        onClick={()=>{setForm((prevState) => !prevState)}}>close</span>
+    console.log("TAGS:",state.myTags)
+    return (
+      <Modal>
+        <div className={formcreateContainer} id="form-create">
+     
+        <div className={headerButtons}>
+        <CancelButton text={"Cerrar"} onClick={()=>{setForm((prevState) => !prevState)}}/>
+        <ConfirmButton text={"Guardar"} onClick={()=>{setTask()}}/>
+        </div>
+        
+        <div className={formContainer}>
+            <FolderModal values={{thisFolder: undefined}}/>
 
-        <div className="form-container">
-            <input className="edit-value" placeholder="contenido"
+            <input 
+            className={inputTittle} 
+            id="inputFocus"
+            placeholder="Contenido"
             value={content}
             onChange = { (e) => setContent(e.target.value)}></input>
-            <textarea className="edit-value" placeholder="detalles"
-            onClick={() => viewRecomended()}
+            <textarea className={inputDetails} 
+            placeholder="Detalles"
             value={details}
             onChange = { (e) => setDetails(e.target.value)}></textarea>
 
-        <div className="added-to-item">
-            <EventModal functions={{handleAdd: handleEvent}} values={{event: state.event}}/>
+            <EventScheduler/>
+
+            <AddImage/>
+
+            <ColorItemSelector/>
+        <div className={addButtons}>
+            
             <NotificationsModal functions={{handleAdd: handleNotifications}} values={{notifications: state.notifications}}/> 
-            <FoldersModal functions={{handleAdd: handleFolderChange}}/>
+            <PriorityModal functions={{handleAdd: handleFolderChange}}/>
+            <TagModal functions={{handleAdd: handleEvent}} values={{event: state.event}}/>
         </div>
             
-
-            <Tags myTags={state.myTags} />
-            <SelectTag functions={{handleAddTag}}/>
-            <CreateTag functions={{handleAddTag}}/>
         </div>
     </div>
+      </Modal>
+    )
 } 
 
 export {FormCreate}
+/**
+ *  /*recomended &&
+        <Recomended question={content} functions={{handleAddTag}}></Recomended>
+        onClick={() => viewRecomended()}
+  */

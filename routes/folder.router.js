@@ -2,6 +2,7 @@ const express = require('express')
 const router = new express.Router()
 const {models} = require('./../db/connec')
 const TodosService = require('./../services/todos.services.js')
+const ItemsService = new TodosService()
 const AuthService = require('./../services/auth.services')
 const authservice = new AuthService()
 
@@ -92,7 +93,14 @@ router.get('/all', async (req, res) => {
                         }]
                     }
                 ]
-            }]
+            },
+        {
+            model: models.todo,
+            as: 'blocsInFolder',
+            where: {
+                sectionid: null
+            }
+        }]
         })
         res.json(folders)
     }

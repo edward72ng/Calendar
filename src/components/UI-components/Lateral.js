@@ -4,7 +4,6 @@ import { DataContext } from '../../providers/DataContext';
 import { ItemsContext } from '../../providers/ItemsContext';
 import './lateral.css';
 
-const colors = ['#fff8b9','#e2f6d3','#b4ded4','#afccdc','#f29f75'] 
 function Lateral ({children}) {
   const {setFilter} = useContext(DataContext)
   const {myProjects} = useContext(ItemsContext)
@@ -49,15 +48,17 @@ function Lateral ({children}) {
           <div className='folders-modal'>
             {
           myProjects.map((elem, i) => {
-            return(
-              <Link to='/app/my-projects' key={elem.id}>
-              <div className={`sub menu-item ${showText? "show" : ""}`}
-              onClick={() => {setFilter(elem.id)}}>
-              <span className={`sub-text ${showText ? "show" : ""}`}>{elem.name}</span>
-              <span className="material-symbols-outlined" style={{color: `rgba(${elem.myColor.color}, 1)`}}>folder</span>
-              </div>
-              </Link>
-            )
+            if(elem.name != "Inbox"){
+              return(
+                <Link to='/app/my-projects' key={elem.id}>
+                <div className={`sub menu-item ${showText? "show" : ""}`}
+                onClick={() => {setFilter(elem.id)}}>
+                <span className={`sub-text ${showText ? "show" : ""}`}>{elem.name}</span>
+                <span className="material-symbols-outlined" style={{color: `rgba(${elem.myColor.color}, 1)`}}>folder</span>
+                </div>
+                </Link>
+              )
+            }
           })
             }
           </div>

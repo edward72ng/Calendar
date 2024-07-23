@@ -4,27 +4,16 @@ const {models} = require('./../db/connec')
 const sequelize = require('./../db/connec');
 const AuthService = require('./../services/auth.services')
 const authservice = new AuthService
+const TodosService = require('./../services/todos.services.js')
+const ItemsService = new TodosService()
 
 router.get('/', async (req, res) => {
    if (req.headers.authorization){
         var token = req.headers.authorization;
         var newToken = token.replace("Bearer ", "");
         const pay = await authservice.getPayload(newToken)
-        const data = await models.todo.findAll(
-            {where: {
-                userid: pay.sub,
-                folderid: null,
-                sectionid: null
-            },
-            include: ['evento', 'notifications', 'myPriority', 'mySubtasks', 'myImages',{
-                model: models.tags,
-                as: 'myTags',
-                include: ['myColor']
-            }]
-            }
-            )
+        const data =await ItemsService.getItemsForInbox(pay.sub)
 
-        
         res.json(data)
     }
     else{

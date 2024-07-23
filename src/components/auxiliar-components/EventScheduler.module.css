@@ -1,0 +1,48 @@
+.eventScheduler {
+    color: #4a4a4a;
+    padding: 0 4px;
+  }
+  
+  .headerSchedule {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .labelHeaderSchedule {
+    font-size: 14px;
+    color: #4a90e2;
+    font-weight: bold;
+    padding-left: 32px;
+  }
+
+  .headerSchedule > span:first-child{
+    position: absolute;
+    color: #4a90e2;
+  }
+  
+  .timeInputs {
+    display: flex;
+    flex-direction: column;
+    padding-left: 32px;
+  }
+  
+  .timeInput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .timeInput label {
+    font-size: 14px;
+    color: #4a90e2;
+  }
+  
+  .timeInput div {
+    display: flex;
+    gap: 10px;
+    color: #4a4a4a;
+  }
+  

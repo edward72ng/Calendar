@@ -5,7 +5,7 @@ import { getforSection, reorder } from '../../utils/dragAndDrop'
 import { SectionHome } from './SectionHome';
 import { FunctionSectionsContext } from '../../providers/FuntionSeccions.provider';
 import { ItemsContext } from '../../providers/ItemsContext';
-import { useUpdate } from '../../custom-hooks/useUpdate';
+import { useSection } from '../../custom-hooks/useSection';
 import { WithoutSection } from './WithoutSection';
 import { DataContext } from '../../providers/DataContext';
 import { DragDropContext} from 'react-beautiful-dnd'
@@ -21,11 +21,13 @@ function MyProjects() {
     const {editTask} = useContext(FunctionTasksContext)
 
     const [task, dispatchTasks, refreshTasks] = useWithoutSection()
-    const [sections, dispatchSections, refreshSections] = useUpdate()
+    const [sections, dispatchSections, refreshSections] = useSection()
     
+
+
     const [input, setInput] = useState('')
 
-    console.log('MyProjects Renderizado')
+    console.log('MyProjects Renderizado', sections)
     const onDragEnd = (values) => {
     const { source, destination } = values
     if(!destination){

@@ -1,0 +1,38 @@
+.addImageContainer{
+width: 100%;
+height: 56px;
+color: #4a90e2;
+display: flex;
+flex-direction: row;
+padding: 8px 4px;
+border-radius: 8px;
+background-color: #f8f8f8;
+margin: 8px 0;
+box-sizing: border-box;
+border: 1px solid lightgray;
+margin-bottom: 20px;
+}
+.addButton{
+height:  40px;
+box-sizing: border-box;
+width: 40px;
+border-radius: 8px;
+border: 2px solid #4a90e2;
+margin-right: 4px;
+display: grid;
+justify-content: center;
+align-items: center;
+align-items: center;
+background-color: #fff;
+}
+.exampleBox{
+height:  40px;
+box-sizing: border-box;
+width: 40px;
+border-radius: 8px;
+border: 2px dashed #4a90e2;
+display: grid;
+justify-content: center;
+align-items: center;
+background-color: #fff;
+}

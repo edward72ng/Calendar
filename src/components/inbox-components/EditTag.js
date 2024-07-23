@@ -1,5 +1,4 @@
 import React from "react";
-import { CreateTag } from "../auxiliar-components/CreateTag";
 import './Tags.css'
 
 function EditTag({myTags, handleDeleteTag}) {

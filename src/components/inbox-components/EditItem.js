@@ -6,13 +6,12 @@ import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { ItemsContext } from "../../providers/ItemsContext";
 import { Recomended } from "../auxiliar-components/Recomended";
 import { Tags } from "./Tags";
-import { SelectTag } from "../auxiliar-components/SelectTag";
 import { EditTag } from "./EditTag";
 import { InputImage } from "../UI-components/InputImage";
 import { EditGalery } from "./EditGalery";
 import { NotificationsModal } from "../auxiliar-components/NotiificationsModal";
-import { EventModal } from "../auxiliar-components/EventModal";
-import { FoldersModal } from "../auxiliar-components/FoldersModal";
+import { TagModal } from "../auxiliar-components/TagModal";
+import { PriorityModal } from "../auxiliar-components/PriorityModal";
 import { Modal } from "../../app/modal";
 import { ErrorMessage } from "../auxiliar-components/ErrorMessage";
 import { TimeBlockModal } from "../auxiliar-components/TimeBlockModal";
@@ -171,7 +170,6 @@ function EditItem ({values, functions}){
                 <></>
                 } 
                 <EditTag myTags={options.myTags} handleDeleteTag={handleDeleteTag}/>
-                <SelectTag functions={{handleAddTag}}/>
                 
                 
                 
@@ -183,9 +181,9 @@ function EditItem ({values, functions}){
 
         <div className="added-to-item">
         <NotificationsModal functions={{handleAdd}} values={{notifications: options.notifications}}/>
-        <EventModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
+        <TagModal functions={{handleAdd: handleEventChange}} values={{event: options.event}}/>
         <TimeBlockModal functions={{handleAdd: handleTimeBlockChange}}/>
-        <FoldersModal functions={{handleAdd: handleFolderChange}}/>
+        <PriorityModal functions={{handleAdd: handleFolderChange}}/>
         </div>
         
         <EditGalery values={{id, myImages}} functions={{dispatchTasks}}/>

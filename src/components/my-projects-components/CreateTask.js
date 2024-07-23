@@ -4,7 +4,7 @@ import { FunctionTasksContext } from "../../providers/FunctionTasks.provider"
 import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider"
 import { ItemsContext } from "../../providers/ItemsContext"
 import { Options } from "../auxiliar-components/Options"
-import {EventModal} from '../auxiliar-components/EventModal'
+import {TagModal} from '../auxiliar-components/TagModal'
 import {NotificationsModal} from '../auxiliar-components/NotiificationsModal'
 
 function CreateTask ({functions, dataValues}) {
@@ -99,7 +99,7 @@ function CreateTask ({functions, dataValues}) {
             />
         <div className="added-to-item">
         
-            <EventModal functions={{handleAdd: handleEvent}} values={{event: options.event}}/>
+            <TagModal functions={{handleAdd: handleEvent}} values={{event: options.event}}/>
             <NotificationsModal functions={{handleAdd: handleNotifications}} values={{notifications: options.notifications}}/>
         </div>
             

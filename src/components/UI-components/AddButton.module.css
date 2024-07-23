@@ -1,0 +1,20 @@
+.adding{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 3;
+    right: 50px;
+    bottom: 50px;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 50px;
+    width: 120px;
+    height: 40px;
+    background-color: var(--aquamarine);
+    /* color: #fff; */
+    cursor: pointer;
+    font-size: 12px;
+    /* text-align: center; */
+    align-items: center;
+}

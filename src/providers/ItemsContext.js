@@ -16,18 +16,19 @@ const ItemsContext = createContext()
 
 
 function ItemsProvider ({children}) {
+    //console.log("ITEM cONTEXT!!!!!")
     const [colors, dispatchColors, updateColors, loadingColors] = useFetchItems(colorsUrl)
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
     const [priorities, dispatchPriorities, updatePriorities, loadingPriorities] = useFetchItems(prioritiesUrl)
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
+    //En dudas de uso ^
+
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
-    const [taks, dispatchTaks, updateTaks, loadingTaks] = useFetchItems(tasksUrl)
     const [timeBlock, dispatchTimeBlock, updateTimeBlock, loadingTimeBlock] = useFetchItems(timeBlockDate)
     const [errorMessage, setErrorMessage] = useState(null)
-
-  
+    console.log("se rerenderiza el contexto",all)
     const section = (id)=> {
         if(!id){
             return []
@@ -40,7 +41,7 @@ function ItemsProvider ({children}) {
         const sectionWithOrderTasks = sectionsInFolder.map((elem)=>{
             const orderString = elem.orders
             const order = orderString.split("|")
-            const copyTasks = []
+            const copyTasks = [] 
             order.forEach((id) => {
               const element = elem.tasksInSections.find((item) => item.id == id);
               if (element) {
@@ -56,15 +57,22 @@ function ItemsProvider ({children}) {
         return sectionWithOrderTasks
     }
     
-    const task = (id) => {
-        const folder = without.find((elem) => {
+    const getItemsWithoutSection = (id) => {
+        if(!id){
+            return []
+        }
+        const folder = all.find((elem)=>{
             return elem.id == id
         })
+        const {blocsInFolder} = folder
+        /*const folder = without.find((elem) => {
+            return elem.id == id
+        })*/
+
         if (!folder){
             return []
         }
-        const {blocsInFolder} = folder
-        //console.log('task()')
+        //console.log('getItemsWithoutSection()')
         return blocsInFolder
     }
 
@@ -76,8 +84,8 @@ function ItemsProvider ({children}) {
         !loadingTags &&
         !loadingColors &&
         !loadingPriorities &&
-        !loadingTaks &&
-        !loadingTimeBlock){
+        !loadingTimeBlock
+        ){
 
         return <ItemsContext.Provider value={
             {inbox, dispatchInbox, updateInbox,
@@ -89,7 +97,7 @@ function ItemsProvider ({children}) {
                 priorities, dispatchPriorities, updatePriorities,
                 //taks, dispatchTaks, updateTaks,
                 timeBlock, dispatchTimeBlock, updateTimeBlock,
-                section, task,
+                section, getItemsWithoutSection,
                 errorMessage, setErrorMessage
             }
             }>

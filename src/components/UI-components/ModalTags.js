@@ -15,7 +15,7 @@ function ModalColors({functions, values}) {
                 colors.map((elem, i) => {
                     if (elem.id == color.id){
                         return (
-                            <div key={i} style={{backgroundColor: `rgba(${elem.color},1)`}} className={'item-color'}
+                            <div key={i} style={{backgroundColor: `rgba(${elem.color},0.5)`}} className={'item-color'}
                     onClick={() => selectColor(elem.id)}>
                         <span className="material-symbols-outlined">check</span>
                     </div>

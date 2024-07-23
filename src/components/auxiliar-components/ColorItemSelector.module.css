@@ -1,0 +1,24 @@
+.colorSelectorContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.colorSelectorContainer > span:first-child{
+    position: absolute;
+    color: #4a90e2;
+}
+.circlesSlider{
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 0 0 0 32px;
+}
+.circle{
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}

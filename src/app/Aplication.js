@@ -13,6 +13,7 @@ import { FunctionTagsProvider } from '../providers/FunctionTags';
 import { ErrorMessage } from '../components/auxiliar-components/ErrorMessage';
 import { FunctionImagesProvider } from '../providers/FuctionImages.provider';
 import { FunctionSubTaskProvider } from '../providers/FunctionSubItem.provider';
+import { TaskModalProvider } from '../providers/TaskModalContext';
 
 function Aplication () {
     return(
@@ -26,11 +27,13 @@ function Aplication () {
         <FunctionImagesProvider>    
         <FunctionSubTaskProvider>  
         <Lateral><Header>
+            <TaskModalProvider>
             <Routes>
                 <Route path='/' element={<Inbox></Inbox>}></Route>
                 <Route path='/home' element={<Dashboard></Dashboard>}></Route>
                 <Route path='/my-projects' element={<MyProjects></MyProjects>}></Route>
             </Routes>
+            </TaskModalProvider>
         </Header></Lateral>
         </FunctionSubTaskProvider>
         </FunctionImagesProvider>

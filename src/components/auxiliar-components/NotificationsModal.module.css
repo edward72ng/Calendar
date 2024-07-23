@@ -1,27 +1,26 @@
-.position-container{
+.positionContainer{
     position: relative;
     width: 100%;
-}
-.button-modal{
-    border-radius: 2px;
-    background-color: #e5e6ea;
     display: flex;
-    align-items: center;
-    border: 0;
-    justify-content: center;
-    font-size: 13px;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #4a90e2;
+}
+.buttonModal{
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
     height: 36px;
     padding: 4px;
     box-sizing: border-box;
-    width: 100%;
     cursor: pointer;
+    padding-left: 32px;
 }
-.added-to-item{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+.positionContainer > span:first-child{
+    position: absolute;
 }
-.sub-modal-container{
+
+.subModalContainer{
     max-width: 100%;
     background-color: #eee;
     border-radius: 8px;
@@ -36,13 +35,13 @@
     display: flex;
     flex-direction: column;
 }
-.alarma-data-item{
+.alarmaDataItem{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
-.generic-button{
+.genericButton{
     padding: 8px;
     border-radius: 4px;
     background-color: #1e90ff;
@@ -52,7 +51,7 @@
     cursor: pointer;
     border: 0;
 }
-.folder-data-item{
+.folderDataItem{
     padding: 4px;
     box-sizing: border-box;
     background-color: #fff;
@@ -69,14 +68,14 @@
     height: 100vh;
     background-color: rgba(0,0,0,0.3); /* fondo oscuro con transparencia */
     z-index: 5;
-  }
-.time-block-items{
+}
+.timeBlockItems{
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-around;
 }
-.time-block-items > span{
+.timeBlockItems > span{
     align-items: center;
     padding: 4px;
 }

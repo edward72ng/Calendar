@@ -358,6 +358,27 @@ class Todos {
         })
         return (block)
     }
+
+    async getItemsForInbox(userId) {
+        const data = await models.todo.findAll({
+            where: {
+                userid: userId,
+                folderid: null,
+                sectionid: null},
+            include: [
+                'evento', 
+                'notifications', 
+                'myPriority', 
+                'mySubtasks', 
+                'myImages',{
+                model: models.tags,
+                as: 'myTags',
+                include: ['myColor']
+        }]})
+        
+        return (data)
+    }
+
 }
 
 module.exports = Todos;

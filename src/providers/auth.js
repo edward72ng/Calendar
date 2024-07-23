@@ -11,6 +11,7 @@ function AuthProvider({ children }) {
   const [error, setError] = useState(null)
 
   const checkLocal = () => {
+    console.log("se ejecuta check local")
     const localToken = localStorage.getItem('MANAGER_TOKEN')
     console.log('REVISANDO LOCALSTORAGE')
     if (localToken){
