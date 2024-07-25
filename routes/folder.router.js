@@ -79,29 +79,41 @@ router.get('/all', async (req, res) => {
             where: {
                 userid: pay.sub
             },
-            include: [{
-                model: models.sections,
-                as: 'sectionsInFolder',
-                include: [
-                    {
-                        model: models.todo,
-                        as: 'tasksInSections',
-                        include: ['evento', 'notifications','myPriority','mySubtasks','myImages',{
-                            model: models.tags,
-                            as: 'myTags',
-                            include: ['myColor']
-                        }]
-                    }
-                ]
-            },
-        {
-            model: models.todo,
-            as: 'blocsInFolder',
-            where: {
-                sectionid: null
-            }
-        }]
-        })
+            include: [
+                {
+                    model: models.sections,
+                    as: 'sectionsInFolder',
+                    include: [
+                        {
+                            model: models.todo,
+                            as: 'tasksInSections',
+                            include: [
+                                'evento',
+                                'notifications',
+                                'myPriority',
+                                'mySubtasks',
+                                'myImages',
+                                {
+                                    model: models.tags,
+                                    as: 'myTags',
+                                    include: ['myColor']
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    model: models.todo,
+                    as: 'blocsInFolder',
+                    where: {
+                        sectionid: null
+                    },
+                    required: false  // Esto asegura que se use LEFT JOIN en lugar de INNER JOIN
+                },
+                'myColor'
+            ]
+        });
+        
         res.json(folders)
     }
 })
@@ -130,6 +142,22 @@ router.get('/without-sections', async (req, res) => {
             }]
         })
         res.json(folders)
+    }
+})
+
+router.get('/my-inbox', async (req, res) => {
+    if (req.headers.authorization){
+        let token = req.headers.authorization;
+        let newToken = token.replace("Bearer ", "");
+        const pay = await authservice.getPayload(newToken)
+
+        const register = await models.userinbox.findAll({
+            where: {
+                userid: pay.sub
+            },
+        })
+
+        res.json(register)
     }
 })
 

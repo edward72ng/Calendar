@@ -7,7 +7,6 @@ const authservice = new AuthService
 
 router.get('/',async (req,res) =>{
     const rsp = await models.colors.findAll()
-    console.log(rsp)
     res.json(rsp)
 })
 

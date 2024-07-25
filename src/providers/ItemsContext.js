@@ -10,30 +10,40 @@ import {
     prioritiesUrl,
     projectsUrl,
     myAll,
-    withoutSections} from "./URLS"
+    withoutSections,
+    myInbox} from "./URLS"
+import { useItems } from "../custom-hooks/useItems";
+import globalState from "../custom-hooks/SingletonGlobalState"
 
 const ItemsContext = createContext()
 
 
 function ItemsProvider ({children}) {
-    //console.log("ITEM cONTEXT!!!!!")
     const [colors, dispatchColors, updateColors, loadingColors] = useFetchItems(colorsUrl)
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
     const [priorities, dispatchPriorities, updatePriorities, loadingPriorities] = useFetchItems(prioritiesUrl)
+    
+
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
+
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     //En dudas de uso ^
 
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
     const [timeBlock, dispatchTimeBlock, updateTimeBlock, loadingTimeBlock] = useFetchItems(timeBlockDate)
     const [errorMessage, setErrorMessage] = useState(null)
-    console.log("se rerenderiza el contexto",all)
-    const section = (id)=> {
+    const [register] =  useFetchItems(myInbox)
+
+    const [updated, loading] = useItems(myAll)
+
+    console.log("se rerenderiza el contexto",globalState.getValue())
+
+    const getSections = (id)=> {
         if(!id){
             return []
         }
-        const folder = all.find((elem)=>{
+        const folder = globalState.getValue().find((elem)=>{
             return elem.id == id
         })
         const {sectionsInFolder} = folder
@@ -53,29 +63,47 @@ function ItemsProvider ({children}) {
                 tasksInSections: copyTasks
             }
         })
-        //console.log('section()')
         return sectionWithOrderTasks
     }
     
-    const getItemsWithoutSection = (id) => {
+    const getWthSection = (id) => {
         if(!id){
             return []
         }
-        const folder = all.find((elem)=>{
+        const folder = globalState.getValue().find((elem)=>{
             return elem.id == id
         })
         const {blocsInFolder} = folder
-        /*const folder = without.find((elem) => {
-            return elem.id == id
-        })*/
 
         if (!folder){
             return []
         }
-        //console.log('getItemsWithoutSection()')
+
         return blocsInFolder
     }
 
+    const getInbox = (id) => {
+        if(!id){
+            return []
+        }
+        const folder = globalState.getValue().find((elem)=>{
+            return elem.id == id
+        })
+        const {blocsInFolder} = folder
+        return blocsInFolder
+    }
+
+    const getFolder = (id) => {
+        const folder = myProjects.find((elem) => {
+            return elem.id == id
+        })
+        return folder
+    }
+
+    const getAllFolders = () => {
+        const folders = globalState.getValue()
+        return folders
+    }
 
     if(!loadingInbox && 
         !loadingMyProjects && 
@@ -84,7 +112,8 @@ function ItemsProvider ({children}) {
         !loadingTags &&
         !loadingColors &&
         !loadingPriorities &&
-        !loadingTimeBlock
+        !loadingTimeBlock && 
+        !loading
         ){
 
         return <ItemsContext.Provider value={
@@ -97,8 +126,10 @@ function ItemsProvider ({children}) {
                 priorities, dispatchPriorities, updatePriorities,
                 //taks, dispatchTaks, updateTaks,
                 timeBlock, dispatchTimeBlock, updateTimeBlock,
-                section, getItemsWithoutSection,
-                errorMessage, setErrorMessage
+                //section, getItemsWithoutSection,
+                errorMessage, setErrorMessage,
+                getSections, getWthSection, getInbox, getFolder, getAllFolders,
+                register
             }
             }>
             {children}

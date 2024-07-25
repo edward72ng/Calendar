@@ -1,59 +1,87 @@
 import React, { useContext, useState } from "react";
 import { ItemsContext } from "../../providers/ItemsContext";
-import { Overlay } from "./Overlay";
-import style from './NotificationsModal.module.css';
 import folderStyle from './FolderModal.module.css'
+import { DataContext } from "../../providers/DataContext";
 
-const { 
-    subModalContainer, 
-    genericButton, 
-    folderDataItem, 
-  } = style;
 
-const { button, positionContainer} = folderStyle
+const {sectionItem, itemInbox, folderDataItem, subModalContainer, button, positionContainer} = folderStyle
 
 function FolderModal ({functions, values}) {
-    const {myProjects} = useContext(ItemsContext)
+    const {folder_id} = useContext(DataContext)
+    const {getAllFolders} = useContext(ItemsContext)
     const [isClosed, setIsClosed] = useState(true)
-    const {thisFolder = {color: "128,128,128", name: "Inbox"}} = values
+    const {thisFolder } = values
+    const folders = getAllFolders()
+console.log(folders)
 
-    
+    const styleFolders = {
+        backgroundColor:`rgba(${thisFolder.myColor.color},0.1)`,
+        border: `2px solid rgba(${thisFolder.myColor.color},1)`,
+        color: `rgba(${thisFolder.myColor.color},1)`}
+
     return (
         <div className={positionContainer}>
             
             <div 
             className={button}
-            style={{
-            backgroundColor:`rgba(${thisFolder.color},0.3)`,
-            border: `2px solid rgba(${thisFolder.color},1)`,
-            color: `rgba(${thisFolder.color},1)`}}
+            style={styleFolders}
             onClick={() => setIsClosed(!isClosed)}>
                 <span className="material-symbols-outlined">folder</span>
-                <span>Inbox</span>
+                <span>{thisFolder.name}</span>
             </div>
         
 
             {!isClosed && <>
-                <Overlay/>
                 <div className={subModalContainer}>
     
                     {
-                        myProjects.map((elem, i) => {
-                            return (
-                                <div 
-                                    key={elem.id}
-                                    className={folderDataItem}>
-                                    {elem.name}
-                                </div>
-                            );
+                         folders.map((elem, i) => {
+                            if(elem.id == folder_id){
+                                return (
+                                    <div 
+                                        key={elem.id}
+                                        className={itemInbox}>
+                                        <span 
+                                        className="material-symbols-outlined">
+                                            archive</span>
+                                        <span>{elem.name}</span>
+                                    </div>
+                                )
+                            }
                         })
                     }
-                    <div
-                        className={genericButton}
-                        onClick={() => setIsClosed(!isClosed)}>
-                        Cancelar
-                    </div>
-                </div>
+
+                    {
+                        folders.map((elem, i) => {
+                            if(elem.id != folder_id){
+                                return (<>
+                                    <div 
+                                        key={elem.id}
+                                        className={folderDataItem}>
+                                        <span 
+                                        className="material-symbols-outlined"
+                                        style={{color: `rgba(${elem.myColor.color},1)`}}>
+                                            tag</span>
+                                        <span>{elem.name}</span>
+                                    </div>
+                                    {
+                                        elem.sectionsInFolder.map((section) => {
+                                            return(<div 
+                                                key={`section${section.id}`}
+                                                className={sectionItem}>
+                                                <span 
+                                                className="material-symbols-outlined">
+                                                    subdirectory_arrow_right</span>
+                                                <span>{section.section}</span>
+                                            </div>)
+                                        })
+                                    }
+                                    </>
+                                )
+                            }
+                        })
+                    }
+                </div> 
             </>}
     
         </div>

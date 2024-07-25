@@ -5,7 +5,7 @@ import { ItemsContext } from '../../providers/ItemsContext';
 import './lateral.css';
 
 function Lateral ({children}) {
-  const {setFilter} = useContext(DataContext)
+  const {setFilter, folder_id} = useContext(DataContext)
   const {myProjects} = useContext(ItemsContext)
   const [showText, setShowText] = useState(false);
   const [open, setOpen] = useState(false)
@@ -32,7 +32,8 @@ function Lateral ({children}) {
         
 
         <Link to='/app/'>
-        <div className={`menu-item ${showText? "show" : ""}`}>
+        <div className={`menu-item ${showText? "show" : ""}`}
+        onClick={() => {setFilter(folder_id)}}>
         <span className={`text ${showText ? "show" : ""}`}>Inbox</span>
         <span className="material-symbols-outlined">archive</span>
         </div>

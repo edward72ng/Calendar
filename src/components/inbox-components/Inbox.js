@@ -7,23 +7,32 @@ import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { reorder } from "../../utils/dragAndDrop";
 import { AddButton } from "../UI-components/AddButton";
 import { TaskModalContext } from "../../providers/TaskModalContext";
+import globalState from "../../custom-hooks/SingletonGlobalState"
+import { useInbox } from "../../custom-hooks/useInbox";
+import { DataContext } from "../../providers/DataContext";
 
 function Inbox () {
-    const {inbox,
-        dispatchInbox: dispatchTasks,
-        updateInbox: refreshTasks,
+    const {//uinbox,
+        //dispatchInbox: dispatchTasks,
+        //updateInbox: refreshTasks,
         myProjects, 
-        updateWithout} = useContext(ItemsContext);
+        updateWithout,
+    getFolder} = useContext(ItemsContext); // el updatewithout ya no debe ser usado, en su lugar se debe remplazar opr un dispatch global 
     const { editTask } = useContext(FunctionTasksContext);
     const {setForm} = useContext(TaskModalContext);
+    const {filter} = useContext(DataContext)
 
-    console.log("se rerenderiza inbox", inbox)
+    const [inbox, dispatchTasks, refreshTasks] = useInbox()
+
+    console.log("se rerenderiza inbox", getFolder(filter))
     
+
     const openTaskForm = () => {
         setForm((prevSate) => {
             return({
                 ...prevSate,
-                open: true
+                open: true,
+                actualFolder: getFolder(filter)
             })
         })
     }

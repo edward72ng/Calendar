@@ -1,10 +1,14 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
+import { ItemsContext } from './ItemsContext'
+
 
 const DataContext = React.createContext()
 
 
 
 function DataProvider ({children}) {
+const {register} = useContext(ItemsContext)
+const {folder_id} = register[0]
 
     const defaultValue = {
         id: null,
@@ -45,7 +49,7 @@ function DataProvider ({children}) {
 
     const [permission, setPermission] = useState(getPermissionValue(worker))
     const [form, setForm] = useState(false)
-	const [filter, setFilter] = useState(null)
+	const [filter, setFilter] = useState(folder_id)
 	const [taskValue, setTaskValue] = useState(defaultValue)
     const [dragInfo, setDragInfo] = useState(initialDragInfo)
 
@@ -89,7 +93,9 @@ function DataProvider ({children}) {
             setDragDefault,
             worker,
             permission,
-            setPermission}}>
+            setPermission,
+            folder_id
+            }}>
 		{children}
 	</DataContext.Provider>
 }

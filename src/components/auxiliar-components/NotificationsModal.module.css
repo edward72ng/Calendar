@@ -22,15 +22,17 @@
 
 .subModalContainer{
     max-width: 100%;
-    background-color: #eee;
-    border-radius: 8px;
-    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    background-color: #fff;
+    border-radius: 4px;
+    /*box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
             0px 1px 5px 0px rgba(0, 0, 0, 0.12),
-            0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+            0px 3px 1px -2px rgba(0, 0, 0, 0.2);*/
     position: absolute;
     padding: 8px;
-    right: 0;
+    border: 1px solid lightgray;
+    left: 0;
     bottom: 100%;
+    width: 260px; 
     z-index: 20;
     display: flex;
     flex-direction: column;

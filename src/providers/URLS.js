@@ -9,6 +9,7 @@ const prioritiesUrl = '/api/v1/priorities/'
 const projectsUrl = '/api/v1/folders/me' //obtiene solo folders
 const myAll = '/api/v1/folders/all' //obtiene folders con todas las tareas
 const withoutSections = '/api/v1/folders/without-sections'
+const myInbox = '/api/v1/folders/my-inbox'
 
 const imagesBaseUrl = 'api/v1/images/'
 const subTasksBaseUrl = '/api/v1/subtasks/'
@@ -35,4 +36,5 @@ export {
     funcTaksBaseUrl,
     funcFoldersUrl,
     funcSectionsBaseUrl,
-    reloadSectionsUrl}
+    reloadSectionsUrl,
+    myInbox}

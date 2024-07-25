@@ -17,6 +17,7 @@ import { AddImage } from "./AddImage";
 import { ColorItemSelector } from "./ColorItemSelector";
 import { FolderModal } from "./FolderModal";
 import { TaskModalContext } from "../../providers/TaskModalContext";
+import { DataContext } from "../../providers/DataContext";
 
 const {inputDetails, 
   inputTittle,
@@ -37,18 +38,19 @@ const initialstate = {
 } 
 
 function FormCreate ({functions, values}) {
-    const {isClosing} = values
+    const {isClosing, actualFolder} = values
     const {dispatchTasks} = functions
     
     const {setErrorMessage} = useContext(ItemsContext)
     const {setForm} = useContext(TaskModalContext)
     const { createTask } = useContext(FunctionTasksContext)
+    const {filter} = useContext(DataContext)
 
     const [recomended, setRecomended] = useState(false)
     const [content, setContent] = useState('')
     const [details, setDetails] = useState('')
     const [state, setState] = useState(initialstate);
-
+  console.log(actualFolder)
     useEffect(() => {
       const formCreate = document.getElementById("form-create")
       if(isClosing){
@@ -139,7 +141,7 @@ function FormCreate ({functions, values}) {
         </div>
         
         <div className={formContainer}>
-            <FolderModal values={{thisFolder: undefined}}/>
+            <FolderModal values={{thisFolder: actualFolder}}/>
 
             <input 
             className={inputTittle} 

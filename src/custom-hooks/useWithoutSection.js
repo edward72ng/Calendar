@@ -32,11 +32,11 @@ function reducer (state, action) {
 
 function useWithoutSection(){
     const {filter} = useContext(DataContext)
-    const {all, getItemsWithoutSection, without, updateWithout} = useContext(ItemsContext)
+    const {all, getWthSection, without, updateWithout} = useContext(ItemsContext)
 	const [state, dispatch] = useReducer(reducer, [])
 
     useEffect(()=>{
-        dispatch({type: 'SET', payload: {body:getItemsWithoutSection(filter)}})
+        dispatch({type: 'SET', payload: {body:getWthSection(filter)}})
     }, [filter, without, all])
 
 		const update = async () => {

@@ -18,18 +18,18 @@ function TaskModalProvider ({children}) {
     const [form, setForm] = useState(defaultValue)
 
     const getDispatchTaskType = () => {
-        if(form.actualFolder == undefined){
             return dispatchInbox;
-        }
     };
 	
+    console.log(form.actualFolder)
+
 	return <TaskModalContext.Provider
 			value = {
             {setForm}}>
         {form.open && 
         <FormCreate 
         values={{
-            thisFolder: form.actualFolder,
+            actualFolder: form.actualFolder,
             isClosed: false,}}
         functions={{
             dispatchTasks: getDispatchTaskType()

@@ -33,22 +33,19 @@ function reducer (state, action) {
     }
 }
 
-function useSection(){
-        const {filter} = useContext(DataContext)
-        const {getSections, all} = useContext(ItemsContext)
+function useInbox(){
+        const {getInbox} = useContext(ItemsContext)
+        const {folder_id} = useContext(DataContext)
+
 		const [state, dispatch] = useReducer(reducer, [])
 	
     useEffect(()=>{
-        dispatch({type: 'SET', payload: {body:getSections(filter)}})
+        dispatch({type: 'SET', payload: {body:getInbox(folder_id)}})
+    }, [])
 
-    }, [filter])
-
-    useEffect(()=>{
-        dispatch({type: 'SET', payload: {body:getSections(filter)}})
-    }, [all])
   
 
-		const update = async (url) => {
+		const update = async (url) => {//peticion del inbox
 				const res = await fetch(url,{
 						method: 'GET',
 						//headers: {auth}
@@ -62,4 +59,4 @@ function useSection(){
 		
 }
 
-export {useSection}
+export {useInbox}

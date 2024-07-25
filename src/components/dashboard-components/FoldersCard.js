@@ -9,6 +9,7 @@ import './sliderFolders.css';
 function FoldersCard () {
     const [open, setOpen] = useState(false)
     const {myProjects, dispatchMyProjects, updateMyProjects} = useContext(ItemsContext)
+    const {folder_id} = useContext(DataContext)
     const {setFilter} = useContext(DataContext)
 
     const colors = ['#fff8b9','#e2f6d3','#b4ded4','#afccdc','#f29f75']
@@ -17,11 +18,13 @@ function FoldersCard () {
         {
             myProjects.map((elem, i)=>{
                 const {id, name} = elem
-                return (
+                if(id != folder_id){
+                    return (
                     
-                    <FolderItem  key={id} values={elem}></FolderItem>
-                    
-                )
+                        <FolderItem  key={id} values={elem}></FolderItem>
+                        
+                    )
+                }
             })
         }
         <div className="slider-item" >
