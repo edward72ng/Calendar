@@ -4,13 +4,13 @@ import { EditItem } from "./EditItem";
 
 function OneItem ({values, functions}){
     const {id, content, details, evento, sectionid, folderid} = values
-    const {refreshTasks, dispatchTasks} = functions
+    const { dispatchTasks} = functions
     const [edit, setEdit] = useState(false)
     
     if(edit){
       return <EditItem
       values={values}
-      functions={{refreshTasks, setEdit, dispatchTasks}}></EditItem>
+      functions={{ setEdit, dispatchTasks}}></EditItem>
     }
 
     return <VisualItem

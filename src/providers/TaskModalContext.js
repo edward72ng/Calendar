@@ -6,7 +6,7 @@ const TaskModalContext = React.createContext()
 
 const defaultValue = {
     open: false,
-    actualFolder: undefined, //undifined se interpreta como "inbox"
+    actualFolder: undefined, //el filter toma como valor inicial el inboxId
     section: undefined,
     eventDay: undefined,
     setPreviousDataCallback: undefined, //function
@@ -26,6 +26,7 @@ function TaskModalProvider ({children}) {
 	return <TaskModalContext.Provider
 			value = {
             {setForm}}>
+
         {form.open && 
         <FormCreate 
         values={{
@@ -36,6 +37,7 @@ function TaskModalProvider ({children}) {
 
         }}/>  
         } 
+        
 		{children}
 	</TaskModalContext.Provider>
 }

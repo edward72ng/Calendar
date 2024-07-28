@@ -7,17 +7,19 @@ import { DataContext } from "../../providers/DataContext";
 const {sectionItem, itemInbox, folderDataItem, subModalContainer, button, positionContainer} = folderStyle
 
 function FolderModal ({functions, values}) {
+    const {changeFolderSection} = functions
     const {folder_id} = useContext(DataContext)
     const {getAllFolders} = useContext(ItemsContext)
     const [isClosed, setIsClosed] = useState(true)
     const {thisFolder } = values
     const folders = getAllFolders()
-console.log(folders)
+
+console.log('REVISA', folders)
 
     const styleFolders = {
         backgroundColor:`rgba(${thisFolder.myColor.color},0.1)`,
-        border: `2px solid rgba(${thisFolder.myColor.color},1)`,
-        color: `rgba(${thisFolder.myColor.color},1)`}
+        border: `2px solid rgba(${thisFolder.myColor.color},0.6)`,
+        color: `rgba(${thisFolder.myColor.color},0.7)`}
 
     return (
         <div className={positionContainer}>
@@ -40,7 +42,8 @@ console.log(folders)
                                 return (
                                     <div 
                                         key={elem.id}
-                                        className={itemInbox}>
+                                        className={itemInbox}
+                                        onClick={() =>{changeFolderSection(elem, elem.id, null)}}>
                                         <span 
                                         className="material-symbols-outlined">
                                             archive</span>
@@ -57,7 +60,8 @@ console.log(folders)
                                 return (<>
                                     <div 
                                         key={elem.id}
-                                        className={folderDataItem}>
+                                        className={folderDataItem}
+                                        onClick={() =>{changeFolderSection(elem, elem.id, null)}}>
                                         <span 
                                         className="material-symbols-outlined"
                                         style={{color: `rgba(${elem.myColor.color},1)`}}>
@@ -68,7 +72,8 @@ console.log(folders)
                                         elem.sectionsInFolder.map((section) => {
                                             return(<div 
                                                 key={`section${section.id}`}
-                                                className={sectionItem}>
+                                                className={sectionItem}
+                                                onClick={() => {changeFolderSection(elem, elem.id, section.id)}}>
                                                 <span 
                                                 className="material-symbols-outlined">
                                                     subdirectory_arrow_right</span>

@@ -18,6 +18,7 @@ import globalState from "../custom-hooks/SingletonGlobalState"
 const ItemsContext = createContext()
 
 
+
 function ItemsProvider ({children}) {
     const [colors, dispatchColors, updateColors, loadingColors] = useFetchItems(colorsUrl)
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
@@ -82,16 +83,7 @@ function ItemsProvider ({children}) {
         return blocsInFolder
     }
 
-    const getInbox = (id) => {
-        if(!id){
-            return []
-        }
-        const folder = globalState.getValue().find((elem)=>{
-            return elem.id == id
-        })
-        const {blocsInFolder} = folder
-        return blocsInFolder
-    }
+   
 
     const getFolder = (id) => {
         const folder = myProjects.find((elem) => {
@@ -128,7 +120,7 @@ function ItemsProvider ({children}) {
                 timeBlock, dispatchTimeBlock, updateTimeBlock,
                 //section, getItemsWithoutSection,
                 errorMessage, setErrorMessage,
-                getSections, getWthSection, getInbox, getFolder, getAllFolders,
+                getSections, getWthSection, getFolder, getAllFolders,
                 register
             }
             }>

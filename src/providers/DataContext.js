@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import { ItemsContext } from './ItemsContext'
-
+import globalState from '../custom-hooks/SingletonGlobalState'
 
 const DataContext = React.createContext()
 
@@ -9,6 +9,7 @@ const DataContext = React.createContext()
 function DataProvider ({children}) {
 const {register} = useContext(ItemsContext)
 const {folder_id} = register[0]
+
 
     const defaultValue = {
         id: null,

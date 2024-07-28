@@ -18,7 +18,7 @@ import { TimeBlockModal } from "../auxiliar-components/TimeBlockModal";
 
 function EditItem ({values, functions}){
     const {id, content, details, evento, sectionid, folderid, notifications, myTags, myImages} = values
-    const {refreshTasks, dispatchTasks, setEdit} = functions
+    const {dispatchTasks, setEdit} = functions
 
     const [error, setError] = useState(false)
     const {updateWithout, setErrorMessage} = useContext(ItemsContext)
@@ -90,7 +90,6 @@ function EditItem ({values, functions}){
       
         editTask({...values,...editValues, ...options}, (data) => {
           
-          refreshTasks();
           updateWithout();
 
           
@@ -104,7 +103,6 @@ function EditItem ({values, functions}){
       dispatchTasks({type: 'DELETE', payload: {id: id}})
       
         deleteTask(id, (data) => {
-          refreshTasks();
           updateWithout();
 
           

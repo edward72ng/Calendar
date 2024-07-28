@@ -12,7 +12,7 @@ const schemaPrioritiesSeq = {
         type: DataTypes.INTEGER.UNSIGNED,
         
     },
-    prioriti: {
+    priority: {
         type: DataTypes.STRING,
         allowNull: false
     },

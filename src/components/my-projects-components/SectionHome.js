@@ -8,17 +8,24 @@ import { DataContext } from "../../providers/DataContext";
 import { FunctionTasksContext } from "../../providers/FunctionTasks.provider";
 import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 import {reloadSectionsUrl} from '../../providers/URLS'
-
-function getRamdon(max, min) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
+import { useItem } from "../../custom-hooks/useItem";
+import globalState from '../../custom-hooks/SingletonGlobalState'
 
 function SectionHome({dataValues, functions, index}) {
     const {id, section, tasksInSections, orders} = dataValues
+    const  [items, dispatchItems] = useItem(tasksInSections)
+    const {refreshSections, dispatchSections} = functions
+
+    globalState.setMoreFunctions({
+      id: id,
+      dispatch: dispatchItems,
+      dispatchSections: dispatchSections
+    })
+
+
 
     //console.log('RENDER',copyTasks)
-    const {refreshSections, dispatchSections} = functions
+    
     const {socket} = useContext(SocketContext)
    
     //const [task, dispatchTasks ,refreshTasks] = useUpdate(tasksInSections)
@@ -71,7 +78,7 @@ function SectionHome({dataValues, functions, index}) {
               style= {{marginBottom: "4px"}}
             >
 
-            {tasksInSections.map((elem, i) => (
+            {items.map((elem, i) => (
                 <Draggable key={elem.id? elem.id : 'Provitional DragId'} 
                 draggableId={String(elem.id)} index={i}>
                 {(provided) => (

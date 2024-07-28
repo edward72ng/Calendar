@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import { Overlay } from "./Overlay";
 import style from './NotificationsModal.module.css';
 import { ItemsContext } from "../../providers/ItemsContext";
+import styleTagModal from "./TagModal.module.css"
 
 const { 
     positionContainer, 
     buttonModal, 
     materialSymbolsOutlined, 
-    subModalContainer, 
     alarmaDataItem, 
     genericButton, 
     folderDataItem, 
@@ -15,6 +15,11 @@ const {
     timeBlockItems, 
     timeBlockItemsSpan 
   } = style;
+
+const {
+itemTag,
+subModalContainer
+} = styleTagModal
 
 function TagModal ({functions, values}) {
     const {tags}= useContext(ItemsContext)
@@ -47,19 +52,17 @@ function TagModal ({functions, values}) {
     
             {!isClosed && (
                 <>
-                    <Overlay />
                     <div className={subModalContainer}>
                 {
                     tags.map((elem, i)=>{
                         return(
                         <div key={elem.id} 
-                        className={folderDataItem}
+                        className={itemTag}
                         style={{
-                        backgroundColor: `rgba(${elem.myColor?.color ? elem.myColor.color: '204,204,204'},0.1)`,
-                        color: `rgba(${elem.myColor?.color ? elem.myColor.color: '204,204,204'},1)`
-                        
-                        }}>
-                          {elem.tag}
+                        color: `rgba(${elem.myColor?.color ? elem.myColor.color: '204,204,204'},1)`}}>
+                            <span className="material-symbols-outlined">
+                                sell</span>
+                            <span>{elem.tag}</span>
                         </div>
                           )
                       })

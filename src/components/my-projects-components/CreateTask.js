@@ -60,7 +60,13 @@ function CreateTask ({functions, dataValues}) {
             copyTasks.pop()
             copyTasks.push(data)
             console.log('RECIPERANDO ID ANTES DE EDTAR SECCION')
-            dispatchTasks({type: 'UPDATE', payload:{id:id ,body: {tasksInSections: copyTasks, orders: stringOrder}}})
+            dispatchTasks({type: 'UPDATE',
+                 payload:
+                 {
+                    id:id ,
+                    body: {
+                        tasksInSections: copyTasks, 
+                        orders: stringOrder}}})
 
             editSection(id, {orders: stringOrder}, () => {
                 

@@ -18,6 +18,8 @@ import { ColorItemSelector } from "./ColorItemSelector";
 import { FolderModal } from "./FolderModal";
 import { TaskModalContext } from "../../providers/TaskModalContext";
 import { DataContext } from "../../providers/DataContext";
+import globalState from '../../custom-hooks/SingletonGlobalState'
+import {v4 as uuidv4 } from 'uuid'
 
 const {inputDetails, 
   inputTittle,
@@ -25,32 +27,43 @@ const {inputDetails,
   formcreateContainer,
   formContainer,
   addButtons} = formCreateStyle
-const initialstate = {
-  event: "",
-  date: "",
-  time: "",
-  notifications: [],
-  folder: null,
-  myTags:[],
-  myPriority: {
-    id: null
-  }
-} 
+
+import {itemBase} from "../../utils/baseFormat" 
+import { getOrderInOneSection } from "../../providers/getFunctions";
+import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provider";
+
+
 
 function FormCreate ({functions, values}) {
     const {isClosing, actualFolder} = values
-    const {dispatchTasks} = functions
     
-    const {setErrorMessage} = useContext(ItemsContext)
+    const initialstate = {
+      event: "",
+      date: "",
+      time: "",
+      notifications: [],
+      folder: actualFolder,
+      folderid: actualFolder.id,
+      myTags:[],
+      myPriority: {
+        id: null
+      },
+      sectionid: null
+    } 
+
     const {setForm} = useContext(TaskModalContext)
     const { createTask } = useContext(FunctionTasksContext)
+    const {editSection} = useContext(FunctionSectionsContext)
     const {filter} = useContext(DataContext)
 
-    const [recomended, setRecomended] = useState(false)
+    
     const [content, setContent] = useState('')
     const [details, setDetails] = useState('')
+
     const [state, setState] = useState(initialstate);
-  console.log(actualFolder)
+
+    console.log(actualFolder)
+
     useEffect(() => {
       const formCreate = document.getElementById("form-create")
       if(isClosing){
@@ -89,51 +102,128 @@ function FormCreate ({functions, values}) {
         
       };
 
-    const setTask = () => {
+    const addItemInGS =  (uuid, path) => {
+      const item = {
+        ...itemBase,
+        content: content,
+        details: details,
+        id: uuid,
+        folderid: state.folderid,
+        sectionid: state.sectionid
+      }
+      globalState.addItemInValue(path, item)
+    }
+
+    const getPath = () =>{
+      if(!state.sectionid){//sea null o undefined
+        return[state.folderid, 'blocsInFolder']
+      }else{
+        return[state.folderid, 'sectionsInFolder', state.sectionid, 'tasksInSections']
+      }
       
-      //crear para el estado interno
+    }
+
+    const setTask = () => {
+
+      const uuid = uuidv4()
+      let stringOrder = ''
+
+      if(state.sectionid){
+        const orderInSection = getOrderInOneSection(state.folderid, state.sectionid)
+        
+        const newOrder = orderInSection.split("|") 
+        newOrder.push(uuid)
+        stringOrder = newOrder.join("|")
+      }
+
+      
+      const path = getPath() 
+      
+      if(filter == state.folderid){
+
+        const [dispatchTasks, dispatchSections] = globalState.getDispatch(state.sectionid)  
+        
+        if(state.sectionid){
+          dispatchSections(
+            {type: 'UPDATE', 
+              payload:{
+                id:state.sectionid,
+                body: {
+                  orders: stringOrder
+                }}})
+        }
+
         dispatchTasks(
           {type: 'CREATE', 
           payload:{
             body: {
-              id: 'provitionalid',
+              id: uuid,
               content, 
               details, 
+              folderid: state.folderid,
               evento: state.event ? {event: state.event} : null, 
               myTags: state.myTags, 
               myPriority: state.myPriority}}})
-        setContent('')
-        setDetails('')
-        setState(initialstate)
-          
+
+      }
+
+     
+      
+
+        
+        
+        
+        
         //crear para la base de datos
         createTask({
+            id: uuid,
             content, 
             details, 
+            folderid: state.folderid,
             event: state.event, 
             notifications: state.notifications, 
             myTags : state.myTags, 
-            priorityid: state.myPriority?.id
+            priorityid: state.myPriority?.id,
+            sectionid: state.sectionid
           }, (data) => {
-            console.log('RECUPERANDO ID')
-            dispatchTasks({type: 'UPDATE', payload: {id: 'provitionalid', body: data}})
+            
+            
+            if(state.sectionid){
+              globalState.changeOrderSection(state.folderid, state.sectionid, stringOrder)
+              editSection(state.sectionid, {orders: stringOrder}, () => {
+              })
+            }
+            addItemInGS(uuid, path)
+            
+            //console.log('RECUPERANDO ID')
+            //dispatchTasks({type: 'UPDATE', payload: {id: 'provitionalid', body: data}})
           })
-        setRecomended(false)
-
-     
-        
+          setContent('')
+          setDetails('')
+          setState(initialstate)
       }
     
-    const viewRecomended = () => {
-      if(content.length > 2){
-        setRecomended(true)
-      }
+ 
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      setTask()
     }
 
-    console.log("TAGS:",state.myTags)
+    const changeFolderSection = (folder, folderid, sectionid) => {
+      setState((prev) => {
+        return({
+          ...prev,
+          folderid: folderid,
+          sectionid: sectionid,
+          folder: folder
+        })
+      })
+    }
+
     return (
       <Modal>
-        <div className={formcreateContainer} id="form-create">
+        <div  className={formcreateContainer} id="form-create">
      
         <div className={headerButtons}>
         <CancelButton text={"Cerrar"} onClick={()=>{setForm((prevState) => !prevState)}}/>
@@ -141,7 +231,9 @@ function FormCreate ({functions, values}) {
         </div>
         
         <div className={formContainer}>
-            <FolderModal values={{thisFolder: actualFolder}}/>
+            <FolderModal 
+            values={{thisFolder: state.folder}}
+            functions={{changeFolderSection}}/>
 
             <input 
             className={inputTittle} 
@@ -149,10 +241,10 @@ function FormCreate ({functions, values}) {
             placeholder="Contenido"
             value={content}
             onChange = { (e) => setContent(e.target.value)}></input>
-            <textarea className={inputDetails} 
+            <input className={inputDetails} 
             placeholder="Detalles"
             value={details}
-            onChange = { (e) => setDetails(e.target.value)}></textarea>
+            onChange = { (e) => setDetails(e.target.value)}></input>
 
             <EventScheduler/>
 
@@ -173,6 +265,19 @@ function FormCreate ({functions, values}) {
 } 
 
 export {FormCreate}
+
+/**
+ * const [recomended, setRecomended] = useState(false)
+ */
+
+/**
+ *    const viewRecomended = () => {
+      if(content.length > 2){
+        setRecomended(true)
+      }
+    }
+ */
+
 /**
  *  /*recomended &&
         <Recomended question={content} functions={{handleAddTag}}></Recomended>

@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react'
-import { DataContext } from '../providers/DataContext';
-import { ItemsContext } from '../providers/ItemsContext';
-import {getInbox} from '../providers/getFunctions'
 
 function reducer (state, action) {
     switch (action.type) {
@@ -34,17 +31,11 @@ function reducer (state, action) {
     }
 }
 
-
-
-function useInbox(){
-        const {folder_id} = useContext(DataContext)
-        const itemsInInbox = getInbox(folder_id)
-        
-    console.log('USando use inbox', itemsInInbox)
-		const [state, dispatch] = useReducer(reducer, itemsInInbox)
+function useItem(items){
+	const [state, dispatch] = useReducer(reducer, items)
 		
 		return [state, dispatch]
 		
 }
 
-export {useInbox}
+export {useItem}

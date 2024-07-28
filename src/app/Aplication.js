@@ -25,16 +25,18 @@ function Aplication () {
         <FunctionSectionsProvider>  
         <FunctionTagsProvider>
         <FunctionImagesProvider>    
-        <FunctionSubTaskProvider>  
+        <FunctionSubTaskProvider>
+        <TaskModalProvider>
         <Lateral><Header>
-            <TaskModalProvider>
+            
             <Routes>
                 <Route path='/' element={<Inbox></Inbox>}></Route>
                 <Route path='/home' element={<Dashboard></Dashboard>}></Route>
                 <Route path='/my-projects' element={<MyProjects></MyProjects>}></Route>
             </Routes>
-            </TaskModalProvider>
+            
         </Header></Lateral>
+        </TaskModalProvider>
         </FunctionSubTaskProvider>
         </FunctionImagesProvider>
         </FunctionTagsProvider>

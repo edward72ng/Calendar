@@ -10,10 +10,10 @@ function getforSection(id, arr){
     return [section, tasksInSections, orderArray]
 }
 
-const reorder = (arr, origin, destination) => {
+const reorder = (arr, origin, destinationIndex) => {
     const result = [...arr]
     const [removed] = result.splice(origin, 1)
-    result.splice(destination, 0, removed)
+    result.splice(destinationIndex, 0, removed)
   
     return result
   }

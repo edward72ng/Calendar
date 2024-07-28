@@ -12,30 +12,22 @@ import { useInbox } from "../../custom-hooks/useInbox";
 import { DataContext } from "../../providers/DataContext";
 
 function Inbox () {
-    const {//uinbox,
-        //dispatchInbox: dispatchTasks,
-        //updateInbox: refreshTasks,
+    const {
         myProjects, 
         updateWithout,
     getFolder} = useContext(ItemsContext); // el updatewithout ya no debe ser usado, en su lugar se debe remplazar opr un dispatch global 
     const { editTask } = useContext(FunctionTasksContext);
-    const {setForm} = useContext(TaskModalContext);
     const {filter} = useContext(DataContext)
+ 
+    const [inbox, dispatchTasks] = useInbox()
 
-    const [inbox, dispatchTasks, refreshTasks] = useInbox()
-
-    console.log("se rerenderiza inbox", getFolder(filter))
-    
-
-    const openTaskForm = () => {
-        setForm((prevSate) => {
-            return({
-                ...prevSate,
-                open: true,
-                actualFolder: getFolder(filter)
-            })
-        })
-    }
+    globalState.setFolder(filter)
+    globalState.setFirstFunction({
+        id: null,
+        dispatch: dispatchTasks,
+        dispatchSection: null
+    })
+    console.log('EL DISPATCH QUE ENVIE', dispatchTasks)
 
     const onDragEnd = (values) => {
         const { source, destination, draggableId } = values
@@ -77,7 +69,7 @@ function Inbox () {
                 {...provided.dragHandleProps}>
                     <OneItem
                     values={elem}
-                    functions = {{refreshTasks, dispatchTasks}}>
+                    functions = {{dispatchTasks}}>
                     </OneItem>
                   </div>
                 )}
@@ -113,8 +105,6 @@ function Inbox () {
         </div>
 
         </DragDropContext>
-
-        <AddButton clickFunction={openTaskForm}/>
     </div>
 }
 

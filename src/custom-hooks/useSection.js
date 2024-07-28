@@ -36,16 +36,15 @@ function reducer (state, action) {
 function useSection(){
         const {filter} = useContext(DataContext)
         const {getSections, all} = useContext(ItemsContext)
-		const [state, dispatch] = useReducer(reducer, [])
+    const sectionItems = getSections(filter)
+
+		const [state, dispatch] = useReducer(reducer, sectionItems)
 	
     useEffect(()=>{
         dispatch({type: 'SET', payload: {body:getSections(filter)}})
 
     }, [filter])
 
-    useEffect(()=>{
-        dispatch({type: 'SET', payload: {body:getSections(filter)}})
-    }, [all])
   
 
 		const update = async (url) => {

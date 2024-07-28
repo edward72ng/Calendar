@@ -3,10 +3,17 @@ import { useWithoutSection } from "../../custom-hooks/useWithoutSection";
 import { OneItem } from "../inbox-components/OneItem";
 import { DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 import { DataContext } from "../../providers/DataContext";
+import globalState from '../../custom-hooks/SingletonGlobalState'
 
 function WithoutSection({values, functions}) {
     const {task} = values
     const {dispatchTasks, refreshTasks} = functions
+
+    globalState.setFirstFunction({
+      id : null,
+      dispatch: dispatchTasks,
+      dispatchSection: null
+    })
 
     if(task.length < 1){
         return <></>
