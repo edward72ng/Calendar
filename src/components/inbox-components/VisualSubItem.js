@@ -27,7 +27,7 @@ function VisualSubItem({values, functions}) {
 
 
    
-          return(<div className="visual-item-container appear">
+          return(<div className="visual-item-container">
           {completed ?
             <i className="material-icons"
             >check_circle</i>

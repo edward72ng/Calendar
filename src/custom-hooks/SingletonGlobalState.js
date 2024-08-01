@@ -27,30 +27,33 @@ class GlobalState {
   setFirstFunction(funct){
     this.functions.dispatchs = []
     this.functions.dispatchs.push(funct)
-    console.log('COMPLETO FIRST',this.functions)
+    ////console.log('COMPLETO FIRST',this.functions)
   }
   setMoreFunctions(funct){
     this.functions.dispatchs.push(funct)
-    console.log('COMPLETO MORE',this.functions)
+    ////console.log('COMPLETO MORE',this.functions)
   }
 
   getDispatch(sectionId){
+    const items =  this.functions.dispatchs.find(elem => elem.id == sectionId)?.items
     const dispatch =  this.functions.dispatchs.find(elem => elem.id == sectionId)?.dispatch
     const dispatchSections = this.functions.dispatchs.find(elem => elem.id == sectionId)?.dispatchSections
-    return [dispatch, dispatchSections]
+    const order = this.functions.dispatchs.find(elem => elem.id == sectionId)?.order
+    //const setAnimation = this.functions.dispatchs.find(elem => elem.id == sectionId)?.setAnimation
+    return [dispatch, dispatchSections, items, order]
   }
   getUsingPath(path, arrayState){
-    console.log('PATH', path)
+    ////console.log('PATH', path)
     if(path.length == 0){
       return arrayState
     }else{
       const idPath = path.shift()
-      console.log('THIS ARRSTATE', arrayState)
+      ////console.log('THIS ARRSTATE', arrayState)
       const objItem = arrayState.find(elem => elem.id == idPath)
-      console.log(objItem, idPath)
+      ////console.log(objItem, idPath)
       const objPath = path.shift()
       const arrItems = objItem[objPath]
-      console.log('THIS ARRITEMS', arrItems)
+      ////console.log('THIS ARRITEMS', arrItems)
 
       return this.getUsingPath(path, arrItems)
     }
@@ -66,10 +69,22 @@ class GlobalState {
   addItemInValue(path, newItem){
     //path: [31,'blocksInfolder']
     //path: [3,'sectionsInFolder', 12, 'tasksInSection']
-    console.log('THISVALUE DE ADDITEMSING', this.value)
+    //console.log('THISVALUE DE ADDITEMSING', this.value)
     const arrItems = this.getUsingPath(path, this.value)
-    console.log(arrItems)
+    //console.log(arrItems)
     arrItems.push(newItem)
+  }
+
+  deleteItemInValue(path, id){
+    //path: [31,'blocksInfolder']
+    //path: [3,'sectionsInFolder', 12, 'tasksInSection']
+    //console.log('THISVALUE DE DELETEITEMSING', this.value)
+    const arrItems = this.getUsingPath(path, this.value)
+    //console.log(arrItems)
+    const index = arrItems.findIndex(elem => elem.id == id)
+    if(index != -1){
+      arrItems.splice(index, 1)
+    }
   }
 
 }

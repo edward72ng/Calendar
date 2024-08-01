@@ -24,7 +24,7 @@ function AddButton () {
           return () => {
             document.removeEventListener('keydown', handleKeyDown);
           };
-    },[])
+    },[filter])
 
     const openTaskForm = (folder) => {
         setForm((prevSate) => {

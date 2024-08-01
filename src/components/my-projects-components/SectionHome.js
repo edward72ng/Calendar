@@ -15,11 +15,14 @@ function SectionHome({dataValues, functions, index}) {
     const {id, section, tasksInSections, orders} = dataValues
     const  [items, dispatchItems] = useItem(tasksInSections)
     const {refreshSections, dispatchSections} = functions
+  console.log(section)
 
     globalState.setMoreFunctions({
       id: id,
       dispatch: dispatchItems,
-      dispatchSections: dispatchSections
+      items: items,
+      dispatchSections: dispatchSections,
+      order: orders.split("|").filter(elem => elem !== '')
     })
 
 
@@ -87,7 +90,7 @@ function SectionHome({dataValues, functions, index}) {
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}>
                     <OneItemWithSection key={elem.id? elem.id : 'Provitional TaskId'} 
-                    values={{...elem, tasksInSections, orders}}
+                    values={{...elem, tasksInSections, orders, dataValues}}
                     functions = {{refreshSections, dispatchSections}}>
                     </OneItemWithSection>
                   </div>

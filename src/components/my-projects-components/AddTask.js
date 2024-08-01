@@ -1,22 +1,32 @@
-import React, { useState } from "react";
-import { CreateTask } from "./CreateTask";
+import React, { useContext, useState } from "react";
+import { TaskModalContext } from "../../providers/TaskModalContext";
+import { ItemsContext } from "../../providers/ItemsContext";
+import { DataContext } from "../../providers/DataContext";
 
 function AddTask({dataValues, functions}) {
-  const {id} = dataValues
-  const {dispatchTasks, refreshTasks} = functions
-  const [open, setOpen] = useState(false)
+  const section = dataValues
 
-  if(!open){
-    return <div className="add-task">
+  const {getFolder} = useContext(ItemsContext);
+    const {setForm} = useContext(TaskModalContext)
+    const {filter} = useContext(DataContext)
+
+  const openForm =  () => {
+    setForm((prevSate) => {
+      return({
+        ...prevSate,
+        open: true,
+        actualFolder: getFolder(filter),
+        actualSection: section
+      })
+    })
+  }
+
+  return <div className="add-task">
     <div>Añadir Tarea</div>
     <span className="material-symbols-outlined"
-    onClick={() => setOpen(true)}>add</span>
+    onClick={() => openForm()}>add</span>
   </div>
-  }else{
-    return <CreateTask 
-    dataValues={dataValues}
-    functions= {{...functions, setOpen}}></CreateTask>
-  }
+
   
 }
 

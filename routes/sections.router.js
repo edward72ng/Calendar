@@ -15,8 +15,9 @@ router.put('/:sectionId',async (req, res)=>{
 
     console.log(sectionId)
     const sectionGet = await models.sections.findByPk(sectionId)
-    console.log('ACTUALIZANDO !!!!!!!!')
+    console.log('ACTUALIZANDO !!!!!!!!', req.body)
     const resp = await sectionGet.update(req.body)
+
     res.json(resp)
 })
 

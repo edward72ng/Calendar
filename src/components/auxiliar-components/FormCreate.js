@@ -35,8 +35,10 @@ import { FunctionSectionsContext } from "../../providers/FuntionSeccions.provide
 
 
 function FormCreate ({functions, values}) {
-    const {isClosing, actualFolder} = values
+    const {isClosing, actualFolder, actualSection} = values
     
+  console.log('ACTUAL SECT', actualSection)
+
     const initialstate = {
       event: "",
       date: "",
@@ -48,7 +50,8 @@ function FormCreate ({functions, values}) {
       myPriority: {
         id: null
       },
-      sectionid: null
+      section: actualSection || null,
+      sectionid: actualSection?.id || null
     } 
 
     const {setForm} = useContext(TaskModalContext)
@@ -210,13 +213,14 @@ function FormCreate ({functions, values}) {
       setTask()
     }
 
-    const changeFolderSection = (folder, folderid, sectionid) => {
+    const changeFolderSection = (folder, folderid, section, sectionid) => {
       setState((prev) => {
         return({
           ...prev,
           folderid: folderid,
           sectionid: sectionid,
-          folder: folder
+          folder: folder,
+          section: section
         })
       })
     }
@@ -232,7 +236,9 @@ function FormCreate ({functions, values}) {
         
         <div className={formContainer}>
             <FolderModal 
-            values={{thisFolder: state.folder}}
+            values={{
+              thisFolder: state.folder,
+              thisSection: state.section}}
             functions={{changeFolderSection}}/>
 
             <input 

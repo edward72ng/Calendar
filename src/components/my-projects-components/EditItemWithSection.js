@@ -86,12 +86,19 @@ function EditItemWithSection ({values, functions}){
         return elem.id !== id;
       })
 
-      const orderArray = orders.split("|")
+      const orderArray = orders.split("|").filter(elem => elem !== '');
       const newOrder = orderArray.filter((elem)=>{
         return elem != id
       })
       const orderString  = newOrder.join("|")
-      dispatchSections({type: 'UPDATE', payload: {id: sectionid, body: {tasksInSections: newTasksItems, orders: orderString}}})
+      dispatchSections({
+        type: 'UPDATE',
+        payload: {
+          id: sectionid, 
+          body: {
+            tasksInSections: newTasksItems, 
+            orders: orderString
+          }}})
       
       editSection(sectionid, {orders: orderString},() => {
         deleteTask(id,()=>{updateAll()})

@@ -12,7 +12,9 @@ function WithoutSection({values, functions}) {
     globalState.setFirstFunction({
       id : null,
       dispatch: dispatchTasks,
-      dispatchSection: null
+      dispatchSection: null,
+      items: task,
+      order: []
     })
 
     if(task.length < 1){

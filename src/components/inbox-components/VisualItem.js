@@ -1,23 +1,71 @@
-import React,{useContext, useState} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import { DataContext } from "../../providers/DataContext";
 import { GaleryFromTask } from "./GaleryFromTask";
 import { SubItem } from "./SubItem";
 import { Tags } from "./Tags";
 import './Tags.css'
+import { TaskModalContext } from "../../providers/TaskModalContext";
+import { ItemsContext } from "../../providers/ItemsContext";
 
 function VisualItem ({values, functions}){
-    const {id, content, details, evento, sectionid, myTags, myPriority, priorityid, mySubtasks, myImages} = values
+    const {
+      id,
+      content,
+      details,
+      evento,
+      sectionid,
+      myTags,
+      myPriority,
+      priorityid,
+      mySubtasks,
+      myImages,
+      section} = values
     const {setEdit, dispatchTasks} = functions
-
-    
+    const {filter} = useContext(DataContext)
+    const {setForm} = useContext(TaskModalContext)
+    const {getFolder} = useContext(ItemsContext)
     const [check, setCheck] = useState(false)
     const [expand, setExpand] = useState(false)
     const [subTasks, setSubTasks] = useState(false)
    
-    return (
-      <div className="visual-container" data-id={id}>
+  useEffect(() => {
+    const element = document.getElementById(id)
 
-            <div className="visual-item-container" style={{borderRight: myPriority? `4px solid ${myPriority.color}`: 'none'}}>
+    const deleteClass = (element) =>{
+      console.log('SE VA A ELIM', element)
+      if(element){
+        element.classList.remove('appear')
+      }
+    }
+
+    setTimeout(() => {
+      deleteClass(element)
+    }, 600)//0.6s 
+
+  },[])
+
+  const openEditForm =  () => {
+    setForm((prevSate) => {
+      return({
+        ...prevSate,
+        openEdit: true,
+        actualFolder: getFolder(filter),
+        actualSection: section,
+        actualTask: values
+      })
+    })
+  }
+
+    return (
+      <div 
+      className={`visual-container appear`} 
+      id={id} 
+      data-id={id}
+      onClick={openEditForm}
+      >
+
+            <div className="visual-item-container" 
+            style={{borderRight: myPriority? `4px solid ${myPriority.color}`: 'none'}}>
                 {check ?
                   <i className="material-icons"
                   onClick={()=>setCheck(false)}
@@ -28,8 +76,7 @@ function VisualItem ({values, functions}){
                   >radio_button_unchecked</i>
                 }
 
-              <div className="details-container"
-              onClick={() => setEdit(true)}>
+              <div className="details-container">
                 <Tags myTags={myTags}/>
 
                 <p className="content">{content}</p>

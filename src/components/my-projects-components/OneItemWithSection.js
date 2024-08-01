@@ -3,7 +3,7 @@ import { VisualItem } from "../inbox-components/VisualItem"
 import { EditItemWithSection } from "./EditItemWithSection";
 
 function OneItemWithSection ({values, functions}){
-    const {id, content, details, evento, sectionid, folderid, tasksInSections,} = values
+    const {dataValues: section, id, content, details, evento, sectionid, folderid, tasksInSections, animation} = values
     const {refreshSections, dispatchSections} = functions
     const [edit, setEdit] = useState(false)
     
@@ -32,7 +32,7 @@ function OneItemWithSection ({values, functions}){
     }
 
     return <VisualItem
-    values={values}
+    values={{...values, section}}
     functions={{setEdit, dispatchTasks}}></VisualItem>
 }
 export {OneItemWithSection}

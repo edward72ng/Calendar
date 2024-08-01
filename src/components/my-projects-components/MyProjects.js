@@ -20,105 +20,178 @@ function MyProjects() {
     const {createSection, editSection} = useContext(FunctionSectionsContext) 
     const {editTask} = useContext(FunctionTasksContext)
     
-
     const [task, dispatchTasks, refreshTasks] = useWithoutSection()
     const [sections, dispatchSections, refreshSections] = useSection()
-    
-    const myDispatchsItem = []
-    const addDispatch = (id, dispatch) => {
-      const newDispatch = {
-        id,
-        dispatch
-      }
-      myDispatchsItem.push(newDispatch)
-    } 
-
+    //console.log("SECCIONES AL COMPLETO", sections)
     const [input, setInput] = useState('')
 
-    console.log('MyProjects Renderizado', sections)
     const onDragEnd = (values) => {
+    
       const { source, destination } = values
       if(!destination){
         return;
       }
-      if( source.droppableId == 'without-section'){
-       
-        const [sectionDest, tasksInsectionDest, orderDest] = getforSection(destination.droppableId, sections)
-        //console.log('Justo despues del Posible error', tasksInsectionDest)
+      if((source.droppableId == 'without-section') && (destination.droppableId !== 'without-section')){
+        const [dispatchItems, dispatchSection, items, order] = globalState.getDispatch(destination.droppableId) 
+        
         const dragItem = task.splice(source.index, 1)
-        tasksInsectionDest.splice(destination.index, 0, ...dragItem)
+        const destinationItems = items
+        console.log(dragItem)
+        destinationItems.splice(destination.index, 0, dragItem[0])
   
-        orderDest.splice(destination.index, 0, dragItem[0].id.toString())
-        const orderDestString = orderDest.join("|")
+        const destinationOrder = order
+        console.log(destinationOrder)
+        destinationOrder.splice(destination.index, 0, dragItem[0].id)
+        const orderString = destinationOrder.join("|")
   
-        dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections: tasksInsectionDest, orders: orderDestString}}})
+        dispatchSections({
+          type: 'UPDATE',
+          payload: {
+            id: destination.droppableId,
+            body:{
+              order: orderString
+            }
+          }
+        })
+
+        dispatchTasks({
+          type:  'DELETE',
+          payload: {
+            id: source.index
+          }
+        })
+
+        dispatchItems({
+          type: 'SET',
+          payload:{
+            body: destinationItems
+          }
+        })
+
         const body = {
           id: dragItem[0].id,
           sectionid: destination.droppableId
         }
+
+        editSection( destination.droppableId, {orders: orderString}, () => {
+          globalState.changeOrderSection(filter, destination.droppableId, orderString)
+        })
         editTask(body, () => {
-          editSection(destination.droppableId, {orders: orderDestString}, () => {
-            updateAll() 
-          })
+          const path = [filter, 'sectionsInFolder', destination.droppableId, 'tasksInSections']
+          globalState.addItemInValue(path, dragItem[0])
         })
         
-         
+        //Need a gsEditItem
         return;
       }
   
       if ((source.droppableId === destination.droppableId)&& source.droppableId != 'without-section') {
-         //cambiar el tasksinsection = getforsection() por el  globalestategetdispatch para obter un valor mas actual
-        const [section, tasksInsection, order] = getforSection(destination.droppableId, sections)
-        
+        const [dispatchItems, dispatchSection, items, order] = globalState.getDispatch(destination.droppableId)
         const orders = reorder(order, source.index, destination.index)
-        const newOrderTasks = reorder(tasksInsection, source.index, destination.index)
+        const newOrderTasks = reorder(items, source.index, destination.index)
 
         const orderString = orders.join("|")
-        
-        dispatchSections(
-          {type: 'UPDATE', 
+        dispatchSections({
+          type: 'UPDATE', 
             payload: {
               id: destination.droppableId, 
               body: {orders: orderString}}})
 
-        const [dispatchItems, dispatchSection] = globalState.getDispatch(destination.droppableId) 
         dispatchItems({
           type: 'SET',
           payload:{
             body: newOrderTasks
-          }
-        })
+          }})
 
-        editSection(destination.droppableId, {orders: orderString}, ()=>{})
-        
-        
+        editSection(destination.droppableId, {orders: orderString}, ()=>{
+          globalState.changeOrderSection(filter, destination.droppableId, orderString)
+        })
       } 
 
-      if (source.droppableId !== destination.droppableId) {
-        const [sectionSrc, tasksInsectionSrc, orderSrc] = getforSection(source.droppableId, sections)
-        const [sectionDest, tasksInsectionDest, orderDest] = getforSection(destination.droppableId, sections)
+      if (
+      (source.droppableId !== destination.droppableId) &&
+      (source.droppableId !== 'without-section') &&
+      (destination.droppableId !==  'without-section')) {
+        const [
+          dispatchSourceItems, 
+          dispatchSourceSection, 
+          itemsSource, 
+          orderSource] = globalState.getDispatch(source.droppableId)
+        const [
+          dispatchDestinationItems, 
+          dispatchDestinationSection, 
+          itemsDestination, 
+          orderDestination] = globalState.getDispatch(destination.droppableId)
+
+        const dragItem = itemsSource.splice(source.index, 1)
+        itemsDestination.splice(destination.index, 0, dragItem[0])
         
-        const dragItem = tasksInsectionSrc.splice(source.index, 1)
-        tasksInsectionDest.splice(destination.index, 0, ...dragItem)
-        
-        orderSrc.splice(source.index, 1)
-        orderDest.splice(destination.index, 0, dragItem[0].id.toString())
+        orderSource.splice(source.index, 1)
+        orderDestination.splice(destination.index, 0, dragItem[0].id)
   
-        const orderSrcString = orderSrc.join("|") 
-        const orderDestString = orderDest.join("|")
-      
-        dispatchSections({type: 'UPDATE', payload: {id: source.droppableId, body: {tasksInSections: tasksInsectionSrc, orders: orderSrcString}}})
-        dispatchSections({type: 'UPDATE', payload: {id: destination.droppableId, body: {tasksInSections: tasksInsectionDest, orders: orderDestString}}})
+        const orderSourceString = orderSource.join("|") 
+        const orderDestinationString = orderDestination.join("|")
+
         
+      
+        //console.log('ITEM S',itemsSource)
+        //console.log('ITEM D',itemsDestination)
+        //console.log(orderSource)
+        //console.log(orderDestination)
+        //console.log(orderSourceString)
+        //console.log(orderDestinationString)
+
+        globalState.changeOrderSection(filter, source.droppableId, orderSourceString)
+        globalState.changeOrderSection(filter, destination.droppableId, orderDestinationString)
+
+
+        dispatchSourceSection({
+          type: 'UPDATE',
+            payload: {
+              id: source.droppableId,
+              body: {
+                orders: orderSourceString
+              }}})
+
+        dispatchDestinationSection({
+          type: 'UPDATE',
+          payload: {
+            id: destination.droppableId,
+            body: {
+              orders: orderDestinationString
+            }}})
+        
+        dispatchSourceItems({
+          type: 'DELETE',
+          payload:{
+            id: source.droppableId
+          }})
+
+        dispatchDestinationItems({
+          type: 'SET',
+          payload:{
+            body: itemsDestination
+          }})
+
         const body = {
           id: dragItem[0].id,
           sectionid: destination.droppableId
         }
-  
-        editTask(body,()=>{})
-        editSection(source.droppableId, {orders: orderSrcString}, ()=>{})
-        editSection(destination.droppableId, {orders: orderDestString}, ()=>{updateAll()})
-        
+
+        editSection(source.droppableId, {orders: orderSourceString}, () => {
+          
+        })
+        editSection(destination.droppableId, {orders: orderDestinationString}, () => {
+          
+        })
+        editTask(body, () => {
+          const pathSource = [filter, 'sectionsInFolder', source.droppableId, 'tasksInSections']
+          globalState.deleteItemInValue(pathSource, dragItem[0].id)
+
+          const pathDestination = [filter, 'sectionsInFolder', destination.droppableId, 'tasksInSections']
+          globalState.addItemInValue(pathDestination, dragItem[0])
+        })
+
         return;
       }
     }
@@ -134,7 +207,7 @@ function MyProjects() {
   
     {sections.map((elem, i) => {
         return <SectionHome key={elem.id ? elem.id : 'provitionalSectionKey'}
-        dataValues={elem}
+        dataValues={{...elem}}
         index= {elem.id}
         functions={{refreshSections, dispatchSections}}>
         </SectionHome>})

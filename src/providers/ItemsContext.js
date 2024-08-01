@@ -50,8 +50,11 @@ function ItemsProvider ({children}) {
         const {sectionsInFolder} = folder
 
         const sectionWithOrderTasks = sectionsInFolder.map((elem)=>{
+            console.log('LA SECCION', elem)
             const orderString = elem.orders
-            const order = orderString.split("|")
+            console.log('THE POSSBLE ERR',orderString)
+            const order = orderString.split("|").filter(elem => elem !== '');
+            //const order = elem.orders
             const copyTasks = [] 
             order.forEach((id) => {
               const element = elem.tasksInSections.find((item) => item.id == id);
@@ -86,7 +89,7 @@ function ItemsProvider ({children}) {
    
 
     const getFolder = (id) => {
-        const folder = myProjects.find((elem) => {
+        const folder = globalState.getValue().find((elem) => {
             return elem.id == id
         })
         return folder
