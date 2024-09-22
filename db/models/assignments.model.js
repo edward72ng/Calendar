@@ -23,7 +23,7 @@ const schemaAssignmentsSeq = {
         onDelete: 'CASCADE',
      },
      todoid: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.CHAR(36), //
         references: {
             model: TODO_TABLE,
             key: 'id'

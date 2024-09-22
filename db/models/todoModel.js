@@ -8,9 +8,8 @@ const TODO_TABLE = 'todo'
 
 const schemaTodoSeq = {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR(36), //INTEGER.UNSIGNED
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         
         

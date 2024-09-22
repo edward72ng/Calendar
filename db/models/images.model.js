@@ -15,7 +15,7 @@ const schemaImagesSeq = {
     allowNull: false,
   },
   todoid: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.CHAR(36),
     allowNull: false,
     references: {
       model: TODO_TABLE,

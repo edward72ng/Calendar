@@ -43,6 +43,21 @@ router.post('/sing-up',
 validate(createUser, 'body'),
 async (req,res) =>{
     var rsp = await service.createUser(req.body)
+    const rspObj = await rsp.toJSON()
+
+    console.log('RSPOBJ', rspObj)
+
+    const folder = await models.folders.create({
+        name: 'Inbox',
+        userid: rspObj.uid,
+        colorid: 8, //this is folder color, default for inbox
+    })
+    const folderObj = folder.toJSON()
+    await models.userinbox.create({
+        userid: rspObj.uid,
+        folder_id: folderObj.id
+    })
+
     res.json(rsp)
 })
 

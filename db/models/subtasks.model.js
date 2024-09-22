@@ -18,7 +18,7 @@ const schemaSubtaskSeq = {
     type: DataTypes.TEXT,
   },
   taskid: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.CHAR(36),
     allowNull: false,
     references: {
       model: TODO_TABLE,

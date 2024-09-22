@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router-dom'
 import Aplication from './Aplication';
 import { ItemsProvider } from '../providers/ItemsContext';
 import { NavigateContext, NavigateProvider } from '../providers/NavigateManager';
+import { SingUp } from './SignUp';
 
 function App () {
 
@@ -21,6 +22,7 @@ function App () {
                     <NavigateProvider>
                         <Routes>
                         <Route path='/' element={<Login/>}/>
+                        <Route path='/sing-up' element={<SingUp/>}/>
                         <Route path='/app/*' element={
                         <ItemsProvider><Aplication></Aplication></ItemsProvider>
                         }></Route>

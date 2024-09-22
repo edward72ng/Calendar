@@ -5,10 +5,10 @@ const {Sequelize} = require ('sequelize');
 //const setupModles= require('./models/index')
 const setupModels = require('./models/index.js')
 console.log(config.uriLink)
-//const sequelize = new Sequelize(config.uriLink,{
-const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,{
+const sequelize = new Sequelize(config.uriLink,{
+//const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,{
   
-    host: config.dbHost,
+    //host: config.dbHost,
     
     dialect: 'mysql',
     logging: false,
@@ -16,6 +16,12 @@ const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,
         freezeTableName: true,
         timestamps: false,
         
+      },
+      pool: {
+        max: 5, // Número máximo de conexiones en el pool
+        min: 0, // Número mínimo de conexiones en el pool
+        acquire: 30000, // Tiempo máximo que Sequelize intentará establecer la conexión antes de arrojar un error
+        idle: 10000 // Tiempo máximo que una conexión puede estar inactiva antes de ser liberada
       }
 
 });

@@ -14,7 +14,7 @@ const schemaNotifydateSeq = {
         
       },
      todoid: {
-         type: DataTypes.INTEGER,
+         type: DataTypes.CHAR(36),
          allowNull: false,
 
          references: {

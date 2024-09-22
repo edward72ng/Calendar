@@ -151,11 +151,15 @@ router.get('/my-inbox', async (req, res) => {
         let newToken = token.replace("Bearer ", "");
         const pay = await authservice.getPayload(newToken)
 
+        console.log(pay)
+
         const register = await models.userinbox.findAll({
             where: {
                 userid: pay.sub
             },
         })
+
+        console.log(register)
 
         res.json(register)
     }
