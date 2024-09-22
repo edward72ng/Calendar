@@ -4,7 +4,7 @@ const {Sequelize} = require ('sequelize');
 
 //const setupModles= require('./models/index')
 const setupModels = require('./models/index.js')
-console.log(config.uriLink)
+
 const sequelize = new Sequelize(config.uriLink,{
 //const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword,{
   

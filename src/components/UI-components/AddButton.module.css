@@ -16,3 +16,15 @@
     /* text-align: center; */
     align-items: center;
 }
+
+@media (max-width: 450px){
+    .adding {
+        position: fixed;
+        width: 44px;
+        height: 44px;
+        bottom: 90px;
+        right: 30px;
+        border-radius: 24%;
+        background-color: rgb(11, 233, 233);
+    }
+}

@@ -30,7 +30,7 @@ function Lateral ({children}) {
   return (<>
     <div className={`menu-lateral-container ${showText ? "auto" : ""}`}>
 
-      <div>
+      <div className='header-buttons'>
 
       <div className="menu-button" onClick={toggleText}>
       <span className="material-symbols-outlined">menu</span>
