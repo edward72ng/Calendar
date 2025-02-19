@@ -17,10 +17,11 @@ const {
   } = style;
 
 function PriorityModal ({functions, values}) {
-    const {myProjects} = useContext(ItemsContext)
+    const {priorities} = useContext(ItemsContext)
     const {handleAdd} = functions
     const [isClosed, setIsClosed] = useState(true)
     
+    console.log('OPCIONES DE PRIORIDA CLIENTE',priorities)
 
     const saveChanges = (id) => {
         setIsClosed(!isClosed)
@@ -38,17 +39,17 @@ function PriorityModal ({functions, values}) {
         <div></div>
 
             {!isClosed && <>
-                <Overlay/>
                 <div className={subModalContainer}>
     
                     {
-                        myProjects.map((elem, i) => {
+                        priorities.map((elem, i) => {
                             return (
                                 <div 
-                                    key={elem.id}
+                                    key={`priorities-${elem.id}`}
                                     className={folderDataItem}
+                                    style={{color: `rgb(${elem.color})`}}
                                     onClick={() => saveChanges(elem.id)}>
-                                    {elem.name}
+                                    {elem.priority}
                                 </div>
                             );
                         })

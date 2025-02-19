@@ -108,12 +108,25 @@ router.get('/all', async (req, res) => {
                     where: {
                         sectionid: null
                     },
+                    include: [
+                        'evento',
+                        'notifications',
+                        'myPriority',
+                        'mySubtasks',
+                        'myImages',
+                        {
+                            model: models.tags,
+                            as: 'myTags',
+                            include: ['myColor']
+                        }
+                    ],
                     required: false  // Esto asegura que se use LEFT JOIN en lugar de INNER JOIN
                 },
                 'myColor'
             ]
         });
         
+        console.log('LOS TODO',folders)
         res.json(folders)
     }
 })
@@ -159,7 +172,7 @@ router.get('/my-inbox', async (req, res) => {
             },
         })
 
-        console.log(register)
+        console.log('REGISTER:',register)
 
         res.json(register)
     }

@@ -15,6 +15,7 @@ function AddButton () {
         const handleKeyDown = (event) => {
             if (event.ctrlKey && event.key === 'a') {
                 const folder = getFolder(filter)
+                console.log('ID DEL FILTRO:', filter)
                 openTaskForm(folder);
             }
           };

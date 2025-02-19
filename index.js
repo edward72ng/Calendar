@@ -14,7 +14,7 @@ const {models} = require ('./db/connec')
 
 var corsOptions = {
   origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200 
 }
 
 //middleaware not errors
@@ -54,7 +54,7 @@ io.on('connection',(socket)=>{
     socket.broadcast.emit('refrescar', data)
   })
 })
-
+ 
 server.listen(port,()=>{
   console.log("host:" + port + "/");
 })

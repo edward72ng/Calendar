@@ -20,6 +20,7 @@ const ItemsContext = createContext()
 
 
 function ItemsProvider ({children}) {
+    const [register] =  useFetchItems(myInbox)
     const [colors, dispatchColors, updateColors, loadingColors] = useFetchItems(colorsUrl)
     const [inbox, dispatchInbox, updateInbox, loadingInbox] = useFetchItems(inboxUrl)
     const [myProjects, dispatchMyProjects, updateMyProjects, loadingMyProjects] = useFetchItems(projectsUrl)
@@ -27,6 +28,8 @@ function ItemsProvider ({children}) {
     
 
     const [all, dispatchAll, updateAll, loadingAll] = useFetchItems(myAll)
+    console.log('TODOS LOS DATOS',all)
+    console.log('OPCIONES DE PRIORIDAD',priorities)
 
     const [without, dispatchWithout, updateWithout, loadingWithout] = useFetchItems(withoutSections)
     //En dudas de uso ^
@@ -34,8 +37,7 @@ function ItemsProvider ({children}) {
     const [tags, dispatchTags, updateTags, loadingTags] = useFetchItems(myTagsUrl)
     const [timeBlock, dispatchTimeBlock, updateTimeBlock, loadingTimeBlock] = useFetchItems(timeBlockDate)
     const [errorMessage, setErrorMessage] = useState(null)
-    const [register] =  useFetchItems(myInbox)
-
+    
     const [updated, loading] = useItems(myAll)
 
     console.log("se rerenderiza el contexto",globalState.getValue())

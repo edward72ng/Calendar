@@ -8,6 +8,7 @@ const DataContext = React.createContext()
 
 function DataProvider ({children}) {
 const {register} = useContext(ItemsContext)
+console.log('TU REGISTRO EN DATA CONTEXT', register)
 const {folder_id} = register[0]
 
 

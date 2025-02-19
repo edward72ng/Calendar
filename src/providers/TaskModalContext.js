@@ -25,7 +25,7 @@ function TaskModalProvider ({children}) {
             return dispatchInbox;
     };
 	
-    console.log(form.actualFolder)
+    console.log('FOLDER ACTUAL:',form.actualFolder)
 
 	return <TaskModalContext.Provider
 			value = {

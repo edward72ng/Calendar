@@ -27,6 +27,7 @@ const {
 
     const saveChanges = () => {
         setIsOpen(false);
+        console.log('ALARMAS', alarms)
         handleAdd(alarms);
     };
 
@@ -61,7 +62,7 @@ const {
           <div></div>
       
           {isOpen ? <>
-            <Overlay />
+            
             <div className={subModalContainer}>
       
               {alarms.map((elem, i) => {

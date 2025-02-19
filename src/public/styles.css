@@ -721,6 +721,33 @@ input{
     overflow-y: auto;
 }
 /*Provitional class*/
+.event-notif-bar{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: space-between;
+    padding: 4px 12px 0 12px;
+    
+}
+.event-notif-bar  span{
+    color: gray;
+    font-size: medium;
+    cursor: pointer;
+}
+.tag-prio-bar{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: space-between;
+    padding: 4px 12px 4px 12px;
+}
+.tag-prio-bar span{
+    color: red;
+    font-size: large;
+    cursor: pointer;
+}
 
 @media (min-width: 900px){
     .menu-enable{

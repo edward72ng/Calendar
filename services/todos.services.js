@@ -286,6 +286,7 @@ class Todos {
             if(notifications){
                     await notifications.map( async(elem)=>{
                         console.log(this.getToday())
+
                         if (elem.date == this.getToday()){
                             const payload = {
                                 title: 'Nueva Alarma',
@@ -307,10 +308,6 @@ class Todos {
                                     await createTaskNotification(elem.date, elem.time, {endpoint: val ,payload: payload})
                                 })
                             )
-                            
-
-                            
-
                         }
 
                         await models.notifications.create(

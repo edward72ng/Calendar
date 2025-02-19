@@ -17,14 +17,17 @@ function reducer (state, action) {
                     ...elem,
                     ...action.payload.body
                 }
-                console.log(newElem)
+                
                 return newElem;
             };
             return elem;
         });
 
     case 'CREATE':
-        return [...state, action.payload.body];
+        const dat = [...state, action.payload.body]
+        console.log(dat)
+        return dat
+        //return [...state, action.payload.body];
 
     case 'SET':
         return action.payload.body;

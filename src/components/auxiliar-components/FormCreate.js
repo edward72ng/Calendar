@@ -47,9 +47,7 @@ function FormCreate ({functions, values}) {
       folder: actualFolder,
       folderid: actualFolder.id,
       myTags:[],
-      myPriority: {
-        id: null
-      },
+      myPriority: /*{id: null}*/null,
       section: actualSection || null,
       sectionid: actualSection?.id || null
     } 
@@ -164,9 +162,12 @@ function FormCreate ({functions, values}) {
               content, 
               details, 
               folderid: state.folderid,
+              notifications: state.notifications,
               evento: state.event ? {event: state.event} : null, 
               myTags: state.myTags, 
               myPriority: state.myPriority}}})
+
+              console.log(globalState.getValue())
 
       }
 
@@ -260,7 +261,7 @@ function FormCreate ({functions, values}) {
         <div className={addButtons}>
             
             <NotificationsModal functions={{handleAdd: handleNotifications}} values={{notifications: state.notifications}}/> 
-            <PriorityModal functions={{handleAdd: handleFolderChange}}/>
+            <PriorityModal functions={{handleAdd: handleFolderChange}}/>{/*Cambiar*/}
             <TagModal functions={{handleAdd: handleEvent}} values={{event: state.event}}/>
         </div>
             

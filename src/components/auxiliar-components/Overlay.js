@@ -4,7 +4,9 @@ import ReactDOM from "react-dom";
 function Overlay(){
 
     return ReactDOM.createPortal(
-        <div className="overlay"></div>
+        <div className="overlay">
+            
+        </div>
         ,
         document.getElementById('modal')
         )

@@ -19,7 +19,8 @@ function VisualItem ({values, functions}){
       priorityid,
       mySubtasks,
       myImages,
-      section} = values
+      section,
+      notifications} = values
     const {setEdit, dispatchTasks} = functions
     const {filter} = useContext(DataContext)
     const {setForm} = useContext(TaskModalContext)
@@ -32,7 +33,6 @@ function VisualItem ({values, functions}){
     const element = document.getElementById(id)
 
     const deleteClass = (element) =>{
-      console.log('SE VA A ELIM', element)
       if(element){
         element.classList.remove('appear')
       }
@@ -116,6 +116,24 @@ function VisualItem ({values, functions}){
                 }
                 </div> 
             </div>
+            {
+              ((myTags.length > 0) || (myPriority)) &&
+              <div className="tag-prio-bar">
+                {(myTags.length > 0) &&
+                  <div></div>
+                }
+                {myPriority &&
+                  <span className="material-icons">flag</span>
+                }
+              </div>
+            }
+            {
+              (notifications.length > 0) && 
+              <div className="event-notif-bar">
+                <span></span>
+                <span className="material-icons">alarm</span>               
+              </div>
+            }
         { subTasks && <SubItem values={{subTasks: mySubtasks, taskid: id}} functions={{dispatchTasks}}/>}
         { expand && <GaleryFromTask myImages={myImages}></GaleryFromTask> }
       </div>
